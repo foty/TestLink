@@ -1,0 +1,21 @@
+package com.example.testlink.animator;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+
+import com.example.testlink.R;
+
+/**
+ * Created by lxx on 2019/6/14.
+ * Use by ObjectAnimator的介绍。
+ */
+
+public class _ObjectAnimator extends AppCompatActivity {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_object_anim
+        );
+    }
+}

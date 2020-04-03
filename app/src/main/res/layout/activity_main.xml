@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_tree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:paddingLeft="60dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_create_tree"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_text"
+            android:gravity="center"
+            android:text=" 随机插入一个数 "
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/tv_insert_tree"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_text"
+            android:gravity="center"
+            android:text=" 随机插入一颗树 "
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/tv_clear_tree"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_text"
+            android:gravity="center"
+            android:text=" 清空 "
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/tv_show_tree"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_text"
+            android:gravity="center"
+            android:minWidth="100dp"
+            android:text=""
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+    <!-- <com.example.testlink.view.TreeView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="200dp" />-->
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_animator"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#76a9f1"
+        android:text="撒旦撒大所"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_play_sound"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#76a9f1"
+        android:text="播放声音"
+        android:visibility="gone" />
+
+    <!--自定义倒计时-->
+    <com.example.testlink.view.DialProgress
+        android:id="@+id/dial_progress_bar"
+        android:layout_width="300dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:padding="5dp"
+        android:visibility="gone"
+        app:animTime="60000"
+        app:arcColors="#27ae0d"
+        app:arcWidth="5dp"
+        app:dialIntervalDegree="15"
+        app:dialWidth="10dp"
+        app:hint="当前时速"
+        app:hintSize="25sp"
+        app:maxValue="60"
+        app:startAngle="270"
+        app:sweepAngle="360"
+        app:unit="km/h"
+        app:unitSize="25sp"
+        app:value="60"
+        app:valueSize="35sp" />
+
+    <com.example.testlink.view.FirstView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="#b65c5c"
+        android:visibility="gone" />
+
+    <com.example.testlink.view.ClockView
+        android:background="#FFA500"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- <com.example.testlink.view.SecondView
+         android:layout_width="match_parent"
+         android:layout_height="800dp"
+         android:background="#d9d788"
+         android:visibility="gone" />-->
+
+    <!--<com.example.testlink.view.SiriView-->
+    <!--android:id="@+id/sir_view"-->
+    <!--android:layout_marginTop="300dp"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="200dp" />-->
+
+</LinearLayout>

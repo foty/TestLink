@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:paddingLeft="60dp">
+
+        <TextView
+            android:id="@+id/tv_create_tree"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_text"
+            android:gravity="center"
+            android:text=" 随机插入一个数 "
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/tv_insert_tree"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_text"
+            android:gravity="center"
+            android:text=" 随机插入一颗树 "
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/tv_clear_tree"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_text"
+            android:gravity="center"
+            android:text=" 清空 "
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/tv_show_tree"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_text"
+            android:gravity="center"
+            android:minWidth="100dp"
+            android:text=""
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_animator"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="撒旦撒大所"
+        android:background="#76a9f1"
+        android:layout_gravity="center_horizontal"/>
+
+    <!-- <com.example.testlink.view.FirstView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:background="#b65c5c"/>-->
+
+    <!--<com.example.testlink.view.SecondView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#d9d788"/>-->
+
+    <!--<com.example.testlink.view.TreeView
+        android:layout_marginTop="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#85b1ba"/>-->
+
+</LinearLayout>

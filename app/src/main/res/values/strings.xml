@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Testlink</string>
+
+    <!--<string name="app_name1">确认</string>-->
+    <!--<string name="app_name2">取消</string>-->
+    <!--<string name="app_name3">返回</string>-->
+    <!--<string name="app_name4">抱歉，当前网络无法使用</string>-->
+    <!--<string name="app_name5">网络加载中，请稍等</string>-->
+    <!--<string name="app_name6">您有一个新订单</string>-->
+    <!--<string name="app_name7">欢迎你下次再来</string>-->
+    <!--<string name="app_name8">您确定要退出吗</string>-->
+</resources>
