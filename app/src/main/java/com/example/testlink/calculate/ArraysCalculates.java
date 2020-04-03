@@ -1822,5 +1822,79 @@ public class ArraysCalculates {
 //        执行用时 :7 ms, 在所有 Java 提交中击败了 72.81% 的用户
 //        内存消耗 :42.6 MB, 在所有 Java 提交中击败了 100.00% 的用户
     }
+
+    /**
+     * 给定一个由 '1'（陆地）和 '0'（水）组成的的二维网格，计算岛屿的数量。一个岛被水包围，并且它是通过水平方向或垂直方向上相邻的陆地连接而成的。
+     * 你可以假设网格的四个边均被水包围。
+     * 示例 1:
+     * 输入:
+     * 11110
+     * 11010
+     * 11000
+     * 00000
+     * 输出: 1
+     * <p>
+     * 示例 2:
+     * 输入:
+     * 11000
+     * 11000
+     * 00100
+     * 00011
+     * 输出: 3
+     *
+     * @param grid
+     * @return
+     */
+    public static int problem200(char[][] grid) {
+
+        /**
+         * 深度优先搜索
+         * 广度优先搜索
+         */
+        return 0;
+    }
+
+    /**
+     * 假设你有一个很长的花坛，一部分地块种植了花，另一部分却没有。可是，花卉不能种植在相邻的地块上，它们会争夺水源，两者都会死去。
+     * 给定一个花坛（表示为一个数组包含0和1，其中0表示没种植花，1表示种植了花），和一个数 n 。能否在不打破种植规则的情况下种入 n 朵花？
+     * 能则返回True，不能则返回False。
+     * <p>
+     * 输入: flowerbed = [1,0,0,0,1], n = 1 [0,0,1,0,1]
+     * 输出: True
+     * 示例 2:
+     * <p>
+     * 输入: flowerbed = [1,0,0,0,0,1], n = 2
+     * 输出: False
+     * <p>
+     * 注意:
+     * <p>
+     * 数组内已种好的花不会违反种植规则。
+     * 输入的数组长度范围为 [1, 20000]。
+     * n 是非负整数，且不会超过输入数组的大小
+     *
+     * @param flowerbed
+     * @param n
+     * @return
+     */
+    public static boolean problem605(int[] flowerbed, int n) {
+        int count = 0;
+        int sum = 0;
+
+        for (int i = 0; i < flowerbed.length; i++) {
+            if (flowerbed[i] == 0) {
+                sum++;
+                if (sum == 3){
+                    count++;
+                    sum--;
+                }
+            } else {
+                sum = 0;
+            }
+        }
+        System.out.println(count);
+
+        return count >= n;
+
+    }
 }
 
