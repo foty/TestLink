@@ -10,11 +10,15 @@ public abstract class AbstractFile {
     /**
      * 公共属性- 文件名称
      */
-    private String name;
+    protected String name;
 
     /**
      * 公共方法- 显示内容
      */
     public abstract void showContent();
+
+    AbstractFile(String name){
+        this.name = name;
+    }
 
 }

@@ -7,11 +7,12 @@ package com.example.testlink.design.combine;
  */
 public class TextFile extends AbstractFile {
 
-
-
+    public TextFile(String name){
+        super(name);
+    }
 
     @Override
     public void showContent() {
-
+        System.out.println("文件： "+name);
     }
 }

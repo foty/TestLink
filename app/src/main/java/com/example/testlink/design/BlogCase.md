@@ -6,106 +6,109 @@
 * 树枝构件: 参与组合对象、其下有分支的树枝对象。它的作用是将树枝和叶子组合成一个树形结构，并且定义出管理子对象的方法。
 
 场景模拟: 
-说到组合模式的一个很常见的例子就是我们电脑里的文件夹。文件夹下面有文件，又有文件夹。整体结构就像是一个树，有一个很明显的层级结构。
-下面使用组合模式来编码。
-
+说到组合模式的一个很常见的例子就是我们电脑里的文件夹。在一个总文件夹里面有若干文件夹，若干文件，里面文件夹下又有文件、文件夹。
+整体上呈现一种树形的层级结构。下面使用组合模式来编码。
 ```
-//抽象构建
-public interface Task {
-    void checkTask();
-}
-```
-因为在具体命令角色里会持有接收者实例，所以具体命令放到最后来定义，先把调用者跟接收者先创建出来:
-```
-//调用者(班主任)
-public class HeadTeacher {
-
-    private Task task;
-
-    public HeadTeacher(Task task) {
-        this.task = task;
-    }
+//抽象构件
+public abstract class AbstractFile {
 
     /**
-     *为了能够切换执行不同命令
+     * 公共属性- 文件名称
      */
-    public void setTask(Task task){
-        this.task = task;
-    }
+    protected String name;
 
-    public void checkTask() {
-        task.checkTask();
-    }
-}
-```
-```
-//接收者(课代表)，实际执行请求的人
-public class ClassRepresentatives {
+    /**
+     * 公共方法- 显示内容
+     */
+    public abstract void showContent();
 
-    public void checkChinese(){
-        Log.d("tag", "检查了语文作业");
-    }
-
-    public void checkMath(){
-        Log.d("tag", "检查了数学作业");
+    AbstractFile(String name){
+        this.name = name;
     }
 
 }
 ```
-接下来分别是具体命令:
+叶子对象代码: 
 ```
-//检查语文作业
-public class ChineseTask implements Task {
+单个对象-文本类文件(叶子构件)
+public class TextFile extends AbstractFile {
 
-    private ClassRepresentatives representatives;
-
-    public ChineseTask() {
-        representatives = new ClassRepresentatives();
+    public TextFile(String name){
+        super(name);
     }
 
     @Override
-    public void checkTask() {
-        representatives.checkChinese();
+    public void showContent() {
+        System.out.println("文件： "+name);
     }
 }
 
-//检查数学作业
-public class MathTask implements Task {
-
-    private ClassRepresentatives representatives;
-
-    public MathTask() {
-        representatives = new ClassRepresentatives();
+单个对象-图片类文件(叶子构件)
+public class ImageFile extends AbstractFile {
+    public ImageFile(String name) {
+        super(name);
     }
 
     @Override
-    public void checkTask() {
-        representatives.checkMath();
+    public void showContent() {
+        System.out.println("name=  " + name);
+        // dosomething ....
+    }
+}
+```
+组合对象代码(树枝构件):
+```
+public class Folders extends AbstractFile {
+
+    private ArrayList<AbstractFile> files;
+
+    public Folders(String name) {
+        super(name);
+        files = new ArrayList<>();
+    }
+
+    public void addFile(AbstractFile file) {
+        files.add(file);
+    }
+
+    public void deteleteFile(AbstractFile file) {
+        files.remove(file);
+    }
+
+    @Override
+    public void showContent() {
+        for (AbstractFile file : files) {
+            file.showContent();
+        }
     }
 }
 ```
 场景使用:
 ```
- Task math = new MathTask();
- Task chinese = new ChineseTask();
- HeadTeacher teacher = new HeadTeacher(math);
- teacher.checkTask();
- //切换执行命令
- teacher.setTask(chinese);
- teacher.checkTask();
+   AbstractFile file1 = new TextFile("aaa");
+   AbstractFile file2 = new TextFile("bbb");
+   AbstractFile file3 = new TextFile("ccc");
+   AbstractFile file4 = new TextFile("ddd");
+
+   Folders folder = new Folders("e");
+   folder.addFile(file1);
+   folder.addFile(file2);
+   // 单个对象使用
+   file3.showContent();
+   file4.showContent();
+   //组合对象使用
+   folder.showContent();
 ```
 应用场景：
-* 需要将请求调用者与请求接收者解耦时；
-* 命令类不确定性高时，如频繁添加命令，删除命令；
-* 对命令有额外要求时，如命令的撤销或者恢复。
+* 需要表示一个对象整体与部分的层次结构；
+* 对单个对象和组合对象的使用要求具有一致性的时候；
+
 优点： 
-* 解耦。调用者与接收者没有任何依赖关系；
-* 拓展性高。非常容易地添加或删除命令；
+* 可以统一地处理单个对象或组合对象，而不需要关心自己处理的是单个对象，还是组合对象，简化代码；
+
 缺点：
-* 会产生大量具体命令类。因为每一个具体操作都需要设计成一个具体命令类，这将增加系统的复杂性。
+* 不容易控制树枝结构的类型；
+* 不容易使用继承方式来增加新的行为；
 
 **小结**  
-个人认为命令模式所带来的最大优势并不是将请求者与接收者解耦，而是在设计解耦过程中带来的可操作性。使用命令
-模式可以很轻松地增加命令(虽然命令类多起来也会显得很重复累赘)，以及添加其他的操作，例如撤销，恢复(可以结合备忘录模式)。
-如果没有使用命令模式设计代码，请求者直接调用接收者完成请求，这部分请求执行代码在多处使用就要多次创建，这会造成大量
-重复代码；当需要额外操作时往往是在接收者加以各种逻辑，接收者代码可能会变得非常复杂，既包含各种请求的执行又包括各种执行条件，直接影响代码可读性。
+这

@@ -20,6 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.testlink.design.combine.AbstractFile;
+import com.example.testlink.design.combine.Folders;
+import com.example.testlink.design.combine.ImageFile;
+import com.example.testlink.design.combine.TextFile;
 import com.example.testlink.design.command.ChineseTask;
 import com.example.testlink.design.command.HeadTeacher;
 import com.example.testlink.design.command.MathTask;
@@ -278,6 +282,21 @@ public class MainActivity extends AppCompatActivity {
 
         teacher.setTask(chinese);
         teacher.checkTask();
+
+        //组合模式
+        AbstractFile file1 = new TextFile("aaa");
+        AbstractFile file2 = new TextFile("bbb");
+        AbstractFile file3 = new TextFile("ccc");
+        AbstractFile file4 = new TextFile("ddd");
+        AbstractFile image = new ImageFile("简约风格");
+
+        Folders folder = new Folders("e");
+        folder.addFile(file1);
+        folder.addFile(file2);
+        folder.addFile(image);
+        file3.showContent();
+        file4.showContent();
+        folder.showContent();
 
     }
 
