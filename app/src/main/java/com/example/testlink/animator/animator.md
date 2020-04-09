@@ -51,9 +51,10 @@ xml实现方式一般存放在res/amin文件夹下面。
 https://blog.csdn.net/FooTyzZ/article/details/92066476     
 
 3、属性动画  
-动画类型跟补间动画类型一样，但是补间动画只是改变view的显示，并没有改变view本身。比如一个view在(200,300)- (200,500)的区域做平移动画(补间)。动画结束后
-肉眼看到view停留在(200,500)的地方。但实际上view本身还是在(200,300)的地方。这就是view本身(属性)没有改变的原因。属性动画将弥补这个缺点。   
-objectAnimator属性动画，对应是ObjectAnimator类:
+动画类型跟补间动画类型一样，但是补间动画只改变view的显示，并没有改变view本身。比如一个view在(200,300)- (200,500)的区域做平移动画(补间)。动画结束后
+肉眼看到view停留在(200,500)的地方,但实际上view本身还是在(200,300)的地方。这就是view本身(属性)没有改变的原因。属性动画将弥补这个缺点。属性动画又有objectAnimator
+与animator两种实现,分别对应java类 ObjectAnimator 与 ValueAnimator。其中ObjectAnimator继承至ValueAnimator。   
+objectAnimator实现属性动画，对应是ObjectAnimator类:
 先看xml的实现方式(文件存放目录: res/animator，很少使用这种方式实现属性动画):
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -85,12 +86,12 @@ objectAnimator的属性介绍:
 * valueTo: 属性结束值
 * startOffset: 延迟(播放)时长
 * interpolator: 差值器
-* pathData: 定义path规范，没有使用过(API 21及以上才有)
-* propertyXName: pathData X方向动画的属性名称(API 21及以上才有)
-* propertyYName: pathData Y方向动画的属性名称(API 21及以上才有)
+* pathData: 定义path规范，没有使用过(API 21及以上)
+* propertyXName: pathData X方向动画的属性名称(API 21及以上)
+* propertyYName: pathData Y方向动画的属性名称(API 21及以上)
 
-前面的都是比较常用的属性，基本上都能用上，后面3个属性没有使用过。
-代码实现方式(常用)，这个效果与xml文件实现是一样的。
+前面大部分都是比较常用的属性，基本上都会用上，后面3个属性没有使用过。   
+另外一种实现方式: 代码实现方式(常用)，这个效果与xml文件实现是一样的,而且使用更加简单方便:
 ```
  ObjectAnimator animator1 = ObjectAnimator.ofFloat(img, "rotation", 0, 360).setDuration(3000);
  animator1.setRepeatMode(ValueAnimator.REVERSE);
@@ -98,21 +99,105 @@ objectAnimator的属性介绍:
  animator1.start();
 ```
 
-animator属性动画对应是ValueAnimator类:  
+animator实现属性动画，对应是ValueAnimator类:  
 先看xml实现方式:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <animator xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="1000"
-    android:repeatMode="restart"
+    android:duration="3000"
+    android:repeatMode="reverse"
     android:repeatCount="infinite"
     android:startOffset="0"
     android:valueType="floatType"
-    android:valueFrom="1.0"
-    android:valueTo="2.0"/>
+    android:valueFrom="0"
+    android:valueTo="360" />
 ```
-animator属性动画跟ObjectAnimator没有什么区别，属性上只缺少了propertyName这条(pathData相关的3条也没有，通常不用所以可以忽略)
+animator属性动画跟ObjectAnimator在属性条上没有很大的区别，属性数量上缺少了propertyName属性(pathData相关的3条也没有，通常不用所以可以忽略)。加载xml代码:
+```
+   ImageView img = findViewById(R.id.img);
 
+   ValueAnimator animator = (ValueAnimator) AnimatorInflater.loadAnimator(this, R.animator.my_animator);
+   //一定到手动添加这个监听器，并在回调方法设置需要改变的值。
+   animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+       @Override
+       public void onAnimationUpdate(ValueAnimator animation) {
+           // 对应xml文件的 valueType 属性，如float就是对应floatType。
+           float f = (float) animation.getAnimatedValue();
+           img.setRotation(f); //手动赋值
+       }
+   });
+   animator.setTarget(img);
+   animator.start();
+```
+纯代码实现方式:
+```
+ PropertyValuesHolder holder =  PropertyValuesHolder.ofFloat("rotation",0,360);
+ ValueAnimator animator1 = ValueAnimator.ofPropertyValuesHolder(holder)
+                .setDuration(3000);
+ animator1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+     @Override
+     public void onAnimationUpdate(ValueAnimator animation) {
+         float f = (float) animation.getAnimatedValue();
+         img.setRotation(f);
+     }
+ });
+ animator1.setTarget(img);
+ animator1.setRepeatMode(ValueAnimator.REVERSE);
+ animator1.setRepeatCount(-1);
+ animator1.start();
+```
+ObjectAnimator 与 ValueAnimator 相比较可以看出: 除了在设置作动画的属性设置上有区别外(ValueAnimator需要借助PropertyValuesHolder，ObjectAnimator
+则可以直接在创建实例时传入动画属性，也可通过 ofPropertyValuesHolder()，借助PropertyValuesHolder来完成构建)。ObjectAnimator相对比较智能化，
+使用ValueAnimator还需要手动添加监听器，手动赋值。
+属性动画下实现补间动画效果的propertyName值列表:
+
+动画名称  | 属性名称 
+:---:   | :---: 
+透明度   | alpha
+旋转(平面内，顺时针)     | rotation
+旋转(x轴方向，前->后)   | rotationX
+旋转(y轴方向，左->右)   | rotationY
+平移(x轴方向)   | translationX
+平移(y轴方向)   | translationY
+放缩(x轴方向)   | scaleX
+放缩(y轴方向)   | scaleY
+
+除了上面的属性外，还可以对View的其他属性作动画如height、width、color等等。其实属性动画本质就是通过该属性的set，get方法改变其属性值，所以只要view的属性值
+具有get，set方法都是可以做动画效果的。如果某些属性设置后没有效果则需要检查该属性是否具有get(),set()方法了；或者这个get、set方法是否真实改变该属性的值。解决
+这种情况的办法就是封装一个包装类，包裹原始对象，对该属性设置set，get方法。最后将此包装类作为target传入。例子如下
+```
+public class DemoView1 {
+    private View view;
+
+    public DemoView1(View view){
+        this.view = view;
+    }
+
+    public int getHeight() {
+        return view.getLayoutParams().height;
+    }
+
+    public void setHeight(int height){
+        view.getLayoutParams().height = height;
+        view.requestLayout();
+    }
+}
+```
+使用这个包装类:
+```
+   DemoView1 view = new DemoView1(img);
+   ObjectAnimator animator1 = ObjectAnimator.ofInt(view, "height", 120, 0).setDuration(3000);
+   animator1.setRepeatMode(ValueAnimator.REVERSE);
+   animator1.setRepeatCount(-1);
+   animator1.start();
+```
+通过这样的包装方式，就可以对view的任何属性做动画效果了。
+
+估值器与差值器。
+
+参考文章
+https://www.jianshu.com/p/b117c974deaf  
+https://www.jianshu.com/p/bce3f1d4e1f2  
 
 4、(视图动画?让UI上的子控件呈动画形式显示)  
 5、手势检测(GestureDetector)   

@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:text="HHHHH"
+        android:background="#8F6767"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:layout_gravity="center"/>
     <ImageView
         android:id="@+id/img"
         android:layout_width="60dp"
