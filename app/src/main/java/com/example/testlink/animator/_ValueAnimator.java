@@ -1,6 +1,7 @@
 package com.example.testlink.animator;
 
 import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
@@ -27,17 +28,31 @@ public class _ValueAnimator extends AppCompatActivity {
 
 //        startByXml(img);
 
-        startByCode(img);
+//        startByCode(img);
+
+        //利用AnimatorSet和ObjectAnimator实现平移动画
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(
+                ObjectAnimator.ofFloat(img, "translationX", 20, 300).setDuration(3000),
+                ObjectAnimator.ofFloat(img, "rotation", 0, 360).setDuration(3000));
+        animatorSet.start();
+
+//        加载xml组合动画
+//        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.my_set);
+//        set.setTarget(img);
+//        set.start();
     }
 
     private void startByCode(ImageView img) {
-        PropertyValuesHolder holder =  PropertyValuesHolder.ofFloat("rotation",0,360);
+        PropertyValuesHolder holder = PropertyValuesHolder.ofFloat("rotation", 0, 360);
+        PropertyValuesHolder holder1 = PropertyValuesHolder.ofFloat("rotation", 0, 360);
+        PropertyValuesHolder holder2 = PropertyValuesHolder.ofFloat("rotation", 0, 360);
         ValueAnimator animator1 = ValueAnimator.ofPropertyValuesHolder(holder)
                 .setDuration(3000);
         animator1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-               float f = (float) animation.getAnimatedValue();
+                float f = (float) animation.getAnimatedValue();
                 img.setRotation(f);
             }
         });

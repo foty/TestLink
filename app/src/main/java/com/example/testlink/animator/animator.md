@@ -148,7 +148,41 @@ animator属性动画跟ObjectAnimator在属性条上没有很大的区别，属�
 ```
 ObjectAnimator 与 ValueAnimator 相比较可以看出: 除了在设置作动画的属性设置上有区别外(ValueAnimator需要借助PropertyValuesHolder，ObjectAnimator
 则可以直接在创建实例时传入动画属性，也可通过 ofPropertyValuesHolder()，借助PropertyValuesHolder来完成构建)。ObjectAnimator相对比较智能化，
-使用ValueAnimator还需要手动添加监听器，手动赋值。
+使用ValueAnimator还需要手动添加监听器，手动赋值。   
+通常情况下一个酷炫的动画效果都是由多种单一动画组合而成的，在xml中使用 set作为根标签，对应java类是AnimatorSet。   
+xml实现：
+```
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="together"> //此属性表示所有子动画一起开始,还有一个 sequentially:表示按照配置顺序依次执行。
+    <objectAnimator
+        android:duration="3000"
+        android:propertyName="rotation"
+        android:valueFrom="0"
+        android:valueTo="360"
+        android:valueType="floatType" />
+    <objectAnimator
+        android:duration="3000"
+        android:propertyName="translationX"
+        android:valueFrom="20"
+        android:valueTo="300"
+        android:valueType="floatType" />
+</set>
+
+   //加载xml代码。
+   AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.my_set);
+   set.setTarget(img);
+   set.start();
+```
+纯代码实现就更加简单了(常用):
+```
+   AnimatorSet animatorSet = new AnimatorSet();
+   animatorSet.playTogether(
+           ObjectAnimator.ofFloat(img, "translationX", 20, 300).setDuration(3000),
+           ObjectAnimator.ofFloat(img, "rotation", 0, 360).setDuration(3000));
+   animatorSet.start();
+```
+
 属性动画下实现补间动画效果的propertyName值列表:
 
 动画名称  | 属性名称 
