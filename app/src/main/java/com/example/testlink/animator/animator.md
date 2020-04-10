@@ -147,7 +147,7 @@ animator属性动画跟ObjectAnimator在属性条上没有很大的区别，属�
  animator1.start();
 ```
 ObjectAnimator 与 ValueAnimator 相比较可以看出: 除了在设置作动画的属性设置上有区别外(ValueAnimator需要借助PropertyValuesHolder，ObjectAnimator
-则可以直接在创建实例时传入动画属性，也可通过 ofPropertyValuesHolder()，借助PropertyValuesHolder来完成构建)。ObjectAnimator相对比较智能化，
+则可以直接在创建实例时传入动画属性，也可通过 ofPropertyValuesHolder()这个方法，借助PropertyValuesHolder来完成构建)。ObjectAnimator相对比较智能化，
 使用ValueAnimator还需要手动添加监听器，手动赋值。   
 通常情况下一个酷炫的动画效果都是由多种单一动画组合而成的，在xml中使用 set作为根标签，对应java类是AnimatorSet。   
 xml实现：
@@ -174,10 +174,10 @@ xml实现：
    set.setTarget(img);
    set.start();
 ```
-纯代码实现就更加简单了(常用):
+纯代码实现更加简单(常用):
 ```
    AnimatorSet animatorSet = new AnimatorSet();
-   animatorSet.playTogether(
+   animatorSet.playTogether(  //这是其中一种方式
            ObjectAnimator.ofFloat(img, "translationX", 20, 300).setDuration(3000),
            ObjectAnimator.ofFloat(img, "rotation", 0, 360).setDuration(3000));
    animatorSet.start();
@@ -227,11 +227,9 @@ public class DemoView1 {
 ```
 通过这样的包装方式，就可以对view的任何属性做动画效果了。
 
-估值器与差值器。
-
-参考文章
-https://www.jianshu.com/p/b117c974deaf  
-https://www.jianshu.com/p/bce3f1d4e1f2  
+参考文章(详细，全面):
+<https://www.jianshu.com/p/b117c974deaf]>  
+<https://www.jianshu.com/p/bce3f1d4e1f2>  
 
 4、(视图动画?让UI上的子控件呈动画形式显示)  
 5、手势检测(GestureDetector)   
