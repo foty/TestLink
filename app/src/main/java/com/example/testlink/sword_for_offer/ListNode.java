@@ -7,6 +7,7 @@ package com.example.testlink.sword_for_offer;
 public class ListNode {
     int val;
     ListNode next;
+    ListNode head;
 
     ListNode(int val) {
         this.val = val;
