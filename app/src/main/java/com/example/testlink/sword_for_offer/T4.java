@@ -11,7 +11,7 @@ package com.example.testlink.sword_for_offer;
 public class T4 {
 
     public String solution(String s) {
-
+        // 此方法是否可行???
 //        s.replaceAll(" ","%20");
         /**
          * 可以借助 StringBuilder添加。如果转换成数组，可以优先遍历一遍，统计空格的数量方便确定
