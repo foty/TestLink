@@ -14,3 +14,7 @@ dpi值 | 等级
 480 |  xxhdpi
 640 |  xxxhdpi
 
+关于图片：  
+适配，内存消耗，优化；   
+LruCache和DiskLruCache https://blog.csdn.net/guolin_blog/article/details/34093441
+
