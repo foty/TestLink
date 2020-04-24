@@ -38,9 +38,11 @@ public class T6 {
 //        System.out.println(s1.length + " - " + s1 + " - " + s1[0]); //
 
         /**
-         * 递归数组法
-         * 根据前序遍历与中序遍历规律找到根节点，将数组分成左子树部分与右子树部分，然后左子树部分又寻找子根节点，
-         * 后又分为左、右子树部分。依次递归。(注意结束递归条件)
+         * 方法一:递归数组法
+         * 根据前序遍历与中序遍历规律找到根节点，将数组分成左子树部分与右子树部分，
+         * 然后左、右子树部分又分别寻找子根节点，子叶节点，后又分为左、右子树部分。
+         * 依次递归。(注意结束递归条件)
+         *
          */
         if (cen == null || pre == null) {
             return null;
@@ -50,7 +52,7 @@ public class T6 {
             return null;
         }
 
-        //前序遍历的第一个就是跟节点，可以直接使用
+        //前序遍历的第一个就是根节点，可以直接使用
         Tree root = new Tree(pre[0]);
         for (int i = 0; i < pre.length; i++) {
             if (pre[0] == cen[i]) {// 确认跟节点位置，因为前序遍历第一位就是根节点，可以此作为对照,确认
@@ -64,7 +66,40 @@ public class T6 {
     }
 
     /**
-     * 根据中序遍历与后续遍历重写树。 leetCode 106
+     * 递归数组法的改版-递归边界
+     *
+     * @param pre    前序结果
+     * @param startP 开始位置
+     * @param endP   结束位置 (包含)
+     * @param cen    中序结果
+     * @param startC 开始位置
+     * @param endC   结束位置 (包含)
+     */
+    private static Tree helper(int[] pre, int startP, int endP, int[] cen, int startC, int endC) {
+
+        // TODO: 2020/4/24  待考究
+
+        //找根节点。前序遍历下的根节点总是在前面(后序遍历的根节点总是在后面)
+        int index = 0;
+        while (pre[startP] != cen[index] && index <= endC) { //不能越界
+            index++;
+        }
+
+        //创建节点
+        Tree root = new Tree(pre[startP]);
+        //左子节点
+        root.left = helper(pre, startP + 1, startP + index,
+                cen, startC, index - 1);
+        //右子节点
+        root.right = helper(pre, startP + index + 1, endP,
+                cen, index+1,endC);
+
+        return root;
+
+    }
+
+    /**
+     * 根据中序遍历与后续遍历重写树(copy数组法)。 leetCode 106
      *
      * @param cen
      * @param aft
