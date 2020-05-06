@@ -1,11 +1,6 @@
 package com.example.testlink.sword_for_offer;
 
-import android.widget.Spinner;
-
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
 
 /**
  * Create by lxx
@@ -26,7 +21,7 @@ public class T6 {
         solution(ints, ints);
     }
 
-    public static Tree solution(int[] pre, int[] cen) {
+    public static TreeNode solution(int[] pre, int[] cen) {
         // 1、2、4、7、3、5、6、8
         // 包括 from ，不包括 to。
         //from必须在0到数组长度之间，to可能比原数组长度更长
@@ -53,7 +48,7 @@ public class T6 {
         }
 
         //前序遍历的第一个就是根节点，可以直接使用
-        Tree root = new Tree(pre[0]);
+        TreeNode root = new TreeNode(pre[0]);
         for (int i = 0; i < pre.length; i++) {
             if (pre[0] == cen[i]) {// 确认跟节点位置，因为前序遍历第一位就是根节点，可以此作为对照,确认
                 root.left = solution(Arrays.copyOfRange(pre, 1, i), Arrays.copyOfRange(cen, 0, i));
@@ -63,10 +58,19 @@ public class T6 {
             }
         }
         return root;
+
+        /**
+         * 方法二
+         *
+         * 执行用时 :6 ms, 在所有 Java 提交中击败了 37.38% 的用户
+         * 内存消耗 :39.4 MB, 在所有 Java 提交中击败了 100.00% 的用户
+         *
+         */
+//        return helper(pre,0,pre.length-1,cen,0,cen.length -1);
     }
 
     /**
-     * 递归数组法的改版-递归边界
+     * 递归数组法的改版-递归边界法
      *
      * @param pre    前序结果
      * @param startP 开始位置
@@ -75,9 +79,11 @@ public class T6 {
      * @param startC 开始位置
      * @param endC   结束位置 (包含)
      */
-    private static Tree helper(int[] pre, int startP, int endP, int[] cen, int startC, int endC) {
+    private static TreeNode helper(int[] pre, int startP, int endP, int[] cen, int startC, int endC) {
 
-        // TODO: 2020/4/24  待考究
+        if (startP > endP || startC > endC) {
+            return null;
+        }
 
         //找根节点。前序遍历下的根节点总是在前面(后序遍历的根节点总是在后面)
         int index = 0;
@@ -86,15 +92,17 @@ public class T6 {
         }
 
         //创建节点
-        Tree root = new Tree(pre[startP]);
-        //左子节点
-        root.left = helper(pre, startP + 1, startP + index,
+        TreeNode root = new TreeNode(pre[startP]);
+        //左子节点。(对于前序结果结束位置：index是从0开始的，最终的找到的是基于整个cen长度，
+        // 而这里需要的是一个相对差值，所以要用index - startC)
+        root.left = helper(pre, startP + 1, startP + index - startC,
                 cen, startC, index - 1);
         //右子节点
-        root.right = helper(pre, startP + index + 1, endP,
-                cen, index+1,endC);
+        root.right = helper(pre, startP + index - startC + 1, endP,
+                cen, index + 1, endC);
 
         return root;
+
 
     }
 
@@ -105,7 +113,7 @@ public class T6 {
      * @param aft
      * @return
      */
-    public static Tree solution2(int[] cen, int[] aft) {
+    public static TreeNode solution2(int[] cen, int[] aft) {
 
         /**
          * [9,3,15,20,7]
@@ -119,7 +127,7 @@ public class T6 {
         if (cen.length <= 0 || aft.length <= 0) {
             return null;
         }
-        Tree root = new Tree(aft[aft.length - 1]);
+        TreeNode root = new TreeNode(aft[aft.length - 1]);
         for (int i = 0; i < aft.length; i++) {
             if (aft[aft.length - 1] == cen[i]) {
                 root.left = solution2(Arrays.copyOfRange(cen, 0, i), Arrays.copyOfRange(aft, 0, i));

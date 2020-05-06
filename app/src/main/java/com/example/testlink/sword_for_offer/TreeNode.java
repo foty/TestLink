@@ -4,15 +4,15 @@ package com.example.testlink.sword_for_offer;
  * Create by lxx
  * Date : 2020/4/10 16:43
  */
-public class Tree {
+public class TreeNode {
     int val;
-    Tree left;
-    Tree right;
+    TreeNode left;
+    TreeNode right;
 
-    Tree() {
+    TreeNode() {
     }
 
-    Tree(int x) {
+    TreeNode(int x) {
         val = x;
     }
 }
