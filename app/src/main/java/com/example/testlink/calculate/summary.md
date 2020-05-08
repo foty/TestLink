@@ -29,8 +29,10 @@
     }
 ```
 
-KMP
+KMP算法: 字符串模式匹配算法。解决的问题就是在字符串（也叫主串）中的模式（pattern）定位问题。
 
-深度优先搜索
+深度优先搜索(DFS-Depth First Search)
 
-广度优先搜索
+广度优先搜索(BFS-Breadth First Search)
+
+动态规划 (DP-Dynamic Programming )
