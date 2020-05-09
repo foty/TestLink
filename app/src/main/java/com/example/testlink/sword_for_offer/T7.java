@@ -5,13 +5,14 @@ import java.util.Stack;
 /**
  * Create by lxx
  * Date : 2020/5/6 16:58
- * Use by 使用2个栈实现队列，完成pop与push操作
+ * Use by
  */
 public class T7 {
 
-    public static void main(String[] args) {
-
-    }
+    /**
+     * 问题: 使用2个栈实现队列，完成pop与push操作
+     *
+     */
 
     class Queues {
         private Stack<Integer> stack;

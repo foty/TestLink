@@ -1,7 +1,5 @@
 package com.example.testlink.sword_for_offer;
 
-import android.content.Intent;
-
 /**
  * Create by lxx
  * Date : 2020/5/8 16:53
