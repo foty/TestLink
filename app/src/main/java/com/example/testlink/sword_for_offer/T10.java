@@ -1,9 +1,12 @@
 package com.example.testlink.sword_for_offer;
 
+import android.content.Intent;
+
 /**
  * Create by lxx
  * Date : 2020/5/8 16:53
  * Use by 统计二进制中1的个数
+ *
  * <p>
  * 位运算操作:
  * 左移（ << ） 整体左移，右边空出位补零，左边位舍弃 （-4 << 1 = -8）
@@ -49,6 +52,22 @@ public class T10 {
             sum += (i & 1);
             // n往右移(无符号)
             i >>>= 1;
+        }
+        return sum;
+    }
+
+
+    /**
+     * 根据: 任意一个数n，与(&)上比自己小1的数(n-1)，都会将数n中最低位的1变为0。
+     * 这条性质消除1。每次消除1，计数器 +1。直到n == 0。
+     *
+     * @param n
+     */
+    private int solve3(int n) {
+        int sum = 0;
+        while (n != 0) {
+            sum++;
+            n = n & (n - 1);
         }
         return sum;
     }
