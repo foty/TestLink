@@ -16,7 +16,7 @@ public class T12 {
      */
 
     public static void main(String[] args) {
-        solve2(3);
+        solve2(2);
     }
 
     /**
@@ -36,11 +36,15 @@ public class T12 {
 
     /**
      * 大数据，不考虑界限问题
+     *
      * @param n
      */
     private static void solve2(int n) {
+        if (n<= 0){
+            System.out.println("n <= 0");
+            return;
+        }
         int[] ints = new int[n];
-
         boolean end = false;
         while (!end) {
             for (int i = ints.length - 1; i >= 0; i--) {
@@ -62,13 +66,19 @@ public class T12 {
     }
 
     private static void print(int[] ints) {
-        List<String> list = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
+        boolean notAdd = true;
         for (int i = 0; i < ints.length; i++) {
 //            System.out.print(ints[i]);
-            sb.append(ints[i]);
+            if (ints[i] != 0) {
+                notAdd = false;
+            }
+            if (!notAdd) {
+                sb.append(ints[i]);
+            }
         }
-        list.add(sb.toString());
+
+        System.out.print(sb.toString());
         System.out.println();
     }
 }
