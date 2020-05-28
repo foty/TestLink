@@ -17,7 +17,7 @@ public class LinksCalculates {
      * 给定一个带有头结点 head 的非空单链表，返回链表的中间结点。
      * 如果有两个中间结点，则返回第二个中间结点。
      */
-    public static ListNode problem876(ListNode head) {
+    public  ListNode problem876(ListNode head) {
         //解法1
 //        List<ListNode> list = new ArrayList();
 //        ListNode temp = head;
@@ -50,7 +50,7 @@ public class LinksCalculates {
 //        内存消耗 :37 MB, 在所有 Java 提交中击败了 5.05% 的用户
     }
 
-    public class ListNode {
+    class ListNode {
         int val;
         ListNode next;
 
