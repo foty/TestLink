@@ -107,7 +107,7 @@ public class T6 {
     }
 
     /**
-     * 根据中序遍历与后续遍历重写树(copy数组法)。 leetCode 106
+     * 拓展：根据中序遍历与后续遍历重写树(copy数组法)。 leetCode 106
      *
      * @param cen
      * @param aft
