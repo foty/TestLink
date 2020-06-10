@@ -20,12 +20,13 @@ public class Folders extends AbstractFile {
         files.add(file);
     }
 
-    public void deteleteFile(AbstractFile file) {
+    public void deleteFile(AbstractFile file) {
         files.remove(file);
     }
 
     @Override
     public void showContent() {
+        System.out.println("文件夹 name= "+name);
         for (AbstractFile file : files) {
             file.showContent();
         }

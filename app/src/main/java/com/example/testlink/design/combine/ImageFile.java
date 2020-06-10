@@ -12,7 +12,7 @@ public class ImageFile extends AbstractFile {
 
     @Override
     public void showContent() {
-        System.out.println("name=  " + name);
+        System.out.println("ImageFile name= " + name);
         // dosomething ....
     }
 }

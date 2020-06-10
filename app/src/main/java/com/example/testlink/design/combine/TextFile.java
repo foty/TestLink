@@ -13,6 +13,6 @@ public class TextFile extends AbstractFile {
 
     @Override
     public void showContent() {
-        System.out.println("文件： "+name);
+        System.out.println("TextFile name= "+name);
     }
 }

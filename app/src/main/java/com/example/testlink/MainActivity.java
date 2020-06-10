@@ -150,10 +150,14 @@ public class MainActivity extends AppCompatActivity {
         timer.start();
     }
 
+    public static void main(String[] args) {
+        designMode();
+    }
+
     /**
      * 设计模式
      */
-    private void designMode() {
+    private static void designMode() {
         //1、原型模式
 //        Student s1 = new Student();
 //        s1.address = "广东";
@@ -282,13 +286,13 @@ public class MainActivity extends AppCompatActivity {
 //        diary.getDay().LookDoSomething();
 
         //14、命令模式
-        Task math = new MathTask();
-        Task chinese = new ChineseTask();
-        HeadTeacher teacher = new HeadTeacher(math);
-        teacher.checkTask();
-
-        teacher.setTask(chinese);
-        teacher.checkTask();
+//        Task math = new MathTask();
+//        Task chinese = new ChineseTask();
+//        HeadTeacher teacher = new HeadTeacher(math);
+//        teacher.checkTask();
+//
+//        teacher.setTask(chinese);
+//        teacher.checkTask();
 
         //组合模式
         AbstractFile file1 = new TextFile("aaa");
@@ -298,9 +302,18 @@ public class MainActivity extends AppCompatActivity {
         AbstractFile image = new ImageFile("简约风格");
 
         Folders folder = new Folders("e");
+        Folders child1 = new Folders("f");
+        Folders child2 = new Folders("g");
         folder.addFile(file1);
         folder.addFile(file2);
         folder.addFile(image);
+        //
+        child1.addFile(file3);
+        folder.addFile(child1);
+        //
+        child2.addFile(file4);
+        folder.addFile(child2);
+
         file3.showContent();
         file4.showContent();
         folder.showContent();
