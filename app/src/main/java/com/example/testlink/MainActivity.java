@@ -21,6 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.testlink.design.adapter.EarAdapter;
+import com.example.testlink.design.adapter.EarPhone;
+import com.example.testlink.design.adapter.Mi8;
+import com.example.testlink.design.adapter.MiMax;
+import com.example.testlink.design.adapter.Mix8Mold;
 import com.example.testlink.design.combine.AbstractFile;
 import com.example.testlink.design.combine.Folders;
 import com.example.testlink.design.combine.ImageFile;
@@ -295,28 +300,46 @@ public class MainActivity extends AppCompatActivity {
 //        teacher.checkTask();
 
         //组合模式
-        AbstractFile file1 = new TextFile("aaa");
-        AbstractFile file2 = new TextFile("bbb");
-        AbstractFile file3 = new TextFile("ccc");
-        AbstractFile file4 = new TextFile("ddd");
-        AbstractFile image = new ImageFile("简约风格");
+//        AbstractFile file1 = new TextFile("aaa");
+//        AbstractFile file2 = new TextFile("bbb");
+//        AbstractFile file3 = new TextFile("ccc");
+//        AbstractFile file4 = new TextFile("ddd");
+//        AbstractFile image = new ImageFile("简约风格");
+//
+//        Folders folder = new Folders("e");
+//        Folders child1 = new Folders("f");
+//        Folders child2 = new Folders("g");
+//        folder.addFile(file1);
+//        folder.addFile(file2);
+//        folder.addFile(image);
+//        //
+//        child1.addFile(file3);
+//        folder.addFile(child1);
+//        //
+//        child2.addFile(file4);
+//        folder.addFile(child2);
+//
+//        file3.showContent();
+//        file4.showContent();
+//        folder.showContent();
 
-        Folders folder = new Folders("e");
-        Folders child1 = new Folders("f");
-        Folders child2 = new Folders("g");
-        folder.addFile(file1);
-        folder.addFile(file2);
-        folder.addFile(image);
-        //
-        child1.addFile(file3);
-        folder.addFile(child1);
-        //
-        child2.addFile(file4);
-        folder.addFile(child2);
 
-        file3.showContent();
-        file4.showContent();
-        folder.showContent();
+        //虚拟耳机对象的用法
+        MiMax max = new MiMax();
+        max.chargeAndEar();
+
+        Mix8Mold mold1 = new Mi8();
+        EarAdapter adapter = new EarAdapter(mold1);
+        adapter.chargeAndEar();
+
+        //使用耳机对象用法
+        EarPhone earPhone = new EarPhone();
+        earPhone.listen();
+
+        Mix8Mold mold = new Mi8();
+        earPhone.setAdapter(new EarAdapter(mold));
+        earPhone.listen();
+
 
     }
 
