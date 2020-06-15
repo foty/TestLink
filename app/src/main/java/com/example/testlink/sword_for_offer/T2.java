@@ -7,14 +7,35 @@ package com.example.testlink.sword_for_offer;
  */
 public class T2 {
 
-//    public class Singleton {
-//        private static class SingletonHodler {
-//            private static Singleton ourInstance = new Singleton();
-//        }
-//        public static Singleton getInstance() {
-//            return SingletonHodler.ourInstance;
-//        }
-//        private Singleton() {
-//        }
-//    }
+    private T2() {
+    }
+
+    /**
+     * 首推静态内部类 跟双重锁校验法。
+     */
+
+    //静态内部类
+    private static class SingletonHolder {
+        private static T2 ourInstance = new T2();
+    }
+
+    public static T2 getInstance() {
+        return SingletonHolder.ourInstance;
+    }
+
+    private static T2 instance;
+
+
+    //双重锁检验法
+    public static T2 getInstance1() {
+      if (instance == null){
+          synchronized (T2.class){
+              if (instance == null){
+                  instance =  new T2();
+              }
+          }
+      }
+      return instance;
+    }
+
 }
