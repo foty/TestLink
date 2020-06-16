@@ -32,7 +32,7 @@ public class T21 {
 
     public void pop() {
         Integer pop = stackA.pop();
-        if (!stackB.isEmpty()&&pop.equals(stackB.peek())) {
+        if (!stackB.isEmpty() && pop.equals(stackB.peek())) {
             stackB.pop();
         }
     }
