@@ -12,8 +12,8 @@ public class T24 {
 
 
     public static void main(String[] args) {
-        int[] ins = new int[]{1, 2, 5, 10, 6, 9, 4};
-        solve(ins);
+        int[] ins = new int[]{4, 8, 6, 12, 16, 14, 10};
+        System.out.println(solve(ins));
     }
 
     /**
@@ -44,19 +44,21 @@ public class T24 {
          *
          *
          */
-        if (postorder == null || postorder.length <= 0) {
-            return false;
-        }
-        System.out.print("[");
-        for (int i = 0; i < postorder.length; i++) {
-
-            System.out.print(postorder[i]);
-            System.out.print(" ");
-        }
-        System.out.print("]");
-        System.out.println();
+        if (postorder == null) return false;
+        if (postorder.length <= 0) return true;
 
 
+//        return relSolve1(postorder);
+        return relSolve2(postorder, 0, postorder.length - 1);
+    }
+
+    /**
+     * 使用复制数组法
+     *
+     * @param postorder
+     * @return
+     */
+    private static boolean relSolve1(int[] postorder) {
         int partIndex = 0;
         int rootIndex = postorder.length - 1;//后续遍历的最后一个是子树的根节点。
         //找到左子树。
@@ -68,8 +70,12 @@ public class T24 {
         //处理一个特殊情况(没有左子树，partIndex = 0)
         if (partIndex == 0) {
             //递归右边子树
-            solve(Arrays.copyOfRange(postorder, 0, rootIndex));
-            return true;
+            int[] ints = Arrays.copyOfRange(postorder, 0, rootIndex);
+            if (ints == null || ints.length <= 0) {
+                return true;
+            } else {
+                return relSolve1(ints);
+            }
         }
         //找到右子树
         for (int i = partIndex; i < rootIndex; i++) {
@@ -78,8 +84,69 @@ public class T24 {
                 return false;
             }
         }
-        boolean b1 = solve(Arrays.copyOfRange(postorder, 0, partIndex));
-        boolean b2 = solve(Arrays.copyOfRange(postorder, partIndex, rootIndex));
+        int[] ints = Arrays.copyOfRange(postorder, 0, partIndex);
+        int[] ints1 = Arrays.copyOfRange(postorder, partIndex, rootIndex);
+        boolean b1;
+        boolean b2;
+        if (ints == null || ints.length <= 0) {
+            b1 = true;
+        } else {
+            b1 = relSolve1(ints);
+        }
+        if (ints1 == null || ints1.length <= 0) {
+            b2 = true;
+        } else {
+            b2 = relSolve1(ints1);
+        }
+
+        return b1 && b2;
+    }
+
+    /**
+     * 使用边界法
+     *
+     * @param postorder
+     * @return
+     */
+    private static boolean relSolve2(int[] postorder, int start, int end) {
+        int partIndex = start;
+
+        //找到左子树。
+        for (int i = start; i < end; i++) {
+            if (postorder[i] < postorder[end]) {
+                partIndex++;
+            }
+        }
+        //处理一个特殊情况(没有左子树，partIndex = 0)
+        if (partIndex == start) {
+            //递归右边子树
+            if (start >= end) {
+                return true;
+            } else {
+                return relSolve2(postorder, start, end);
+            }
+        }
+        //找到右子树
+        for (int i = partIndex; i < end; i++) {
+            //题意说了没有相同元素，右子树所有节点一定大于根节点,否则不是后序遍历序列。
+            if (postorder[i] <= postorder[end]) {
+                return false;
+            }
+        }
+        boolean b1;
+        boolean b2;
+        System.out.println(start +"  "+partIndex+"  "+end);
+        if (start >= partIndex) {
+            b1 = true;
+        } else {
+            b1 = relSolve2(postorder, start, partIndex);
+        }
+
+        if (partIndex >= end) {
+            b2 = true;
+        } else {
+            b2 = relSolve2(postorder, partIndex, end);
+        }
         return b1 && b2;
     }
 }
