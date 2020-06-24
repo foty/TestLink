@@ -56,6 +56,59 @@ public class ThreadDemo {
         executor.execute(new DemoRunnable());
     }
 
+    public static void main(String[] args) {
+        ThreadDemo demo = new ThreadDemo();
+//        demo.executor.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                System.out.println("=======");
+//            }
+//        });
+
+        int t = -464;
+        System.out.println(t | 0);
+        System.out.println(-1 << 29);
+        System.out.println(0 << 29);
+        System.out.println(1 << 29);
+        System.out.println(2 << 29);
+        System.out.println(3 << 29);
+
+//        int t = 8;
+//        int COUNT_BITS = Integer.SIZE - 3;
+//        int CAPACITY = (1 << COUNT_BITS) - 1;
+//        int c = t & ~CAPACITY;
+//        int wc = t & CAPACITY;
+//
+//        // ~ ^ & >> <<
+//
+//        System.out.println(~CAPACITY);
+//        System.out.println(COUNT_BITS + "  " + CAPACITY);
+//        System.out.println(c + "  " + wc);
+
+//        int i = 0;
+//        int j = 0;
+//        tryu:
+//        for (; ; ) {
+//            if (i == 6 && j < 5) {
+//                System.out.println("666=  " + i);
+//                j++;
+//                continue tryu;
+//            }
+//            System.out.println(i);
+//            i++;
+//            if (i == 8) {
+//                break tryu;
+//            }
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        System.out.println("12");
+    }
+
 
     /**
      * 使用Callable执行
