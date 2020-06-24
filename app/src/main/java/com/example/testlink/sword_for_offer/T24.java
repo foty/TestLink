@@ -30,19 +30,8 @@ public class T24 {
         /**
          * [1,2,5,10,6,9,4,3]
          *
-         *             3
-         *          2      4
-         *       1            6
-         *                5      9
-         *                         10
-         *
          *  [4, 8, 6, 12, 16, 14, 10]
-         *
-         *       10
-         *    6      14
-         * 4    8  12    16
-         *
-         *
+
          */
         if (postorder == null) return false;
         if (postorder.length <= 0) return true;
@@ -77,7 +66,7 @@ public class T24 {
                 return relSolve1(ints);
             }
         }
-        //找到右子树
+        //判断右子树
         for (int i = partIndex; i < rootIndex; i++) {
             //题意说了没有相同元素，右子树所有节点一定大于根节点,否则不是后序遍历序列。
             if (postorder[i] <= postorder[rootIndex]) {
@@ -109,8 +98,7 @@ public class T24 {
      * @return
      */
     private static boolean relSolve2(int[] postorder, int start, int end) {
-        int partIndex = start;
-
+        int partIndex = 0;
         //找到左子树。
         for (int i = start; i < end; i++) {
             if (postorder[i] < postorder[end]) {
@@ -118,16 +106,16 @@ public class T24 {
             }
         }
         //处理一个特殊情况(没有左子树，partIndex = 0)
-        if (partIndex == start) {
+        if (partIndex == 0) {
             //递归右边子树
             if (start >= end) {
                 return true;
             } else {
-                return relSolve2(postorder, start, end);
+                return relSolve2(postorder, start, end - 1);
             }
         }
-        //找到右子树
-        for (int i = partIndex; i < end; i++) {
+        //判断右子树
+        for (int i = start + partIndex; i < end; i++) {
             //题意说了没有相同元素，右子树所有节点一定大于根节点,否则不是后序遍历序列。
             if (postorder[i] <= postorder[end]) {
                 return false;
@@ -135,17 +123,17 @@ public class T24 {
         }
         boolean b1;
         boolean b2;
-        System.out.println(start +"  "+partIndex+"  "+end);
-        if (start >= partIndex) {
+        if (partIndex == 1) {
             b1 = true;
         } else {
-            b1 = relSolve2(postorder, start, partIndex);
+            b1 = relSolve2(postorder, start, start + partIndex -1);
         }
 
-        if (partIndex >= end) {
+        if (start + partIndex >= end -1) {
             b2 = true;
         } else {
-            b2 = relSolve2(postorder, partIndex, end);
+            System.out.println("递归右子树");
+            b2 = relSolve2(postorder, start + partIndex, end - 1);
         }
         return b1 && b2;
     }
