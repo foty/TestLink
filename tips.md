@@ -7,3 +7,11 @@ Android 项目中asset目录和res的区别
 * asset资源访问时使用AssetManager,以流形式操作;
 * asset资源可以自由创建子文件夹，并且都有效，可以访问到;
 
+
+已知“onSaveInstanceState 会在系统意外杀死 Activity 时调用，或者横纵屏切换的时候调用”。   
+问：随着Android SDK版本的变化，这一方法的调用时机有哪些变化？     
+
+Activity的onSaveInstanceState回调时机，取决于app的targetSdkVersion：    
+* targetSdkVersion低于11的app，onSaveInstanceState方法会在Activity.onPause之前回调；
+* targetSdkVersion低于28的app，则会在onStop之前回调；
+* 28之后，onSaveInstanceState在onStop回调之后才回调r
