@@ -3,6 +3,7 @@ package com.example.testlink.thread_demo;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
@@ -57,7 +58,7 @@ public class ThreadDemo {
     }
 
     public static void main(String[] args) {
-        ThreadDemo demo = new ThreadDemo();
+//        ThreadDemo demo = new ThreadDemo();
 //        demo.executor.execute(new Runnable() {
 //            @Override
 //            public void run() {
@@ -65,20 +66,61 @@ public class ThreadDemo {
 //            }
 //        });
 
-        int t = -464;
-        System.out.println(t | 0);
-        System.out.println(-1 << 29);
-        System.out.println(0 << 29);
-        System.out.println(1 << 29);
-        System.out.println(2 << 29);
-        System.out.println(3 << 29);
+//        HashMap<String, String> map = new HashMap<>();
+//        map.put("哈哈", "123");
+//        map.put("好好", "123");
+//        System.out.println(map.get("哈哈"));
 
-//        int t = 8;
-//        int COUNT_BITS = Integer.SIZE - 3;
-//        int CAPACITY = (1 << COUNT_BITS) - 1;
-//        int c = t & ~CAPACITY;
-//        int wc = t & CAPACITY;
+//        // 左移右移
+//        int t = -464;
+//        System.out.println(t | 0); // t
+//        System.out.println(2 << 2); // 2 * 2^2
+//        System.out.println(-1 << 29);
+//        System.out.println(0 << 29); // 0
+//        System.out.println(1 << 29);
+//        System.out.println(2 << 29);
+//        System.out.println(3 << 29);
+
+        int COUNT_BITS = Integer.SIZE - 3;
+        int CAPACITY = (1 << COUNT_BITS) - 1;
+
+          // ~非
+//        System.out.println(CAPACITY);
+//        System.out.println(~CAPACITY);
+//        System.out.println(~4); // -5
+//        System.out.println(~7); // -6
+//        System.out.println(~8); //-9
+//        System.out.println(~9); // -10
+
+//        int c = 8 & ~CAPACITY;
+//        System.out.println(c); // 0
 //
+//        int wc = 8 & CAPACITY;
+//        System.out.println(wc); // 8
+//        System.out.println(8 & CAPACITY); //8
+
+//        System.out.println(3 & -1); // 3    0011
+//        System.out.println(3 & -2);      // 0001
+//        System.out.println(3 & -3);
+//        System.out.println(3 & -4);
+//        System.out.println(3 & -5);
+//
+//        System.out.println(3 & 1); //1
+//        System.out.println(3 & 2);
+//        System.out.println(3 & 3);  // 3
+//        System.out.println(3 & 4);
+//        System.out.println(3 & 5);
+//
+//        System.out.println(3 & 5461231);
+//        System.out.println(3465445 & 56);
+
+
+//
+//        System.out.println(CAPACITY);
+//
+        System.out.println(18 | 23);
+        System.out.println(18 | 24);
+
 //        // ~ ^ & >> <<
 //
 //        System.out.println(~CAPACITY);
