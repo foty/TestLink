@@ -8,7 +8,6 @@ package com.example.testlink.sword_for_offer;
  */
 public class T27 {
 
-
     public static void main(String[] args) {
         Node root = new Node(2); //4  2
         root.left = new Node(1); // 2  1
@@ -28,17 +27,13 @@ public class T27 {
 
     }
 
-
     /**
-     * 4
-     * <p>
-     * 2       6
-     * <p>
-     * 1       5    7
+     *
      */
     public  Node treeToDoublyList(Node root) {
         if (root == null) return null;
 
+        //第一种解法
 //        Node last = solve(root, null);
 //        Node first = last;
 //        while (first.left != null) {
@@ -48,7 +43,7 @@ public class T27 {
 //        last.right = first;
 //        return first;
 
-        //第二种解法
+        //第二种解法(代码更加简洁)
         head.left = prev;
         prev.right = head;
         return head;
@@ -68,7 +63,6 @@ public class T27 {
         if (root.left != null) {
             before = solve(root.left, left);
         }
-
         if (before == null) { // 没有左子节点，需要判断left是否为空，不为空需要处理指针指向。
             if (left != null) {
                 root.left = left;
@@ -78,27 +72,17 @@ public class T27 {
             before.right = root;
             root.left = before;
         }
-
         if (root.right != null) {
             return solve(root.right, root);
         }
         return root;
     }
 
-
+    /**
+     * 第二种解法: 核心与第一种解法一样，区别是此方法使用全局head以及prev来保存需要操作的节点，而不是
+     * 通过方法返回操作节点。2者相比较，第二种判断逻辑更加少，更加接近中序遍历。
+     */
     Node prev, head;
-
-//    void dfs(Node cur) {
-//        if(cur == null) return;
-//        dfs(cur.left);
-//        if(pre != null) pre.right = cur;
-//        else head = cur;
-//        cur.left = pre;
-//        pre = cur;
-//        dfs(cur.right);
-//    }
-
-
     public void solve2(Node root) {
         if (root == null) return;
 
