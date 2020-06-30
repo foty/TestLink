@@ -36,28 +36,30 @@ public class T27 {
      * <p>
      * 1       5    7
      */
-    public static Node treeToDoublyList(Node root) {
+    public  Node treeToDoublyList(Node root) {
         if (root == null) return null;
 
-        Node last = solve(root, null);
-        Node first = last;
-        while (first.left != null) {
-            first = first.left;
-        }
-        first.left = last;
-        last.right = first;
-        return first;
+//        Node last = solve(root, null);
+//        Node first = last;
+//        while (first.left != null) {
+//            first = first.left;
+//        }
+//        first.left = last;
+//        last.right = first;
+//        return first;
+
+        //第二种解法
+        head.left = prev;
+        prev.right = head;
+        return head;
     }
 
     /**
      * @param root
      * @param left 前一个节点
-     * @return
-     *
-     *思路: 搜索二叉树是有规律的，要排成一个有序链其实走一遍中序遍历即可，难点是如何将每个节点
-     *的前后指针指向正确的节点。此方法通过返回找到第一个(最小)节点，从前往后跟随中序遍历，递归处理每个
+     * @return 思路: 搜索二叉树是有规律的，要排成一个有序链其实走一遍中序遍历即可，难点是如何将每个节点
+     * 的前后指针指向正确的节点。此方法通过返回找到第一个(最小)节点，从前往后跟随中序遍历，递归处理每个
      * 节点。最后返回最后一个节点。递归结束后根据指针找到第一个(双向链表)，返回第一个几点即可。
-     *
      */
     public static Node solve(Node root, Node left) {
         if (root == null) return null;
@@ -84,20 +86,35 @@ public class T27 {
     }
 
 
-    Node left,head;
-    public static Node solve2(Node root) {
-        if (root == null) return null;
+    Node prev, head;
 
-        Node before = null;
+//    void dfs(Node cur) {
+//        if(cur == null) return;
+//        dfs(cur.left);
+//        if(pre != null) pre.right = cur;
+//        else head = cur;
+//        cur.left = pre;
+//        pre = cur;
+//        dfs(cur.right);
+//    }
+
+
+    public void solve2(Node root) {
+        if (root == null) return;
+
         if (root.left != null) {
-            before = solve2(root.left);
+            solve2(root.left);
         }
-
-
-
+        if (prev == null) { //第一个，头结点。
+            head = root;
+            prev = head;
+        } else {
+            prev.right = root;
+            root.left = prev;
+            prev = root;
+        }
         if (root.right != null) {
-            return solve2(root.right);
+            solve2(root.right);
         }
-        return root;
     }
 }
