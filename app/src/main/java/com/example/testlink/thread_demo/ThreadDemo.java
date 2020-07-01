@@ -66,6 +66,15 @@ public class ThreadDemo {
 //            }
 //        });
 
+        CustomerThreadPools cPools = new CustomerThreadPools();
+        for (int i = 0; i < 5; i++) {
+            cPools.execute(() -> {
+                System.out.println("开始"+Thread.currentThread().getName());
+                System.out.println("哈哈哈哈哈");
+                System.out.println("执行结束=====");
+            });
+        }
+
 //        HashMap<String, String> map = new HashMap<>();
 //        map.put("哈哈", "123");
 //        map.put("好好", "123");
@@ -118,8 +127,8 @@ public class ThreadDemo {
 //
 //        System.out.println(CAPACITY);
 //
-        System.out.println(18 | 23);
-        System.out.println(18 | 24);
+//        System.out.println(18 | 23);
+//        System.out.println(18 | 24);
 
 //        // ~ ^ & >> <<
 //
