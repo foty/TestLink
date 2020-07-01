@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mediaPlayer.setOnPreparedListener(mp -> {
-            Log.d("MediaPlayerUtil", "onCompletion: 准备完成");
+            Log.d("MediaPlayerUtil", "onCompletion: 准备完成");//测试
             mediaPlayer.start();
         });
         mediaPlayer.prepareAsync();
