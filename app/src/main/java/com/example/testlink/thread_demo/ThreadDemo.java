@@ -57,6 +57,24 @@ public class ThreadDemo {
         executor.execute(new DemoRunnable());
     }
 
+    static void  test(){
+        System.out.println(Thread.currentThread().getName());
+        new Thread(() -> {
+            testRun();
+        }).start();
+
+    }
+
+    static void testRun() {
+        Thread t = Thread.currentThread();
+        System.out.println(t.getName());
+
+
+        System.out.println(Thread.interrupted());
+
+        System.out.println(t.isInterrupted());
+    }
+
     public static void main(String[] args) {
 //        ThreadDemo demo = new ThreadDemo();
 //        demo.executor.execute(new Runnable() {
@@ -66,14 +84,16 @@ public class ThreadDemo {
 //            }
 //        });
 
-        CustomerThreadPools cPools = new CustomerThreadPools();
-        for (int i = 0; i < 5; i++) {
-            cPools.execute(() -> {
-                System.out.println("开始"+Thread.currentThread().getName());
-                System.out.println("哈哈哈哈哈");
-                System.out.println("执行结束=====");
-            });
-        }
+//        CustomerThreadPools cPools = new CustomerThreadPools();
+//        for (int i = 0; i < 2; i++) {
+//            cPools.execute(() -> {
+//                System.out.println("开始"+Thread.currentThread().getName());
+//                System.out.println("哈哈哈哈哈");
+//                System.out.println("执行结束=====");
+//            });
+//        }
+
+        test();
 
 //        HashMap<String, String> map = new HashMap<>();
 //        map.put("哈哈", "123");

@@ -15,9 +15,14 @@ public class CustomerThreadPools extends ThreadPoolExecutor {
         super(3, 10, 5, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(100));
     }
 
+
+
     @Override
     protected void beforeExecute(Thread t, Runnable r) {
         super.beforeExecute(t, r);
+        System.out.println(Thread.interrupted());
+
+        System.out.println(t.isInterrupted());
 
         System.out.println(t.getName());
     }
