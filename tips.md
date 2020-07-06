@@ -15,3 +15,11 @@ Activity的onSaveInstanceState回调时机，取决于app的targetSdkVersion：
 * targetSdkVersion低于11的app，onSaveInstanceState方法会在Activity.onPause之前回调；
 * targetSdkVersion低于28的app，则会在onStop之前回调；
 * 28之后，onSaveInstanceState在onStop回调之后才回调r
+
+
+retrofit 提交图片：
+文件格式为：  
+ map.put("map key(1)" + "\"; filename=\"" + '文件(2)'.getName(),
+                    RequestBody.create(MediaType.parse("image/png"), '文件(3)'));  
+ 
+其中，除了 1,2,3外,其他部分为固定情况
