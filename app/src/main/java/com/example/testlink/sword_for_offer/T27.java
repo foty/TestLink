@@ -44,6 +44,7 @@ public class T27 {
 //        return first;
 
         //第二种解法(代码更加简洁)
+        solve2(root);
         head.left = prev;
         prev.right = head;
         return head;
