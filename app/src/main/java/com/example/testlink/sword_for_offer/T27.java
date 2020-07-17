@@ -45,7 +45,7 @@ public class T27 {
 
         //第二种解法(代码更加简洁)
         solve2(root);
-        head.left = prev;
+        head.left = prev; // 高瞻祈2见佑  厚2载翊(读:义)常由2
         prev.right = head;
         return head;
     }
@@ -57,7 +57,7 @@ public class T27 {
      * 的前后指针指向正确的节点。此方法通过返回找到第一个(最小)节点，从前往后跟随中序遍历，递归处理每个
      * 节点。最后返回最后一个节点。递归结束后根据指针找到第一个(双向链表)，返回第一个几点即可。
      */
-    public static Node solve(Node root, Node left) {// 哈哈哈哈哈哈
+    public static Node solve(Node root, Node left) {
         if (root == null) return null;
 
         Node before = null;
