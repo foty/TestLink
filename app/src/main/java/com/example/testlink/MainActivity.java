@@ -35,6 +35,8 @@ import com.example.testlink.design.command.HeadTeacher;
 import com.example.testlink.design.command.MathTask;
 import com.example.testlink.design.command.Task;
 import com.example.testlink.design.faced.BossManager;
+import com.example.testlink.design.observer.Clock;
+import com.example.testlink.design.observer.Timer;
 import com.example.testlink.design.proxy.DynamicProxy;
 import com.example.testlink.design.proxy.Subject;
 import com.example.testlink.data_structure.tree.BinarySearchTree;
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //隐藏标题栏
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
         setContentView(R.layout.activity_main);
@@ -299,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
 //        teacher.setTask(chinese);
 //        teacher.checkTask();
 
-        //组合模式
+        //15、组合模式
 //        AbstractFile file1 = new TextFile("aaa");
 //        AbstractFile file2 = new TextFile("bbb");
 //        AbstractFile file3 = new TextFile("ccc");
@@ -323,23 +325,29 @@ public class MainActivity extends AppCompatActivity {
 //        file4.showContent();
 //        folder.showContent();
 
-
+        // 16、适配器模式
         //虚拟耳机对象的用法
-        MiMax max = new MiMax();
-        max.chargeAndEar();
+//        MiMax max = new MiMax();
+//        max.chargeAndEar();
+//
+//        Mix8Mold mold1 = new Mi8();
+//        EarAdapter adapter = new EarAdapter(mold1);
+//        adapter.chargeAndEar();
+//
+//        //使用耳机对象用法
+//        EarPhone earPhone = new EarPhone();
+//        earPhone.listen();
+//
+//        Mix8Mold mold = new Mi8();
+//        earPhone.setAdapter(new EarAdapter(mold));
+//        earPhone.listen();
 
-        Mix8Mold mold1 = new Mi8();
-        EarAdapter adapter = new EarAdapter(mold1);
-        adapter.chargeAndEar();
-
-        //使用耳机对象用法
-        EarPhone earPhone = new EarPhone();
-        earPhone.listen();
-
-        Mix8Mold mold = new Mi8();
-        earPhone.setAdapter(new EarAdapter(mold));
-        earPhone.listen();
-
+        // 17、观察者模式
+        Clock clock = new Clock();
+        Timer timer = new Timer();
+        timer.setObserver(clock);
+        //整点到了
+        timer.ring();
 
     }
 
