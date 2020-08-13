@@ -1,9 +1,5 @@
 package com.example.testlink.sword_for_offer;
 
-import android.util.Log;
-
-import java.util.Arrays;
-
 /**
  * Create by lxx
  * Date : 2020/8/10 17:06

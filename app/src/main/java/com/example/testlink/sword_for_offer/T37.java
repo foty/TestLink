@@ -7,9 +7,9 @@ package com.example.testlink.sword_for_offer;
  */
 public class T37 {
 
-
     /**
      * 思路: 先求出两个链表的长度，让2个链表保持在同一个起跑线上(长的先跑)，最后剩下相同长度互相比较。
+     *
      * 误区: 公共交点是指地址值也相同，而不是只是内容相同。
      *
      * @param n1
@@ -26,12 +26,10 @@ public class T37 {
             temph1 = temph1.next;
             nc1++;
         }
-
         while (temph2 != null) {
             temph2 = temph2.next;
             nc2++;
         }
-
         if (nc1 > nc2) {
             while (n1 != null) {
                 if (nc1 == nc2) {
@@ -72,6 +70,7 @@ public class T37 {
 
     /**
      * 解法2：浪漫解法????。
+     *
      * 解法分析： 分别从2个链表的头结点开始比较，每次都指向下一个节点，先到达尾结点的链表则
      * 将下一个节点指向头结点。以此递推，最终会有一次两个链表剩余节点相同。再比较是否相等
      * 即可。注意即时没有相同的节点，因为会存在剩余节点相同，所以最后有null = null。所以不会
