@@ -948,6 +948,9 @@ public class StringCalculates {
             }
         }
         return stack.empty();
+
+//        执行用时：2 ms, 在所有 Java 提交中击败了 79.37% 的用户
+//        内存消耗：37.7 MB, 在所有 Java 提交中击败了 58.98% 的用户
     }
 
     /**
