@@ -41,6 +41,7 @@
 
         </activity>
         <activity android:name=".animator.MyAnimation" />
+        <activity android:name=".KeyBoardActivity" />
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.testlink;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,29 +22,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.testlink.design.adapter.EarAdapter;
-import com.example.testlink.design.adapter.EarPhone;
-import com.example.testlink.design.adapter.Mi8;
-import com.example.testlink.design.adapter.MiMax;
-import com.example.testlink.design.adapter.Mix8Mold;
-import com.example.testlink.design.combine.AbstractFile;
-import com.example.testlink.design.combine.Folders;
-import com.example.testlink.design.combine.ImageFile;
-import com.example.testlink.design.combine.TextFile;
-import com.example.testlink.design.command.ChineseTask;
-import com.example.testlink.design.command.HeadTeacher;
-import com.example.testlink.design.command.MathTask;
-import com.example.testlink.design.command.Task;
-import com.example.testlink.design.faced.BossManager;
+import com.example.testlink.data_structure.tree.BinarySearchTree;
 import com.example.testlink.design.observer.Clock;
 import com.example.testlink.design.observer.Timer;
 import com.example.testlink.design.proxy.DynamicProxy;
 import com.example.testlink.design.proxy.Subject;
-import com.example.testlink.data_structure.tree.BinarySearchTree;
-import com.example.testlink.design.state.Diary;
-import com.example.testlink.design.state.Timer12;
-import com.example.testlink.design.state.Timer23;
-import com.example.testlink.design.state.Timer6;
 import com.example.testlink.view.DialProgress;
 import com.example.testlink.view.TreeView;
 
@@ -61,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_clear_tree;
     private TextView tv_insert_tree;
     private TextView tvAnimator;
+    private TextView tvShowKeyBoard;
 
 
     @Override
@@ -81,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
         tv_clear_tree = findViewById(R.id.tv_clear_tree);
         tv_insert_tree = findViewById(R.id.tv_insert_tree);
         tvAnimator = findViewById(R.id.tv_animator);
+
+        tvShowKeyBoard = findViewById(R.id.tvShowKeyBoard);
+
+        tvShowKeyBoard.setOnClickListener(v -> {
+
+            Intent intent = new Intent(this, KeyBoardActivity.class);
+            startActivity(intent);
+        });
 
         Random mRandom = new Random();
         DialProgress mDialProgress = findViewById(R.id.dial_progress_bar);
