@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tool="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <LinearLayout
@@ -67,21 +68,24 @@
     <LinearLayout
         android:id="@+id/llFunctionList"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="290dp"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:visibility="visible"
+        android:visibility="gone"
+        tool:visibility="visible"
         app:layout_constraintTop_toBottomOf="@+id/clInput">
 
         <TextView
+            android:id="@+id/tvPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@mipmap/icon_photo"
             android:gravity="center_horizontal"
-            android:text="文件"
+            android:text="图片"
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tvCamera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@mipmap/icon_photo"
