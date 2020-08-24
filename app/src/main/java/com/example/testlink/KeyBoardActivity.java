@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testlink.utils.ScreenUtils;
+
+import io.reactivex.annotations.Nullable;
 
 public class KeyBoardActivity extends Activity {
 
