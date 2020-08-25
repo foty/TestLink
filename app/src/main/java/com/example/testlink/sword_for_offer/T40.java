@@ -17,7 +17,7 @@ public class T40 {
      *
      * @param a
      */
-    public static void solve(int[] a) {
+    public static List solve(int[] a) {
         HashMap<Integer, Integer> sMap = new HashMap();
 
         for (int i = 0; i < a.length; i++) {
@@ -34,6 +34,7 @@ public class T40 {
                 list.add(i);
             }
         }
+        return list;
     }
 
 }
