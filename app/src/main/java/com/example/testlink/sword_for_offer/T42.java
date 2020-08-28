@@ -1,5 +1,7 @@
 package com.example.testlink.sword_for_offer;
 
+import javassist.expr.NewArray;
+
 /**
  * Create by lxx
  * Date : 2020/8/25 10:08
@@ -17,25 +19,28 @@ public class T42 {
      * @param target
      * @return
      */
-    public int solve(int[] arr, int target) {
+    public int[] solve(int[] arr, int target) {
         if (arr == null || arr.length < 2) {
-            return 0;
+            return new int[0];
         }
         int p = 0, q = arr.length - 1;
 
-        while (p < q){
+        while (p < q) {
 
-            if (arr[p] + arr[q] == target){
-                return  1;
+            if (arr[p] + arr[q] == target) {
+                int[] ars = new int[2];
+                ars[0] = arr[p];
+                ars[1] = arr[q];
+                return ars;
             }
-            if (arr[p] + arr[q] < target){
+            if (arr[p] + arr[q] < target) {
                 p++;
             }
-            if (arr[p]+arr[q] > target){
+            if (arr[p] + arr[q] > target) {
                 q--;
             }
         }
 
-        return 1;
+        return new int[0];
     }
 }
