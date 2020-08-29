@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'key0'
             keyPassword '123456'
-            storeFile file('F:\\androidProject\\TestLink\\test_link.jks')
+            storeFile file('test_link.jks')
             storePassword '123456'
         }
     }
@@ -19,6 +19,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+//    lintOptions {
+//        abortOnError false
+//    }
 
     buildTypes {
         release {
