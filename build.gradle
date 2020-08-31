@@ -20,6 +20,14 @@ allprojects {
         jcenter()
         
     }
+    gradle.taskGraph.whenReady {
+        tasks.each { task ->
+            if (task.name == 'mockableAndroidJar') {
+                task.enabled = false
+            }
+        }
+    }
+
 }
 
 task clean(type: Delete) {
