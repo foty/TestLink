@@ -26,4 +26,27 @@ public class T47 {
         boolean result = (n > 0) && (sum += solve(n - 1)) > 0;
         return sum;
     }
+
+
+    /**
+     * 不使用 + - * /等四则运算做加法。
+     *
+     * 思路：位运算。
+     */
+
+    /**
+     * 不太懂位运算(先记录下来。。。。。)
+     *
+     * @param n1
+     * @param n2
+     * @return
+     */
+    public static int solve1(int n1,int n2) {
+        while (n2 != 0){
+            int temp = n1 ^ n2 ;
+            n2 = (n1 & n2 )<<1;
+            n1 = temp;
+        }
+        return n1;
+    }
 }
