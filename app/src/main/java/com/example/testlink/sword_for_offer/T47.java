@@ -30,7 +30,6 @@ public class T47 {
 
     /**
      * 不使用 + - * /等四则运算做加法。
-     *
      * 思路：位运算。
      */
 
@@ -44,7 +43,9 @@ public class T47 {
     public static int solve1(int n1,int n2) {
         while (n2 != 0){
             int temp = n1 ^ n2 ;
+
             n2 = (n1 & n2 )<<1;
+
             n1 = temp;
         }
         return n1;
