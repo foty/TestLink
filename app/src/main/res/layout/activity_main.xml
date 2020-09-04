@@ -117,17 +117,21 @@
         android:visibility="gone" />
 
     <com.example.testlink.view.ClockView
-        android:background="#FFA500"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:background="#FFA500"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tvShowKeyBoard"
-        android:text="显示键盘"
         android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:gravity="center"
-        android:layout_height="200dp"/>
+        android:text="显示键盘" />
+
+    <com.example.testlink.view.PieView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <!-- <com.example.testlink.view.SecondView
          android:layout_width="match_parent"
