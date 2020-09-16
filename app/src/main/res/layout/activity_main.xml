@@ -130,7 +130,7 @@
         android:text="显示键盘" />
 
     <com.example.testlink.view.PieView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <!-- <com.example.testlink.view.SecondView

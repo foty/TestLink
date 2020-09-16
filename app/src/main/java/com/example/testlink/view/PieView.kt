@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import org.jetbrains.annotations.Nullable
@@ -72,23 +73,23 @@ class PieView : View {
     }
 
     private val textSize by lazy {
-        dip2px(mContext, 7)
+        dip2px(mContext, 8)
     }
 
-    private var textRect: Rect? = null
+    private var textRect = Rect()
 
     /**
      * 折线横向长度
      */
     private val xOffset by lazy {
-        dip2px(mContext, 20)
+        dip2px(mContext, 25)
     }
 
     /**
      * 折线偏Y方向长度
      */
     private val yOffset by lazy {
-        dip2px(mContext, 10)
+        dip2px(mContext, 8)
     }
 
     private var mPointList = ArrayList<Point>()
@@ -104,7 +105,7 @@ class PieView : View {
     constructor(context: Context?, @Nullable attrs: AttributeSet?) : this(context, attrs, 0)
 
     constructor(context: Context?, @Nullable attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init()
+        initView()
         initData()
     }
 
@@ -131,7 +132,7 @@ class PieView : View {
         }
     }
 
-    private fun init() {
+    private fun initView() {
 
         radius = dip2px(mContext, 100)
         centerX = getScreenWidth() / 2.toFloat()
@@ -168,7 +169,7 @@ class PieView : View {
 
 
     override fun onDraw(canvas: Canvas) {
-
+        Log.d("lxx", "onDraw")
         mPointList.clear()
 
         for (i in mRateList.indices) {
@@ -217,13 +218,12 @@ class PieView : View {
                 floats[7] = point.y - yOffset
 
                 if (offSetAngle(point, lastPoint)) {
-                    floats[6] = point.x + xOffset - rty
-                    floats[7] = point.y - yOffset - rty
-                    rty += 5
+                    floats[6] = point.x + xOffset + rty
+                    floats[7] = point.y - yOffset + (rty / 10 * textRect.height())
+                    rty += 10
                 } else {
                     rty = 10
                 }
-
 
             } else {
                 //右下角
@@ -237,7 +237,7 @@ class PieView : View {
 
                 if (offSetAngle(point, lastPoint)) {
                     floats[6] = point.x + xOffset + rby
-                    floats[7] = point.y + yOffset + rby
+                    floats[7] = point.y + yOffset + textRect.height()
                     rby += 5
                 } else {
                     rby = 10
@@ -259,7 +259,7 @@ class PieView : View {
 
                 if (offSetAngle(point, lastPoint)) {
                     floats[6] = point.x - xOffset - lty
-                    floats[7] = point.y - yOffset - lty
+                    floats[7] = point.y - yOffset - textRect.height()
                     lty += 5
                 } else {
                     lty = 10
@@ -277,22 +277,23 @@ class PieView : View {
 
                 if (offSetAngle(point, lastPoint)) {
                     floats[6] = point.x - xOffset - lby
-                    floats[7] = point.y + yOffset - lby
+                    floats[7] = point.y + yOffset - textRect.height()
                     lby += 6
                 } else {
                     lby = 10
                 }
             }
         }
-
-        mPaint.color = Color.BLACK
+        mPaint.textSize = 10f
         canvas.drawLines(floats, mPaint)
+
+        mPaint.textSize = textSize
+        mPaint.color = Color.BLACK
         mPaint.style = Paint.Style.STROKE
 
         if (mRateList.size > 0) {
-            //Y轴：+ textRect.height() / 2 ,相对沿线居中显示
             canvas.drawText(getFormatPercentRate(mRateList[position] * 100) + "%", floats[6],
-                    floats[7] + textRect!!.height() / 2, mPaint)
+                    floats[7] + textRect.height() / 2, mPaint)
         }
     }
 
@@ -313,13 +314,19 @@ class PieView : View {
     }
 
     /**
-     *
+     * 更新数据
      */
     private fun updateDate(rateList: MutableList<Float>, colorList: MutableList<Int>, isShowRateText: Boolean) {
         this.isShowRateText = isShowRateText
-        mRateList = rateList
-        mColorList = colorList
-        init()
+
+        mRateList.clear()
+        for (i in rateList.indices) {
+            mRateList.add(rateList[i] / 100)
+        }
+
+        mColorList.clear()
+        mColorList.addAll(colorList)
+
         invalidate()
     }
 
@@ -327,7 +334,7 @@ class PieView : View {
      * 获取格式化的保留两位数的数
      */
     private fun getFormatPercentRate(dataValue: Float): String {
-        val decimalFormat = DecimalFormat("0.00") //构造方法的字符格式这里如果小数不足2位,会以0补足.
+        val decimalFormat = DecimalFormat("0.00")
         return decimalFormat.format(dataValue)
     }
 
