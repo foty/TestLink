@@ -68,6 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <!--模拟动画-->
     <TextView
         android:id="@+id/tv_animator"
         android:layout_width="50dp"
@@ -77,6 +78,7 @@
         android:text="撒旦撒大所"
         android:visibility="gone" />
 
+    <!--测试声音-->
     <TextView
         android:id="@+id/tv_play_sound"
         android:layout_width="50dp"
@@ -110,34 +112,40 @@
         app:value="60"
         app:valueSize="35sp" />
 
+    <!--非完全自定义(继承ViewGroup)-->
     <com.example.testlink.view.FirstView
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:background="#b65c5c"
         android:visibility="gone" />
 
+    <!--完全自定义-->
+    <com.example.testlink.view.SecondView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#d9d788"
+        android:visibility="visible" />
+
+    <!--自定义时钟-->
     <com.example.testlink.view.ClockView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#14A01A"
         android:visibility="gone" />
 
+    <!--仿微信键盘功能盘-->
     <TextView
         android:id="@+id/tvShowKeyBoard"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:gravity="center"
+        android:visibility="gone"
         android:text="显示键盘" />
 
+    <!--饼状图-->
     <com.example.testlink.view.PieView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-    <!-- <com.example.testlink.view.SecondView
-         android:layout_width="match_parent"
-         android:layout_height="800dp"
-         android:background="#d9d788"
-         android:visibility="gone" />-->
 
     <!--<com.example.testlink.view.SiriView-->
     <!--android:id="@+id/sir_view"-->

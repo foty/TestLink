@@ -27,21 +27,23 @@ public class SecondView extends View {
     private RectF f2;
     private Path tPath;
 
-    public SecondView(Context context) {
+    public SecondView(Context context) { // 代码中new时调用
         super(context);
         initView(context);
     }
 
 
-    public SecondView(Context context, @Nullable AttributeSet attrs) {
+    public SecondView(Context context, @Nullable AttributeSet attrs) { // xml布局中使用时调用
         super(context, attrs);
         initView(context);
     }
 
-    public SecondView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public SecondView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) { // 与第二个类似，但是view需要增加额外属性时使用
         super(context, attrs, defStyleAttr);
         initView(context);
     }
+
+    // 还有一个四个参数的，跟第三个类似，也是要跟随主题变化，增加额外属性时调用，但是要等第三个参数为0或者找不到这个属性时会调用
 
     private void initView(Context context) {
         paint = new Paint();
@@ -76,11 +78,13 @@ public class SecondView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec,heightMeasureSpec);
         setMeasuredDimension(widthMeasureSpec,getDefaultWidth());
+        Log.d("lxx", "secondView-onMeasure");
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        Log.d("lxx", "secondView-onDraw");
         canvas.drawText("哈哈哈哈哈哈哈", 10, 30, paint);
 
         canvas.drawArc(f,0,90,true,paint);
@@ -95,6 +99,12 @@ public class SecondView extends View {
         canvas.drawTextOnPath("ha你好啊哈哈哈哈哈哈哈",tPath,10,10,paint);
     }
 
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        Log.d("lxx", "secondView-onLayout");
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

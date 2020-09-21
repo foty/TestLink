@@ -133,7 +133,6 @@ class PieView : View {
     }
 
     private fun initView() {
-
         radius = dip2px(mContext, 100)
         centerX = getScreenWidth() / 2.toFloat()
         centerY = radius + 80f
@@ -146,30 +145,7 @@ class PieView : View {
         }
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-//        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
-//        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
-//        var widthSize = MeasureSpec.getSize(widthMeasureSpec)
-//        var heightSize = MeasureSpec.getSize(heightMeasureSpec)
-//
-//        if (heightMode == MeasureSpec.AT_MOST) {
-//            //边沿线和文字所占的长度：(xOffset + yOffset + textRect.width())
-//            heightSize = (radius * 2).toInt() + 2 * centerPointRadius + getPaddingLeft()
-//            +getPaddingRight() + (xOffset + yOffset + textRect!!.height()) * 2
-//        }
-//
-//        if (widthMode == MeasureSpec.AT_MOST) {
-//            widthSize = (radius * 2).toInt() + 2 * centerPointRadius + getPaddingLeft() + getPaddingRight()
-//            +(xOffset + yOffset + textRect!!.width()) * 2
-//        }
-//        setMeasuredDimension(600, 600)
-
-    }
-
-
     override fun onDraw(canvas: Canvas) {
-        Log.d("lxx", "onDraw")
         mPointList.clear()
 
         for (i in mRateList.indices) {
@@ -192,6 +168,9 @@ class PieView : View {
     }
 
 
+    /**
+     * 绘制文字与折线
+     */
     private fun dealRateText(canvas: Canvas, point: Point, position: Int, pointList: List<Point>) {
         lastPoint = if (position == 0) {
             pointList[0]
@@ -343,7 +322,7 @@ class PieView : View {
     private fun px2dp(context: Context, px: Float): Float = px / context.resources.displayMetrics.density
 
     /**
-     *
+     * 是否需要偏移(防止文字绘制位置重叠)
      */
     private fun offSetAngle(currentP: Point, lastP: Point?): Boolean {
         if (lastP != null) {
@@ -361,6 +340,9 @@ class PieView : View {
         return false
     }
 
+    /**
+     * 判断折线起点处于哪个半区(上下左右)
+     */
     private fun halfArea(currentP: Point, lastP: Point?): Boolean {
 
         if (lastP != null) {
@@ -374,7 +356,6 @@ class PieView : View {
 
     /**
      * 获取屏幕宽度
-     *
      */
     private fun getScreenWidth(): Int {
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
