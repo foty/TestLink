@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         tvShowKeyBoard.setOnClickListener(v -> {
 
-            Intent intent = new Intent(this, KeyBoardActivity.class);
+//            Intent intent = new Intent(this, KeyBoardActivity.class);
+            Intent intent = new Intent(this, ExpandableListActivity.class);
             startActivity(intent);
         });
 
