@@ -79,3 +79,18 @@ ssl原理
 说一下HashMap
 为什么要使用红黑树
 说一下HashMap扩容
+
+ams,pms,wms,apo,gradle,jvm,launcher
+
+
+
+
+
+
+
+
+实用android studio 插件：   
+codeGlace - 代码预览  
+Gson - json解析  
+android drawable preview 资源预览  
+(黄油刀)Android ButterKnife Zelezny - 代码注解(findViewById)  
