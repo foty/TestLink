@@ -1,4 +1,4 @@
-package com.example.testlink.thread_demo;
+package com.example.testlink.thread_pool;
 
 /**
  * Created by lxx on 2019/12/2.

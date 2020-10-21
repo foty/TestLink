@@ -1,9 +1,8 @@
-package com.example.testlink.thread_demo;
+package com.example.testlink.thread_pool;
 
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
