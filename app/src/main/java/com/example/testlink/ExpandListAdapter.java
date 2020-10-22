@@ -1,16 +1,12 @@
-package com.example;
+package com.example.testlink;
 
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
-
-import com.example.testlink.ExpandChildListAdapter;
-import com.example.testlink.R;
 
 import java.util.List;
 

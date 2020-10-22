@@ -3,7 +3,7 @@ package com.example.testlink.upup;
 /**
  * Create by lxx
  * Date : 2020/10/10 10:12
- * Use by
+ * Use by <字节码层面看class文件结构>
  */
 public class JvmClassStructure {
     /**

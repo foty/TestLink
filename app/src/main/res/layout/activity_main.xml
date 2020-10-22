@@ -127,7 +127,7 @@
         android:visibility="visible" />
 
     <!--自定义时钟-->
-    <com.example.testlink.view.ClockView
+    <com.example.testlink.view.clock_demo.ClockView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#14A01A"

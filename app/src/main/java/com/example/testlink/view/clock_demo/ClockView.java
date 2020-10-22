@@ -1,4 +1,4 @@
-package com.example.testlink.view;
+package com.example.testlink.view.clock_demo;
 
 import android.content.Context;
 import android.graphics.Canvas;

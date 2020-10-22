@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.ExpandableListView;
 
-import com.example.ExpandListAdapter;
-import com.example.ParentBean;
-
 import java.util.ArrayList;
 import java.util.List;
 
