@@ -59,6 +59,7 @@ BootstrapClassLoader加载，当双亲都加载失败了才由APPClassLoader去�
         }
     }
 ```
+
 4、 案例:自定义ClassLoader(案例代码-DiskClassLoader)    
 注意事项:ClassLoader只能识别.class文件，所以需要将java文件编译成.class文件。   
  .java 文件编译成.class文件流程：
@@ -77,3 +78,12 @@ Android下的ClassLoader与传统JVM类似，也是由ClassLoader加载到内存
 
 
 ##### 6、Class对象在执行引擎的初始化过程。
+
+
+一个class文件被加载到内存需要3个步骤：  
+ 装载 --> 链接  --> 初始化。   
+其中链接又可以分为3个步骤：  
+ 验证 --> 准备 --> 解析。
+
+1、装载。  
+ 装载指的是java虚拟机查找class文件并且生成字节流并根据字节流创建JVAV对象的过程。
