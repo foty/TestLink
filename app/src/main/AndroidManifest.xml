@@ -20,29 +20,41 @@
             </intent-filter>
         </activity>
         <activity android:name=".animator._ObjectAnimator">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-
-        </activity>
-        <activity android:name=".animator._ValueAnimator" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
 
         </activity>
-        <activity android:name=".animator.MyGestureDetector" >
+        <activity android:name=".animator._ValueAnimator">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
+
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
+
+        </activity>
+        <activity android:name=".animator.MyGestureDetector">
 
         </activity>
         <activity android:name=".animator.MyAnimation" />
         <activity android:name=".KeyBoardActivity" />
         <activity android:name=".ExpandableListActivity" />
+        <activity android:name=".binder.TestBinderActivity"
+            android:process=":clint"/>
+
+        <service
+            android:name=".binder.TestBinderService"
+            android:exported="true"
+            android:process=":service">
+            <intent-filter>
+                <action android:name="com.example.testlink.binder" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

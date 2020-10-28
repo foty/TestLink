@@ -89,7 +89,7 @@
         android:visibility="gone" />
 
     <!--自定义倒计时-->
-    <com.example.testlink.view.DialProgress
+   <!-- <com.example.testlink.view.DialProgress
         android:id="@+id/dial_progress_bar"
         android:layout_width="300dp"
         android:layout_height="0dp"
@@ -110,7 +110,7 @@
         app:unit="km/h"
         app:unitSize="25sp"
         app:value="60"
-        app:valueSize="35sp" />
+        app:valueSize="35sp" />-->
 
     <!--非完全自定义(继承ViewGroup)-->
     <com.example.testlink.view.FirstView
@@ -140,7 +140,7 @@
         android:layout_height="200dp"
         android:gravity="center"
         android:visibility="visible"
-        android:text="显示键盘" />
+        android:text="显示键盘(测试binder)" />
 
     <!--饼状图-->
 <!--    <com.example.testlink.view.PieView-->

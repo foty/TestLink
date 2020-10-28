@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.testlink.binder.TestBinderActivity;
 import com.example.testlink.data_structure.tree.BinarySearchTree;
 import com.example.testlink.design.observer.Clock;
 import com.example.testlink.design.observer.Timer;
@@ -69,19 +70,21 @@ public class MainActivity extends AppCompatActivity {
         tvShowKeyBoard = findViewById(R.id.tvShowKeyBoard);
 
         tvShowKeyBoard.setOnClickListener(v -> {
-
+            Log.d("lxx", "Pid " + android.os.Process.myPid()
+                    + " Tid: " + android.os.Process.myTid());
 //            Intent intent = new Intent(this, KeyBoardActivity.class);
-            Intent intent = new Intent(this, ExpandableListActivity.class);
+//            Intent intent = new Intent(this, ExpandableListActivity.class);
+            Intent intent = new Intent(this, TestBinderActivity.class);
             startActivity(intent);
         });
 
-        Random mRandom = new Random();
-        DialProgress mDialProgress = findViewById(R.id.dial_progress_bar);
-        mDialProgress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+        //计时器
+//        DialProgress mDialProgress = findViewById(R.id.dial_progress_bar);
+//        mDialProgress.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            }
+//        });
 
 
 //        countDownTimer();
