@@ -3,7 +3,8 @@ Binder，一种IPC(Inter-process communication),也就是进程中间通信。Bi
 现跨进程通信。
 从Android应用层的角度来说， Binder是客户端和服务端进行通信的媒介。这里要引出另外俩种概念：IPC，AIDL。    
 IPC：Inter Process Communication，跨进程间通信。  
-AIDL：Android Interface Definition Language,即Android接口定义语言，用于生成可以在Android设备上两个进程之间进行进程间通信的代码。  
+AIDL：Android Interface Definition Language,即Android接口定义语言，用于生成可以在Android设备上两个进程之间进行进程
+间通信的代码。  
 三者的关系：   
 AIDL是基于Binder机制实现Android上的IPC。
 
@@ -43,10 +44,16 @@ Binder | 1  |
 ##### Binder采用C/S通信方式。该通信模型机制下的角色模型
 * client: 发起服务使用请求的进程
 * service: 提供各种功能的服务进程
-* serviceManager进程: 管理service注册、查询(将字符形式的Binder名字转化成Client中对该Binder的引用，使得Client
-能够通过Binder名字获得对Server中Binder实体的引用)
-* binder驱动: 位于内核空间。在Linux系统来说，是一个字符驱动设备。
+* serviceManager进程: 管理service注册、查询的进程。(将字符形式的Binder名字转化成Client中对该Binder的引用，使
+得Client能够通过Binder名字获得对Server中Binder实体的引用)
+* binder驱动: 位于内核空间。在Linux系统来说，是一个字符驱动设备。提供open()，mmap()，poll()，ioctl()等标准文件操作。
 系统中所有的Binder实体以及每个实体在各个进程中的引用都是记录在驱动中。负责进程间Binder建立，传递，交互等底层支持。
+
+##### 大概流程
+Binder是一种跨越进程的通信机制，使用c/s通信模式。service通过binder驱动向serviceManager注册，并由smg保存到查找表
+中；client通过binder驱动从serviceManager获取到service目标binder的对应代理对象，借助代理对象发起服务请求。client
+与service开始建立通信联系。client，service，smg都是在不同进程(用户进程)运行的，所以无论是注册还是查询还是服务请求，
+3者都要借助binder驱动来完成数据的交流(以一种binder_transaction_data的结构体封装)。
 
 
 <b>额外知识了解</b>   
@@ -74,19 +81,46 @@ mmap()的返回值是内存映射在用户空间的地址,只是这段空间是�
 将直接反映到用户空间。所以当系统调用`copy_from_user()`将数据从发送端拷贝进内核空间缓存区(这里是通过mmap()映射的内核空
 间),也相当于拷贝进了接收端的用户空间。这就是binder只需一次拷贝，提升了一倍的性能的关键。
 
-
 ##### binder线程管理
+使用线程池管理
 
 
-##### 实名binder与匿名binder
+##### 实名binder与匿名binder 
+server端创建一个Binder实体，然后为其取一个字符形式的名称，然后将Binder引用连同名字以数据包的形式通过Binder驱动发送
+给serviceManager，通知serviceManager注册一个同名字的Binder。在此，驱动会在内核中为这个Binder创建一个实体节点以
+及serviceManager对实体的引用，然后将名字及新建引用打包发送给serviceManager。serviceManager再收到数据包后，
+从中取出名字和引用填入查找表中，记录保存。注册到servicemanager的binder称为实名binder。service创建的binder除了发送到
+servicemanager注册称为实名binder，还可以在和binder已建立连接的情况下直接将创建的binder传给client，这样的binder
+叫做匿名binder。匿名Binder为通信双方建立一条私密通道，更加安全。
+
+第一次返回这个Binder的引用的时候，binder驱动保存了这个Binder实体的各种数据，创建了节点。在建立好通信连接后，service
+将创建的binder传到binder驱动，binder驱动会对传入的binder进行检查，查找是否有这样的节点。因为不是第一次通信，所有驱动
+能获取到这个节点，从而获得binder的实体引用。client就能通过引用与service通信了。
 
 
-##### 大概流程
+##### Binder通信协议
+Binder协议基本格式是:命令+数据，使用ioctl(fd, cmd, arg)函数实现交互。命令由参数cmd承载，数据由参数arg承载，随cmd不
+同而不同。  
+常见的命令：   
+1、BINDER_WRITE_READ，表示为向Binder写入或读取数据。arg承载的数据如下
+
+```
+struct binder_write_read {
+
+signed long write_size;
+
+signed long write_consumed;
+
+unsigned long write_buffer;
+
+signed long read_size;
+
+signed long read_consumed;
+
+unsigned long read_buffer;
+};
+```
+2、BINDER_SET_CONTEXT_MGR，表示为将当前进程注册为SMgr。   
 
 
 ##### 案例模拟
-
-
-
-
-
