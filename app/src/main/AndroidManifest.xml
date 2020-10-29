@@ -41,7 +41,7 @@
 
         </activity>
         <activity android:name=".animator.MyAnimation" />
-        <activity android:name=".KeyBoardActivity" />
+        <activity android:name=".widget.KeyBoardActivity" />
         <activity android:name=".ExpandableListActivity" />
         <activity android:name=".binder.TestBinderActivity"
             android:process=":clint"/>

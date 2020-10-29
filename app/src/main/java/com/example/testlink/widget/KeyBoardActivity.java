@@ -1,4 +1,4 @@
-package com.example.testlink;
+package com.example.testlink.widget;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.testlink.R;
 import com.example.testlink.utils.ScreenUtils;
 
 import io.reactivex.annotations.Nullable;

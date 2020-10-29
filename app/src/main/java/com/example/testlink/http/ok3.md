@@ -278,7 +278,7 @@ NamedRunnable类的run()方法体中调用抽象方法``execute();``，最后还
 ```
 这个方法里面添加了一堆拦截器(留意它的添加顺序，不然后面会被绕蒙圈)，最后创建了RealInterceptorChain实例，执行它的proceed()方法。proceed()有一个重载的只有一个参数方法，
 看那个多参数的方法： 
-```java
+```
   public Response proceed(Request request, StreamAllocation streamAllocation, HttpCodec httpCodec,
       RealConnection connection) throws IOException {
     if (index >= interceptors.size()) throw new AssertionError();
@@ -329,7 +329,7 @@ NamedRunnable类的run()方法体中调用抽象方法``execute();``，最后还
 都会重复这样的操作，直到所有的拦截器都被执行完。这里应用到了责任链模式。   
 下面开始是拦截器跟踪部分：   
 <b>RetryAndFollowUpInterceptor 重定向拦截器</b>
-```java
+```
     @Override public Response intercept(Chain chain) throws IOException {
     //---第一部分--------------------
     Request request = chain.request();
@@ -427,7 +427,7 @@ NamedRunnable类的run()方法体中调用抽象方法``execute();``，最后还
 * 处理重定向，是否重新获取response
 
 <b>BridgeInterceptor 桥向拦截器</b>
-```java
+```
 @Override public Response intercept(Chain chain) throws IOException {
     Request userRequest = chain.request();
     Request.Builder requestBuilder = userRequest.newBuilder();
@@ -504,7 +504,7 @@ NamedRunnable类的run()方法体中调用抽象方法``execute();``，最后还
 
 <b>CacheInterceptor 缓存拦截器</b>  
 此方法全部代码展示: 
-```java
+```
 @Override public Response intercept(Chain chain) throws IOException {
      // 取出缓存的响应(如果不存在为null)。这个cache是InternalCache接口，实现类是Cache。内部维护一个DiskLruCache实例
      // ，提供增删改查。存储方式以url的MD5值为key，以response构建的Entry对象为value的LinkedHashMap存储。
@@ -609,7 +609,7 @@ NamedRunnable类的run()方法体中调用抽象方法``execute();``，最后还
 * 返回网络响应，如果需要，更新此次响应缓存；
 
 <b>ConnectInterceptor 连接拦截器</b>
-```java
+```
   @Override public Response intercept(Chain chain) throws IOException {
     RealInterceptorChain realChain = (RealInterceptorChain) chain;
     Request request = realChain.request();
@@ -627,7 +627,7 @@ NamedRunnable类的run()方法体中调用抽象方法``execute();``，最后还
 拦截器里实例化)。先看HttpCodec,跟踪``streamAllocation.newStream(...)``进去:   
 ![](imgs/sa_1.png)   
 继续跟踪寻找连接的那个方法:   
-```java
+```
   private RealConnection findHealthyConnection(int connectTimeout, int readTimeout,
       int writeTimeout, boolean connectionRetryEnabled, boolean doExtensiveHealthChecks)
       throws IOException {
@@ -654,7 +654,7 @@ NamedRunnable类的run()方法体中调用抽象方法``execute();``，最后还
   }
 ```
 整个方法是一个死循环，直到connection返回。进入到``findConnection(...)``方法里面:
-```java
+```
 private RealConnection findConnection(int connectTimeout, int readTimeout, int writeTimeout,
       boolean connectionRetryEnabled) throws IOException {
     Route selectedRoute;
@@ -793,7 +793,7 @@ private RealConnection findConnection(int connectTimeout, int readTimeout, int w
 下一个拦截器。
 
 <b> CallServerInterceptor</b>   
-```java
+```
   @Override public Response intercept(Chain chain) throws IOException {
     RealInterceptorChain realChain = (RealInterceptorChain) chain;
     HttpCodec httpCodec = realChain.httpStream();

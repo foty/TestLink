@@ -1,4 +1,4 @@
-package com.example.testlink.knowledge;
+package com.example.testlink.handler;
 
 import android.app.Activity;
 import android.os.Handler;

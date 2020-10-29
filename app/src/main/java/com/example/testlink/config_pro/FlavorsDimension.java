@@ -1,4 +1,4 @@
-package com.example.testlink.knowledge;
+package com.example.testlink.config_pro;
 
 /**
  * Create by lxx
