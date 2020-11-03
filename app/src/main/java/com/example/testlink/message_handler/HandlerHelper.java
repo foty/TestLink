@@ -1,4 +1,4 @@
-package com.example.testlink.handler;
+package com.example.testlink.message_handler;
 
 import android.app.Activity;
 import android.os.Handler;
