@@ -75,8 +75,8 @@ public final class ActivityThread extends ClientTransactionHandler {
 
 ##### ApplicationThread
 通过ActivityThread了解到：主线程是一直处于死循环状态，那么android中其他组件，比如activity的生命周期等式如何在主
-线程执行的？答案就是开启了子线程执行。在ActivityThread的`main()`方法looper之前先创建了ActivityThread对象,然后
-执行它的`attach(false,0)`方法。在这个方法内，有这样一段代码:
+线程执行的？答案就是开启了子线程/新进程执行。在ActivityThread的`main()`方法looper之前先创建了ActivityThread对象,
+然后执行它的`attach(false,0)`方法。在这个方法内，有这样一段代码:
 ```
   final IActivityManager mgr = ActivityManager.getService();
   try {
@@ -85,8 +85,18 @@ public final class ActivityThread extends ClientTransactionHandler {
       throw ex.rethrowFromSystemServer();
   }
 ```
-这里需要留意一下mAppThread，这个mAppThread是 ApplicationThread实例。它是ApplicationThread的一个私有内部类。它
-是作为IApplicationThread的service端。从类声明上就能看出来。
+看ActivityManager.getService()。翻阅代码可以查到，这个getService()返回的是ActivityManagerService的代理对象。
+这里使用到了Binder通信。而作为service的就是ActivityManagerService了，也就是平常说的AMS。而ActivityThread则
+作为它的client之一通过binder跨进程与ActivityManagerService通信。
+```
+public class ActivityManagerService extends IActivityManager.Stub 
+        implements Watchdog.Monitor, BatteryStatsImpl.BatteryCallback {
+        
+       // ....省略代码
+}
+```
+这里需要留意一下mAppThread，这个mAppThread是 ApplicationThread实例。它是ActivityThread的一个私有内部类。从类声
+明上看，这里也是使用了binder通信。它作为IApplicationThread的service端。
 ```java
  private class ApplicationThread extends IApplicationThread.Stub {
         private static final String DB_INFO_FORMAT = "  %8s %8s %14s %14s  %s";
@@ -104,8 +114,119 @@ public final class ActivityThread extends ClientTransactionHandler {
         // .....省略后续代码
 }
 ```
-这个 ActivityManager.getService()又是什么。翻阅代码可以查到，这个getService()返回的是ActivityManagerService
-的Binder代理类，即Binder通信中的client。而作为service就是ActivityManagerService了，也就是AMS。
+回到`attach(false,0)`方法里，到AMS的`attachApplication()`方法看
+```
+ @Override
+    public final void attachApplication(IApplicationThread thread, long startSeq) {
+        synchronized (this) {
+            int callingPid = Binder.getCallingPid();
+            final int callingUid = Binder.getCallingUid();
+            final long origId = Binder.clearCallingIdentity();
+            attachApplicationLocked(thread, callingPid, callingUid, startSeq);
+            Binder.restoreCallingIdentity(origId);
+        }
+    }
+```
+在`attachApplicationLocked(...)`方法内会通过传入的ApplicationThread实例thread执行到
+`IApplicationThread #bindApplication(processName, appInfo,...,)`方法。这实际上已经是跨进程通信了，最终会
+调用到身为服务端的`ApplicationThread#bindApplication()`里面。接着通过`sendMessage(H.BIND_APPLICATION, data);`
+下面是H的相关代码：
+```java
+class H extends Handler {
+    // ....省略代码
+        public void handleMessage(Message msg) {
+            if (DEBUG_MESSAGES) Slog.v(TAG, ">>> handling: " + codeToString(msg.what));
+            switch (msg.what) {
+                case BIND_APPLICATION:
+                    Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "bindApplication");
+                    AppBindData data = (AppBindData)msg.obj;
+                    handleBindApplication(data);
+                    Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+                    break;
+                case EXIT_APPLICATION:
+                    break;
+            }
+        }
+ }
+```
+从上可以发现，H是一个Handler对象。sendMessage(H.BIND_APPLICATION, data)最终会调用`mH.sendMessage(msg);`。这个
+mH就是H的实例。会由H的handleMessage(msg)进行处理。在`handleBindApplication(data)`方法内会创建Application实例并
+调用onCreate()方法。    
+回到AMS的`attachApplicationLocked()`的bindApplication(...)位置,有以下代码片段：
+```
+  // See if the top visible activity is waiting to run in this process...
+    if (normalMode) {
+     try {
+        if (mStackSupervisor.attachApplicationLocked(app)) {
+                  didSomething = true;
+                }
+        } catch (Exception e) {
+                Slog.wtf(TAG, "Exception thrown launching activities in " + app, e);
+                badApp = true;
+            }
+      }
+```
+mStackSupervisor是ActivityStackSupervisor的实例，
+
+
+ app.thread.scheduleCreateService(r, r.serviceInfo,
+                    mAm.compatibilityInfoForPackageLocked(r.serviceInfo.applicationInfo),
+                    app.repProcState);
+
+```
+ClientLifecycleManager: 
+    void scheduleTransaction(ClientTransaction transaction) throws RemoteException {
+        final IApplicationThread client = transaction.getClient();
+        transaction.schedule();
+        if (!(client instanceof Binder)) {
+            // If client is not an instance of Binder - it's a remote call and at this point it is
+            // safe to recycle the object. All objects used for local calls will be recycled after
+            // the transaction is executed on client in ActivityThread.
+            transaction.recycle();
+        }
+    }
+
+ClientTransaction :
+
+    public void schedule() throws RemoteException {
+        mClient.scheduleTransaction(this);
+    }
+
+
+    /** Target client. */
+    private IApplicationThread mClient;
+
+    /** Get the target client of the transaction. */
+    public IApplicationThread getClient() {
+        return mClient;
+    }
+    
+ ActivityThread   
+    
+     /** Prepare and schedule transaction for execution. */
+    void scheduleTransaction(ClientTransaction transaction) {
+        transaction.preExecute(this);
+        sendMessage(ActivityThread.H.EXECUTE_TRANSACTION, transaction);
+       
+```
+
+api26: scheduleLaunchActivity()##sendMessage(H.BIND_SERVICE, s) -> handleLaunchActivity()
+
+
+
+
+
+ 
+
+activity的创建： ActivityThread#startActivityNow() -> ActivityThread#performLaunchActivity();也有是调用
+ActivityThread#handleLaunchActivity()的说法，但是后面被废弃了。
+
+
+relaunchAllActivities -> scheduleRelaunchActivity# sendMessage(H.RELAUNCH_ACTIVITY, token);
+收到消息后执行:  
+ handleRelaunchActivityLocally((IBinder) msg.obj); -> 
+
+ handleRelaunchActivity --> handleRelaunchActivityInner --> performPauseActivity
 
 
 ##### Handler面试的几个问题
