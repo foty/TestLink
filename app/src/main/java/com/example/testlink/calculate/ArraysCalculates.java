@@ -79,7 +79,10 @@ public class ArraysCalculates {
         int[] a3 = {1, 2, 3, 4, 5};     // 0
         int[] a5 = {2, 1};     // 0
         int[] a6 = {1, 3, 2, 2, 2};     // 4
-        System.out.println(problem581(a6));
+
+        int[] a7 = {2, 2};
+        int[] s = problem34(a7, 1);
+        System.out.println(s[0] + "  " + s[1]);
 
     }
 
@@ -1501,6 +1504,60 @@ public class ArraysCalculates {
     }
 
 
+    /**
+     * 给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
+     * <p>
+     * 如果数组中不存在目标值 target，返回 [-1, -1]。
+     * <p>
+     * 你可以设计并实现时间复杂度为 O(log n) 的算法解决此问题吗
+     *
+     * @param nums
+     * @param target
+     * @return  解析： 话不多说，二分就完事了。考虑时间复杂度为 log n，所以优先找一个最左边边界或者右边边界。
+     * 难度不大，过程中因为边界问题导致重复修改了几遍。考虑不全面。
+     */
+    public static int[] problem34(int[] nums, int target) {
+        int[] result = new int[]{-1, -1};
+
+        if (nums.length <= 0) return result;  // 2 5 5 5 8 10
+        int right = nums.length - 1;
+        int left = 0;
+        //找左边边界
+        while (right > left) {
+            int mid = (left + right) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            }
+            if (nums[mid] > target) {
+                right = mid - 1;
+            }
+            if (nums[mid] == target) {
+                right = mid; //固定右边
+            }
+        }
+        //判断最左边/中间情况
+        if (nums[left] == target) {
+            result[0] = left;
+            result[1] = left;
+        } else {
+            return result;
+        }
+
+        //用个for找右边边界。
+        for (int i = left; i < nums.length; i++) {
+            if (nums[i] != target) {
+                result[1] = i - 1;
+                return result;
+            }
+        }
+        // 执行到这说明，数组最后一位是右边界
+        result[1] = nums.length - 1;
+        return result;
+
+//        执行用时：0 ms, 在所有 Java 提交中击败了 100.00% 的用户
+//        内存消耗：41.8 MB, 在所有 Java 提交中击败了 64.87% 的用户
+    }
+
     //----------------分割线-----------------//
 
     /**
@@ -1883,7 +1940,7 @@ public class ArraysCalculates {
         for (int i = 0; i < flowerbed.length; i++) {
             if (flowerbed[i] == 0) {
                 sum++;
-                if (sum == 3){
+                if (sum == 3) {
                     count++;
                     sum--;
                 }
