@@ -82,7 +82,8 @@ public class ArraysCalculates {
 
         int[] a7 = {2, 2};
         int[] s = problem34(a7, 1);
-        System.out.println(s[0] + "  " + s[1]);
+
+        System.out.println(problem204(100));
 
     }
 
@@ -1556,6 +1557,55 @@ public class ArraysCalculates {
 
 //        执行用时：0 ms, 在所有 Java 提交中击败了 100.00% 的用户
 //        内存消耗：41.8 MB, 在所有 Java 提交中击败了 64.87% 的用户
+    }
+
+    /**
+     * 统计所有小于非负整数 n 的质数的数量。
+     *
+     * @return 质数的定义：在大于1的自然数中，除了1和它本身以外不再有其他因数的自然数。
+     */
+    public static int problem204(int n) {
+        int sum = 0;
+
+        /**
+         * 1.枚举
+         */
+
+//        for (int i = 2; i < n; i++) {
+//
+//            for (int j = 2; j * j <= i; j++) {
+//                if (i % j == 0) {
+//                    break;
+//                }
+//            }
+//            sum++;
+//        }
+
+
+        /**2.埃氏筛
+         *原理：如果x是质数，那么大于x的x的倍数 2x,3x,…一定不是质数。
+         */
+        int[] ints = new int[n];
+        //fill: 将所有数组内容设置为1。
+        Arrays.fill(ints, 1);
+
+        for (int i = 2; i < n; i++) {
+            if (ints[i] == 1) {
+                sum++;
+                // 将这个数的 2*i,3*i都标记为0(非质数)
+//                    for (int j = 2 * i; j < n; j = j + i) {
+                if ((long) i * i < n) {
+                    for (int j = i * i; j < n; j = j + i) { // 优化重复标记的个数
+                        ints[j] = 0;
+                    }
+                }
+            }
+        }
+        return sum;
+
+//        执行用时：26 ms, 在所有 Java 提交中击败了 31.82% 的用户
+//        内存消耗：42.9 MB, 在所有 Java 提交中击败了 8.09% 的用户
+
     }
 
 
