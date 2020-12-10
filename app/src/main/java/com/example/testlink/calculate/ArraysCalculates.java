@@ -1675,19 +1675,12 @@ public class ArraysCalculates {
      */
     public static boolean problem860(int[] bills) {
         if (bills == null || bills.length <= 0) return true;
-        int sum = 0;
         int h5 = 0;
         int h10 = 0;
-        int h20 = 0;
-
         for (int i = 0; i < bills.length; i++) {
             if (5 == bills[i]) {
                 h5++;
-                sum += 5;
             } else {
-                //总金额不够找直接返回
-                if (sum < bills[i] - 5) return false;
-
                 if (h5 <= 0) {//找5、15元。判断是否有5元纸币,没有直接false
                     return false;
                 }
@@ -1695,15 +1688,12 @@ public class ArraysCalculates {
                     //可以正确找回：收回一张10元，失去一张5元
                     h5--;
                     h10++;
-                    sum += 5;
                 } else {//找15元.优先拿10元纸币,没有再拿5元
                     if (h10 > 0) {
                         h10--;
                         h5--;
-                        h20++;
                     } else if (h5 >= 3) {
                         h5 -= 3;
-                        h20++;
                     } else {
                         return false;
                     }
