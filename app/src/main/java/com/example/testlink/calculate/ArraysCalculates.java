@@ -1619,7 +1619,6 @@ public class ArraysCalculates {
      * @return
      */
     public int problem861(int[][] A) {
-
         /**
          * [0,0,1,1]
          * [1,0,1,0]  ==>
@@ -1657,6 +1656,67 @@ public class ArraysCalculates {
             sum += add * (1 << (row - 1 - i));
         }
         return sum;
+
+//        执行用时：0 ms, 在所有 Java 提交中击败了 100.00% 的用户
+//        内存消耗：36.3 MB, 在所有 Java 提交中击败了 68.22% 的用户
+    }
+
+    /**
+     * 柠檬水找零
+     * <p>
+     * 在柠檬水摊上，每一杯柠檬水的售价为 5 美元。
+     * 顾客排队购买你的产品，（按账单 bills 支付的顺序）一次购买一杯。
+     * 每位顾客只买一杯柠檬水，然后向你付 5 美元、10 美元或 20 美元。你必须给每个顾客正确找零，也就是说净交易是每位顾客向你支付 5 美元。
+     * 注意，一开始你手头没有任何零钱。
+     * 如果你能给每位顾客正确找零，返回 true ，否则返回 false 。
+     * <p>
+     * 0 <= bills.length <= 10000
+     * bills[i] 不是 5 就是 10 或是 20
+     */
+    public static boolean problem860(int[] bills) {
+        if (bills == null || bills.length <= 0) return true;
+        int sum = 0;
+        int h5 = 0;
+        int h10 = 0;
+        int h20 = 0;
+
+        for (int i = 0; i < bills.length; i++) {
+            if (5 == bills[i]) {
+                h5++;
+                sum += 5;
+            } else {
+                //总金额不够找直接返回
+                if (sum < bills[i] - 5) return false;
+
+                if (h5 <= 0) {//找5、15元。判断是否有5元纸币,没有直接false
+                    return false;
+                }
+                if (10 == bills[i]) {//找5元
+                    //可以正确找回：收回一张10元，失去一张5元
+                    h5--;
+                    h10++;
+                    sum += 5;
+                } else {//找15元.优先拿10元纸币,没有再拿5元
+                    if (h10 > 0) {
+                        h10--;
+                        h5--;
+                        h20++;
+                    } else if (h5 >= 3) {
+                        h5 -= 3;
+                        h20++;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+        // 1、使用list保存3种金额
+//        执行用时：10 ms, 在所有 Java 提交中击败了 8.57% 的用户
+//        内存消耗：39.1 MB, 在所有 Java 提交中击败了 95.35% 的用户
+        // 2、使用int保存金额
+//        执行用时：2 ms, 在所有 Java 提交中击败了 99.72% 的用户
+//        内存消耗：39.8 MB, 在所有 Java 提交中击败了 26.43% 的用户
     }
 
 
