@@ -20,62 +20,8 @@ ThreadLocal 是用来存储指定线程的数据的。当某些数据的作用�
 ##### 简述工作流程
 
 
-##### ActivityThread
-ActivityThread是Android应用程序的入口，也是任何一个进程的主线程入口。可能会有人理解为ActivityThread就是主线程。
-但其实ActivityThread并不是线程，但可以理解为ActivityThread所在的线程就是主线程。下面是ActivityThread类的核心
-方法。可以看到Android系统把每个应用程序当成java应用来看待：以`main(String[] args)`作为程序的入口。应用启动后会
-执行它的`main(String[] args)`。除去log的输出，初始化外，核心代码就一句：`Looper.loop();`。loop()里就是维护着一
-个无线循环，不断从自己的MessageQueue取出Message，然后分发出去。如果没有消息时，会进入阻塞状态。当消息来了又被唤醒
-分发消息事件。中间阻塞与唤醒是通过`MessageQueue #nativePollOnce()`与 `MessageQueue #nativeWake()`来实现，
-都是native方法。
-```java
-public final class ActivityThread extends ClientTransactionHandler {
-    public static void main(String[] args) {
-        Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "ActivityThreadMain");
-        // CloseGuard defaults to true and can be quite spammy.  We
-        // disable it here, but selectively enable it later (via
-        // StrictMode) on debug builds, but using DropBox, not logs.
-        CloseGuard.setEnabled(false);
-        Environment.initForCurrentUser();
-        // Set the reporter for event logging in libcore
-        EventLogger.setReporter(new EventLoggingReporter());
-        // Make sure TrustedCertificateStore looks in the right place for CA certificates
-        final File configDir = Environment.getUserConfigDirectory(UserHandle.myUserId());
-        TrustedCertificateStore.setDefaultUserDirectory(configDir);
-        Process.setArgV0("<pre-initialized>");
-        Looper.prepareMainLooper();
-        // Find the value for {@link #PROC_START_SEQ_IDENT} if provided on the command line.
-        // It will be in the format "seq=114"
-        long startSeq = 0;
-        if (args != null) {
-            for (int i = args.length - 1; i >= 0; --i) {
-                if (args[i] != null && args[i].startsWith(PROC_START_SEQ_IDENT)) {
-                    startSeq = Long.parseLong(
-                            args[i].substring(PROC_START_SEQ_IDENT.length()));
-                }
-            }
-        }
-        ActivityThread thread = new ActivityThread();
-        thread.attach(false, startSeq);
-        if (sMainThreadHandler == null) {
-            sMainThreadHandler = thread.getHandler();
-        }
-        if (false) {
-            Looper.myLooper().setMessageLogging(new
-                    LogPrinter(Log.DEBUG, "ActivityThread"));
-        }
-        // End of event ActivityThreadMain.
-        Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
-        Looper.loop(); //
-        throw new RuntimeException("Main thread loop unexpectedly exited");
-    }
- }
-```
 
-
-##### ApplicationThread
-通过ActivityThread了解到：主线程是一直处于死循环状态，那么android中其他组件，比如activity的生命周期等式如何在主
-线程执行的？答案就是开启了子线程/新进程执行。在ActivityThread的`main()`方法looper之前先创建了ActivityThread对象,
+在ActivityThread的`main()`方法looper之前先创建了ActivityThread对象,
 然后执行它的`attach(false,0)`方法。在这个方法内，有这样一段代码:
 ```
   final IActivityManager mgr = ActivityManager.getService();
@@ -166,83 +112,44 @@ mH就是H的实例。会由H的handleMessage(msg)进行处理。在`handleBindAp
             }
       }
 ```
-mStackSupervisor是ActivityStackSupervisor的实例，
-
-
- app.thread.scheduleCreateService(r, r.serviceInfo,
-                    mAm.compatibilityInfoForPackageLocked(r.serviceInfo.applicationInfo),
-                    app.repProcState);
-
-```
-ClientLifecycleManager: 
-    void scheduleTransaction(ClientTransaction transaction) throws RemoteException {
-        final IApplicationThread client = transaction.getClient();
-        transaction.schedule();
-        if (!(client instanceof Binder)) {
-            // If client is not an instance of Binder - it's a remote call and at this point it is
-            // safe to recycle the object. All objects used for local calls will be recycled after
-            // the transaction is executed on client in ActivityThread.
-            transaction.recycle();
-        }
-    }
-
-ClientTransaction :
-
-    public void schedule() throws RemoteException {
-        mClient.scheduleTransaction(this);
-    }
-
-
-    /** Target client. */
-    private IApplicationThread mClient;
-
-    /** Get the target client of the transaction. */
-    public IApplicationThread getClient() {
-        return mClient;
-    }
-    
- ActivityThread   
-    
-     /** Prepare and schedule transaction for execution. */
-    void scheduleTransaction(ClientTransaction transaction) {
-        transaction.preExecute(this);
-        sendMessage(ActivityThread.H.EXECUTE_TRANSACTION, transaction);
-       
-```
-
-api26: scheduleLaunchActivity()##sendMessage(H.BIND_SERVICE, s) -> handleLaunchActivity()
 
 
 
-
-
- 
-
-activity的创建： ActivityThread#startActivityNow() -> ActivityThread#performLaunchActivity();也有是调用
-ActivityThread#handleLaunchActivity()的说法，但是后面被废弃了。
-
-
-relaunchAllActivities -> scheduleRelaunchActivity# sendMessage(H.RELAUNCH_ACTIVITY, token);
-收到消息后执行:  
- handleRelaunchActivityLocally((IBinder) msg.obj); -> 
-
- handleRelaunchActivity --> handleRelaunchActivityInner --> performPauseActivity
 
 
 ##### Handler面试的几个问题
-一个线程有几个looper，如果你说一个，他会问，如何保证looper唯一  
-> 1个
-
-
+Handler 的基本原理  
+子线程中怎么使用 Handler  
+MessageQueue 获取消息是怎么等待  
+为什么不用 wait 而用 epoll 呢？  
+多个线程给 MessageQueue 发消息，如何保证线程安全  
+非 UI 线程真的不能操作 View 吗    
+一个线程有几个looper，几个handler，如果你说一个，他会问，如何保证looper唯一        
+> 1个  
 我们能在主线程直接new无参handler吗  
-> 可以
-
-
+> 可以  
+主线程是一直处于死循环状态，那么android中其他组件，比如activity的生命周期等式如何在主线程执行的？  
+>开启了子线程/新进程执行  
 子线程能new handler吗?我们应该怎么样在子线程new handler  
-> 在特殊情况处理下可以在子线程new handler。
-
+> 在特殊情况处理下可以在子线程new handler。  
 为什么主线程不用调用looper.prepar和looper.looper   
 我们的looper通过什么实现与线程关联  
-为什么looper死循环应用(UI)不卡顿 (那你谈谈epoll机制)  
+为什么looper死循环应用(UI)不卡顿(anr) (那你谈谈epoll机制)  
 如果我们的子线程没有消息处理的情况下，我们如何优化looper   
-message上限怎么办。
+Handler 怎么进行线程通信，原理是什么？  
+ThreadLocal 的原理，以及在 Looper 是如何应用的？  
+Handler#post(Runnable) 是如何执行的  
+Handler#sendMessage() 和 Handler#postDelay() 的区别？  
+多个 Handler 发消息时，消息队列如何保证线程安全？
+为什么 MessageQueue 不设置消息上限，message上限怎么办。  
+Looper 死循环为什么不阻塞主线程？  
+Handler内存泄漏的原因？  
+Message.callback 与 Handler.callback 哪个优先？  
+Handler.callback 和 handlemessage() 都存在，但 callback 返回 true，handleMessage() 还会执行么？  
+IdleHandler 是什么？怎么使用，能解决什么问题？  
+同步屏障问题  
+Looper会一直消耗系统资源吗？  
+android的Handle机制，Looper关系，主线程的Handler是怎么判断收到的消息是哪个Handler传来的？  
+Handler机制流程、Looper中延迟消息谁来唤醒Looper？  
+handler机制中如何确保Looper的唯一性？  
+Handler 是如何能够线程切换，发送Message的？
