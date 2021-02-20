@@ -11,7 +11,7 @@ import java.util.Queue;
  * Create by lxx
  * Date : 2020/12/7 16:39
  * Use by "之"型顺序打印二叉树。
- * 之前做过一道从上到下打印二叉树的题，将偶数层顺序倒序便可。
+ * 之前做过一道从上到下打印二叉树的题(T23)，将偶数层顺序倒序便可。
  */
 public class T58 {
 
