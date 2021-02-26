@@ -71,42 +71,56 @@ public class MyHeap {
     /**
      * 堆的删除操作通常都是删除优先权(值)最大的元素，也就是根节点。思路是将队列尾的元素值赋给根节点，队列尾结点赋值为null。然后跟据最大堆或最小堆定义，分别比
      * 较根节点下的左右2个子节点，大(最大堆选择大的)的作为新的根节点。接着处理这个根节点左右几点，重复这个过程，直到顺序正常。
+     *
+     * @return 返回新的根节点(第一个元素)
      */
     public int deleteRoot() {
         if (data.size() == 0) return -9999;
-        int value = data.get(0);
 
+        //取出最后一个元素
+        int newRoot = data.get(size - 1);
         //删除元素
+        data.remove(size - 1);
         size--;
-        data.remove(0);
-        if (size != 0)
-            // 下沉,为了维持堆的性质，重新选择一个根节点
-            shiftDown(0, data.get(size - 1));
-
-        return value;
+        if (size != 0) {
+            // 下沉,先选择最后一个作为根节点,为了维持堆的性质，再调整
+            shiftDown(0, newRoot);
+            return data.get(0);
+        } else {
+            return -9999;
+        }
     }
 
 
     /**
-     * 普通删除，删除元素，不是删除根节点。
+     * 普通删除，删除元素，不是删除根节点。用的应该比较少了。
+     *
+     * @return 返回新的根节点(第一个元素)
      */
     public int delete(int value) {
         //找到这个元素的位置
         int i = data.indexOf(value);
         //没有这个元素
         if (i == -1) return -9999;
-        //根节点
+        //删除根节点
         if (i == 0) return deleteRoot();
-        //最后一个
+        //删除最后一个元素
         if (i == size - 1) {
-            int delete = data.get(size - 1);
             data.remove(size - 1);
             size--;
-            return delete;
+            return data.get(0);
         }
-        int last = data.get(size - 1); // 最后一个元素
+        // 新的根节点
+        int last = data.get(size - 1);
+        //删除元素
+        data.remove(size - 1);
+        size--;
         shiftDown(i, last);
-        return 0;
+        if (data.get(i) == last){ //位置没有改变，表示以该节点为根节点的最小(大)堆符合定义，还需要判断父节点部分
+            // 使用上浮操作，判断上半部分堆是否符合定义
+            shiftUp(i,last);
+        }
+        return data.get(0);
     }
 
 
@@ -130,33 +144,34 @@ public class MyHeap {
 
     /**
      * 下沉。对比父节点的左右子节点。选出一个新的根节点。
+     *
+     * @param index 删除元素的下标
+     * @param value 暂时的新的根节点
      */
     private void shiftDown(int index, int value) {
-        int half = size / 2; // 除以一半的值对应的索引刚好是最后一层最左边的索引。
+        int half = size / 2; // 除以一半的值对应的索引刚好是最下面一层最左边的索引。
         while (index < half) {
             //找到左右子节点的索引与值。
             int leftP = (index * 2) + 1; //  == (index + 1) * 2 - 1
-            int leftV = data.get(leftP);
 
+            int minV = data.get(leftP);
+            int minP = leftP;
+
+            //右子节点
             int rightP = (index * 2) + 2;
-            int rightV = data.get(rightP);
-
-            // (最小)堆比较,选择较小的值<先比较左右，再比较新根节点>
-            int min, minP;
-            if (leftV <= rightV) {
-                min = leftV;
-                minP = leftP;
-            } else {
-                min = rightV;
+            //判断是否存在右子节点,再比较大小。(最小)堆比较,选择较小的值<先比较左右，再比较新根节点>。
+            if (rightP < size && minV > data.get(rightP)) {
+                // 右子节点比左子节点小,选择右子节点
+                minV = data.get(rightP);
                 minP = rightP;
             }
-            //与新根节点比较
-            if (min >= value) {
-                return;
-            } //新节点比较小的字节点还小，符合最小堆性质，不用处理
-            //交换位置
-            data.set(index, min);
+
+            //新根节点比左右较小的子节点还小，符合最小堆性质，不用处理
+            if (minV >= value) break;
+            //否则，交换位置
+            data.set(index, minV);
             index = minP;
         }
+        data.set(index, value);
     }
 }

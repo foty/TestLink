@@ -16,13 +16,19 @@ public class TestHeap {
         heap.insert(2);
         heap.insert(21);
         heap.insert(3);
-        heap.insert(12);
+        heap.insert(4);
         heap.insert(6);
-        heap.insert(8);
+        heap.insert(15);
 
         ArrayList<Integer> data = heap.getData();
         for (int i = 0; i < data.size(); i++) {
             System.out.println(data.get(i));
+        }
+        System.out.println("===========================");
+        heap.delete(4);
+        ArrayList<Integer> data1 = heap.getData();
+        for (int i = 0; i < data1.size(); i++) {
+            System.out.println(data1.get(i));
         }
 
     }
