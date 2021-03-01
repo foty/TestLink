@@ -31,9 +31,25 @@ class NumArray {
 
 
     private int[] nums;
+    private int[] numsSum; //保存和
 
     public NumArray(int[] nums) {
+        //1
         this.nums = nums;
+
+        //2
+        numsSum = new int[nums.length];
+        if (nums.length == 0) return;
+        //第一个
+        numsSum[0] = nums[0];
+        for (int i = 1; i < numsSum.length; i++) {
+            numsSum[i] = nums[i] + numsSum[i - 1];
+        }
+
+        for (int i = 0; i < numsSum.length; i++) {
+            System.out.print(numsSum[i]+"  ");
+        }
+        System.out.println();
     }
 
     public int sumRange(int i, int j) {
@@ -47,4 +63,20 @@ class NumArray {
 
 //    执行用时：100 ms, 在所有 Java 提交中击败了5.25%的用户
 //    内存消耗：41.2 MB, 在所有 Java 提交中击败了73.48%的用户
+
+
+    /**
+     * 因为会重复调用sumRange()方法，不得不考虑效率问题。每次调用sumRange()都走一遍for循环明显效率是最低的。结合题目，
+     * 求得的是一个区间的值。可以先将从0到这个下标位置(包括)的和统计出来，然后再做减法，求出需要的区间和即可。而且这一步可以放在
+     * 构造时候完成。这样就将每次的循环变成了一次循环。
+     */
+
+
+    public int sumRange2(int i, int j) {
+        if (i == 0) return numsSum[j]; // 初始位置=0，所求和刚好对应和数组下标。
+        return numsSum[j] - numsSum[i-1];
+    }
+
+//    执行用时：9 ms, 在所有 Java 提交中击败了99.83%的用户
+//    内存消耗：41.4 MB, 在所有 Java 提交中击败了34.78%的用户
 }
