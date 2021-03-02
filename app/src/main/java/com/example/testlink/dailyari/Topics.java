@@ -32,8 +32,10 @@ public class Topics {
     public static void test304() {
         int[][] ints = new int[][]{{-4, -5}};
         NumMatrix numMatrix = new NumMatrix(ints);
-        numMatrix.sumRegion(0, 0, 0, 0);
-        numMatrix.sumRegion(0, 0, 0, 1);
+//        numMatrix.sumRegion(0, 0, 0, 0);
+//        numMatrix.sumRegion(0, 0, 0, 1);
         numMatrix.sumRegion(0, 1, 0, 1);
+       int s =  numMatrix.sumRegion2(0, 1, 0, 1);
+       System.out.println(s);
     }
 }
