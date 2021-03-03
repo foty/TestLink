@@ -35,7 +35,28 @@ public class Topics {
 //        numMatrix.sumRegion(0, 0, 0, 0);
 //        numMatrix.sumRegion(0, 0, 0, 1);
         numMatrix.sumRegion(0, 1, 0, 1);
-       int s =  numMatrix.sumRegion2(0, 1, 0, 1);
-       System.out.println(s);
+        int s = numMatrix.sumRegion2(0, 1, 0, 1);
+        System.out.println(s);
+    }
+
+    /**
+     * 338.比特位计数
+     *
+     * @param num
+     * @return
+     */
+    public int[] countBits(int num) {
+        /**
+         * 给定一个非负整数 num。对于 0 ≤ i ≤ num 范围中的每个数字 i ，计算其二进制数中的 1 的数目并将它们作为数组返回。
+         */
+        int[] result = new int[num + 1];
+        result[0] = 0;
+
+        for (int i = 1; i <= num; i++) {
+
+
+
+        }
+        return result;
     }
 }
