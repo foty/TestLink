@@ -40,28 +40,6 @@ public class Topics {
     }
 
     /**
-     * 338。比特位计数
-     *
-     * @param num
-     * @return
-     */
-    public int[] countBits(int num) {
-        int[] result = new int[num + 1];
-        result[0] = 0;
-        int height = 0;
-        for (int i = 1; i <= num; i++) {
-            if ((i & (i - 1)) == 0) { // 表示为2的整数次幂，也称之为最高位
-                height = i;
-            }
-            result[i] = result[i - height] + 1;
-        }
-        return result;
-    }
-
-//    执行用时：2 ms, 在所有 Java 提交中击败了60.00%的用户
-//    内存消耗：42.4 MB, 在所有 Java 提交中击败了80.58%的用户
-
-    /**
      * 338.比特位计数
      *
      * @param num
@@ -73,12 +51,41 @@ public class Topics {
          */
         int[] result = new int[num + 1];
         result[0] = 0;
-
+        int height = 0;
         for (int i = 1; i <= num; i++) {
-
-
-
+            if ((i & (i - 1)) == 0) { // 表示为2的整数次幂，也称之为最高位
+                height = i;
+            }
+            result[i] = result[i - height] + 1;
         }
         return result;
+
+        //    执行用时：2 ms, 在所有 Java 提交中击败了60.00%的用户
+        //    内存消耗：42.4 MB, 在所有 Java 提交中击败了80.58%的用户
+    }
+
+
+    /**
+     * 354、俄罗斯信封套娃
+     *
+     * @param envelopes
+     * @return
+     */
+    public int maxEnvelopes(int[][] envelopes) {
+        /**
+         * 给定一些标记了宽度和高度的信封，宽度和高度以整数对形式 (w, h) 出现。当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进
+         * 另一个信封里，如同俄罗斯套娃一样。
+         * 请计算最多能有多少个信封能组成一组“俄罗斯套娃”信封（即可以把一个信封放到另一个信封里面）。
+         *
+         * 说明:
+         * 不允许旋转信封。
+         * 示例:
+         *
+         * 输入: envelopes = [[5,4],[6,4],[6,7],[2,3]]
+         * 输出: 3
+         * 解释: 最多信封的个数为 3, 组合为: [2,3] => [5,4] => [6,7]。
+         */
+
+        return 0;
     }
 }
