@@ -1,5 +1,8 @@
 package com.example.testlink.dailyari;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * Create by lxx
  * Date : 2021/3/1 10:50
@@ -40,7 +43,7 @@ public class Topics {
     }
 
     /**
-     * 338.比特位计数
+     * 338.比特位计数 ？
      *
      * @param num
      * @return
@@ -66,7 +69,7 @@ public class Topics {
 
 
     /**
-     * 354、俄罗斯信封套娃
+     * 354、俄罗斯信封套娃 ？
      *
      * @param envelopes
      * @return
@@ -86,6 +89,34 @@ public class Topics {
          * 解释: 最多信封的个数为 3, 组合为: [2,3] => [5,4] => [6,7]。
          */
 
-        return 0;
+        if (envelopes.length == 0) return 0;
+        int n = envelopes.length;
+        // 固定一边升序排序，另外一边降序(可以保证在固定边相同的情况下，不会重复统计到)
+        Arrays.sort(envelopes, new Comparator<int[]>() {
+            public int compare(int[] e1, int[] e2) {
+                if (e1[0] != e2[0]) {
+                    return e1[0] - e2[0];
+                } else {
+                    return e2[1] - e1[1];
+                }
+            }
+        });
+
+        int[] f = new int[n]; // 记录当前位置最多信封数量
+        Arrays.fill(f, 1);
+        int ans = 1;
+        for (int i = 1; i < n; ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (envelopes[j][1] < envelopes[i][1]) {// 表示可以套娃
+                    f[i] = Math.max(f[i], f[j] + 1); //
+                }
+            }
+            ans = Math.max(ans, f[i]);
+        }
+        return ans;
+
+//        执行用时：266 ms, 在所有 Java 提交中击败了 31.80% 的用户
+//        内存消耗：39.3 MB, 在所有 Java 提交中击败了 78.40% 的用户
+
     }
 }
