@@ -119,4 +119,11 @@ public class Topics {
 //        内存消耗：39.3 MB, 在所有 Java 提交中击败了 78.40% 的用户
 
     }
+
+    /**
+     * 用栈实现队列
+     */
+    public void test232(){
+
+    }
 }
