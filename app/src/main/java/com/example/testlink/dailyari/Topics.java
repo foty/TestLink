@@ -121,6 +121,13 @@ public class Topics {
     }
 
     /**
+     * 用栈实现队列
+     */
+    public void test232(){
+
+    }
+
+    /**
      * 503 下一个更大的数。
      *
      * @param nums
