@@ -119,4 +119,35 @@ public class Topics {
 //        内存消耗：39.3 MB, 在所有 Java 提交中击败了 78.40% 的用户
 
     }
+
+    /**
+     * 503 下一个更大的数。
+     *
+     * @param nums
+     * @return
+     */
+    public int[] nextGreaterElements(int[] nums) {
+        int[] result = new int[nums.length];
+        Arrays.fill(result, -1);
+        for (int i = 0; i < nums.length; i++) {
+            int j;
+            if (i == nums.length - 1) {
+                j = 0;
+            } else {
+                j = i + 1;
+            }
+            while (j != i) {
+                if (nums[i] < nums[j]) {
+                    result[i] = nums[j];
+                    break;
+                }
+                j++;
+                if (j == nums.length)
+                    j = 0;
+            }
+        }
+        return result;
+    }
+//    执行用时：52 ms, 在所有 Java 提交中击败了8.52%的用户
+//    内存消耗：39.1 MB, 在所有 Java 提交中击败了99.64%的用户
 }
