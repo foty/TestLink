@@ -1,7 +1,9 @@
 package com.example.testlink.dailyari;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Create by lxx
@@ -17,7 +19,7 @@ public class Topics {
 
 
     /**
-     * 编号303
+     * 303、
      */
     public static void test303() {
         int[] ints = new int[]{-2, 0, 3, -5, 2, -1};
@@ -31,7 +33,9 @@ public class Topics {
         System.out.println(s2);
     }
 
-
+    /**
+     * 304、
+     */
     public static void test304() {
         int[][] ints = new int[][]{{-4, -5}};
         NumMatrix numMatrix = new NumMatrix(ints);
@@ -44,9 +48,6 @@ public class Topics {
 
     /**
      * 338.比特位计数 ？
-     *
-     * @param num
-     * @return
      */
     public int[] countBits(int num) {
         /**
@@ -70,9 +71,6 @@ public class Topics {
 
     /**
      * 354、俄罗斯信封套娃 ？
-     *
-     * @param envelopes
-     * @return
      */
     public int maxEnvelopes(int[][] envelopes) {
         /**
@@ -121,19 +119,17 @@ public class Topics {
     }
 
     /**
-     * 用栈实现队列
+     * 232、用栈实现队列
      */
-    public void test232(){
+    public void test232() {
 
     }
 
     /**
      * 503 下一个更大的数。
-     *
-     * @param nums
-     * @return
      */
     public int[] nextGreaterElements(int[] nums) {
+        // 暴力循环
         int[] result = new int[nums.length];
         Arrays.fill(result, -1);
         for (int i = 0; i < nums.length; i++) {
@@ -154,7 +150,28 @@ public class Topics {
             }
         }
         return result;
+        //    执行用时：52 ms, 在所有 Java 提交中击败了8.52%的用户
+        //    内存消耗：39.1 MB, 在所有 Java 提交中击败了99.64%的用户
+
+        // 解法2 单调栈。
+
     }
-//    执行用时：52 ms, 在所有 Java 提交中击败了8.52%的用户
-//    内存消耗：39.1 MB, 在所有 Java 提交中击败了99.64%的用户
+
+
+    /**
+     * 131、分割回文串I
+     */
+    public List<List<String>> partition(String s) {
+        List<List<String>> ret = new ArrayList<List<String>>();
+        return ret;
+    }
+
+    /**
+     * 132、分割回文串II
+     */
+    public int minCut(String s) {
+
+        return 0;
+    }
+
 }
