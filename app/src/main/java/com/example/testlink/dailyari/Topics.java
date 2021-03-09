@@ -15,6 +15,9 @@ public class Topics {
     public static void main(String[] args) {
 
         test304();
+
+        String s = removeDuplicates("abbaca");
+        System.out.println(s);
     }
 
 
@@ -172,6 +175,25 @@ public class Topics {
     public int minCut(String s) {
 
         return 0;
+    }
+
+    /**
+     * 1047、删除字符串所有相邻重复项
+     */
+    public static String removeDuplicates(String S) {
+        int[] strIndex = new int[S.length()];
+        for (int i = 0, j = i+1; i < S.length() && j < S.length();) {
+            if (S.charAt(i) == S.charAt(j)){
+                i --;
+                if (i<= 0) i = 0;
+            }else {
+                i++;
+            }
+            j++;
+            strIndex[0] = j;
+        }
+
+        return "";
     }
 
 }
