@@ -50,17 +50,29 @@ public class Topics {
     }
 
     /**
-     * 338.比特位计数 ？
+     * 338.比特位计数
      */
     public int[] countBits(int num) {
         /**
          * 给定一个非负整数 num。对于 0 ≤ i ≤ num 范围中的每个数字 i ，计算其二进制数中的 1 的数目并将它们作为数组返回。
          */
+
+        /**
+         * 最高有效位解法。
+         * 我们知道整数的二进制都是0101这样的。比如 0 = 0000,1 = 0001,2 = 0010。3 = 0011。下面将在二进制中最高位数字为1，剩下
+         * 所有的位数都是为0的数，比如2(0010),4(0100),8(1000)这样的数称为最高有效位数，这些数二进制中1所在位置称为最高有效位。
+         * 下面用b(x)表示数字x的二进制中1的数量，b(y)表示数字y的二进制中1的数量。如果b(y)始终比b(x)多一个1，就有：
+         * b(y) = b(x)+ 1。对于正整数i，如果已知i的最高位有效数为j。那么俩数差k = i - j。对于他们二进制1的数量有：
+         * b(k) = b(i) - b(j)。现有最高有效位数二进制中1的数量都是1(如2(0010),4(0100),8(1000))。那么 对于上面等式
+         * b(i) = b(k) + 1(其中b(k) = b(i - j),j为i的最高位有效数)。那么如何求的最高位有效数，也就是2的整数次幂的数呢。有一
+         * 个位运算规律是 x&(x-1)会将x最后一个1消除为0，对于最高位数j来说，j&(j-1) == 0。可用此作为依据
+         */
+
         int[] result = new int[num + 1];
         result[0] = 0;
         int height = 0;
         for (int i = 1; i <= num; i++) {
-            if ((i & (i - 1)) == 0) { // 表示为2的整数次幂，也称之为最高位
+            if ((i & (i - 1)) == 0) { // 表示为2的整数次幂，也称之为当前数的最高位数
                 height = i;
             }
             result[i] = result[i - height] + 1;
@@ -93,13 +105,11 @@ public class Topics {
         if (envelopes.length == 0) return 0;
         int n = envelopes.length;
         // 固定一边升序排序，另外一边降序(可以保证在固定边相同的情况下，不会重复统计到)
-        Arrays.sort(envelopes, new Comparator<int[]>() {
-            public int compare(int[] e1, int[] e2) {
-                if (e1[0] != e2[0]) {
-                    return e1[0] - e2[0];
-                } else {
-                    return e2[1] - e1[1];
-                }
+        Arrays.sort(envelopes, (e1, e2) -> {
+            if (e1[0] != e2[0]) {
+                return e1[0] - e2[0];
+            } else {
+                return e2[1] - e1[1];
             }
         });
 
@@ -182,11 +192,11 @@ public class Topics {
      */
     public static String removeDuplicates(String S) {
         int[] strIndex = new int[S.length()];
-        for (int i = 0, j = i+1; i < S.length() && j < S.length();) {
-            if (S.charAt(i) == S.charAt(j)){
-                i --;
-                if (i<= 0) i = 0;
-            }else {
+        for (int i = 0, j = i + 1; i < S.length() && j < S.length(); ) {
+            if (S.charAt(i) == S.charAt(j)) {
+                i--;
+                if (i <= 0) i = 0;
+            } else {
                 i++;
             }
             j++;
