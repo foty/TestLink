@@ -2,7 +2,6 @@ package com.example.testlink.dailyari;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -85,7 +84,7 @@ public class Topics {
 
 
     /**
-     * 354、俄罗斯信封套娃 ？
+     * 354、俄罗斯信封套娃 ?
      */
     public int maxEnvelopes(int[][] envelopes) {
         /**
@@ -135,7 +134,7 @@ public class Topics {
      * 232、用栈实现队列
      */
     public void test232() {
-
+        MyQueue queue = new MyQueue();
     }
 
     /**
@@ -172,7 +171,7 @@ public class Topics {
 
 
     /**
-     * 131、分割回文串I
+     * 131、分割回文串I ?
      */
     public List<List<String>> partition(String s) {
         List<List<String>> ret = new ArrayList<List<String>>();
@@ -180,7 +179,7 @@ public class Topics {
     }
 
     /**
-     * 132、分割回文串II
+     * 132、分割回文串II ?
      */
     public int minCut(String s) {
 
@@ -188,7 +187,7 @@ public class Topics {
     }
 
     /**
-     * 1047、删除字符串所有相邻重复项
+     * 1047、删除字符串所有相邻重复项 ?
      */
     public static String removeDuplicates(String S) {
         int[] strIndex = new int[S.length()];
@@ -206,4 +205,62 @@ public class Topics {
         return "";
     }
 
+
+    /**
+     * 224、基本计算器 ?
+     */
+    public int calculate(String s) {
+        /**
+         * 给你一个字符串表达式 s ，请你实现一个基本计算器来计算并返回它的值。
+         * 示例 1：
+         * 输入：s = "1 + 1"
+         * 输出：2
+         * 示例 2：
+         * 输入：s = " 2-1 + 2 "
+         * 输出：3
+         * 示例 3：
+         * 输入：s = "(1+(4+5+2)-3)+(6+8)"
+         * 输出：23
+         * <p>
+         *
+         * 提示：
+         * 1 <= s.length <= 3 * 105
+         * s 由数字、'+'、'-'、'('、')'、和 ' ' 组成
+         * s 表示一个有效的表达式
+         */
+
+
+        return 0;
+    }
+
+    /**
+     * 227、基本计算器II ?
+     */
+    public int calculate2(String s) {
+        /**
+         * 提示：
+         *
+         * 1 <= s.length <= 3 * 105
+         * s 由整数和算符 ('+', '-', '*', '/') 组成，中间由一些空格隔开
+         * s 表示一个 有效表达式
+         * 表达式中的所有整数都是非负整数，且在范围 [0, 231 - 1] 内
+         * 题目数据保证答案是一个 32-bit 整数
+         */
+        return 0;
+    }
+
+
+    /**
+     * 331、验证二叉树的前序序列化 ?
+     */
+    public boolean isValidSerialization(String preorder) {
+        return false;
+    }
+
+    /**
+     * 705、设计hash集合
+     */
+    public void test705() {
+        MyHashSet set = new MyHashSet();
+    }
 }
