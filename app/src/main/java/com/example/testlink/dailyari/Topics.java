@@ -84,7 +84,7 @@ public class Topics {
 
 
     /**
-     * 354、俄罗斯信封套娃 ?
+     * 354、俄罗斯信封套娃
      */
     public int maxEnvelopes(int[][] envelopes) {
         /**
@@ -262,5 +262,12 @@ public class Topics {
      */
     public void test705() {
         MyHashSet set = new MyHashSet();
+    }
+
+    /**
+     * 706、设计哈希映射
+     */
+    public void test706() {
+        MyHashMap map = new MyHashMap();
     }
 }
