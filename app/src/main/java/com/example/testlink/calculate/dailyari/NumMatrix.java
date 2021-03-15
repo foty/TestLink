@@ -1,4 +1,4 @@
-package com.example.testlink.dailyari;
+package com.example.testlink.calculate.dailyari;
 
 class NumMatrix {
 
