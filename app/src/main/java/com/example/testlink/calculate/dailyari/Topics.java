@@ -13,10 +13,21 @@ public class Topics {
 
     public static void main(String[] args) {
 
-        test304();
+        /**
+         *
+         * 1 2  3  4
+         * 5 6  7  8
+         * 9 10 11 12
+         *
+         * 123698745
+         */
 
-        String s = removeDuplicates("abbaca");
-        System.out.println(s);
+        int[][] ints = new int[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
+        List<Integer> list = test54(ints);
+
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
     }
 
 
@@ -269,5 +280,77 @@ public class Topics {
      */
     public void test706() {
         MyHashMap map = new MyHashMap();
+    }
+
+    /**
+     * 54、螺旋矩阵
+     */
+    public static List<Integer> test54(int[][] matrix) {
+        /**
+         * 给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
+         */
+
+        /**
+         * 解答分析：
+         * 不需要特别的知识点即可。唯一的难点是矩阵的边界变化。使用4个指针，最小行，最小列，最大行，最大列划分遍
+         * 历边界即可。分别从左到右，从上到下，从右到左，从下到上遍历。其中最小(行。列)始终是要小于(或等于)最大(行、列)的。
+         * 可以根据这个作为跳出循环的条件。等于的情况看如何变化4个指针。如果每次一个方向遍历完了，相对应的指针就加减，那么
+         * 就需要划等号，保证能够访问完整。
+         *
+         */
+
+        List<Integer> list = new ArrayList<>();
+        if (matrix.length <= 0) return list;
+
+        //最大行数
+        int maxRow = matrix.length - 1;
+        // 最大列数
+        int maxColumn = matrix[0].length - 1;
+
+        //最小行数
+        int cRow = 0;
+        //最小列数
+        int cColumn = 0;
+
+        while (true) {
+
+            // 从左到右,行不变，列变化(变大)。
+            for (int i = cColumn; i <= maxColumn; i++) {
+                list.add(matrix[cRow][i]);
+            }
+
+            //从上到下，列不变，行变化(变大)。但这行开始位置已经被访问了，要排除，行数初始值+1。
+            cRow++;
+            if (cRow > maxRow) break;
+
+            for (int i = cRow; i <= maxRow; i++) {
+                list.add(matrix[i][maxColumn]);
+            }
+
+            // 从右到左，行不变，列变化(变小)。同样这列开始位置被访问过，要排除，列数最大值-1.
+            maxColumn--;
+            if (cColumn > maxColumn) break;
+
+            for (int i = maxColumn; i >= cColumn; i--) {
+                list.add(matrix[maxRow][i]);
+            }
+
+            // 从下到上，列不变，行变化(变小)，同样注意排除被访问过的位置
+            maxRow--;
+            if (cRow > maxRow) break;
+
+            for (int i = maxRow; i >= cRow; i--) {
+                list.add(matrix[i][cColumn]);
+            }
+
+            //准备下一次循环，从左到右，排除一个初始值
+            cColumn++;
+            if (cColumn > maxColumn) break;
+
+        }
+        return list;
+
+//        执行用时：0 ms, 在所有 Java 提交中击败了 100.00% 的用户
+//        内存消耗：36.6 MB, 在所有 Java 提交中击败了 48.94% 的用户
     }
 }
