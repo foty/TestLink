@@ -1,7 +1,5 @@
 package com.example.testlink.calculate;
 
-import com.example.testlink.sword_for_offer.ListNode;
-
 import java.util.ArrayList;
 import java.util.List;
 
