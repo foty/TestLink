@@ -22,11 +22,12 @@ public class Topics {
          * 123698745
          */
 
-        int[][] ints = new int[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
-        List<Integer> list = test54(ints);
+        int[][] ints = generateMatrix(3);
 
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
+        for (int i = 0; i < ints.length; i++) {
+            for (int j = 0; j < ints[i].length; j++) {
+                System.out.println(ints[i][j]);
+            }
         }
     }
 
@@ -177,6 +178,12 @@ public class Topics {
         //    内存消耗：39.1 MB, 在所有 Java 提交中击败了99.64%的用户
 
         // 解法2 单调栈。
+
+        /**
+         *
+         *
+         */
+
 
     }
 
@@ -352,5 +359,78 @@ public class Topics {
 
 //        执行用时：0 ms, 在所有 Java 提交中击败了 100.00% 的用户
 //        内存消耗：36.6 MB, 在所有 Java 提交中击败了 48.94% 的用户
+    }
+
+
+    /**
+     * 59、螺旋矩阵II
+     */
+    public static int[][] generateMatrix(int n) {
+
+        /**
+         * 给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。
+         * 如：
+         * 输入：n = 3
+         * 输出：[[1,2,3],[8,9,4],[7,6,5]]
+         * 提示：
+         * 1 <= n <= 20
+         */
+
+        /**
+         * 解法参考上一题的螺旋矩阵。解法通用
+         */
+
+        int[][] matrix = new int[n][n];
+
+        int maxRow = matrix.length - 1;
+        int maxColumn = matrix[0].length - 1;
+
+        int cRow = 0;
+        int cColumn = 0;
+
+        int value = 1;
+
+        while (true) {
+
+            for (int i = cColumn; i <= maxColumn; i++) {
+                matrix[cRow][i] = value;
+                value++;
+            }
+
+            //从上到下，列不变，行变化(变大)。但这行开始位置已经被访问了，要排除，行数初始值+1。
+            cRow++;
+            if (cRow > maxRow) break;
+
+            for (int i = cRow; i <= maxRow; i++) {
+                matrix[i][maxColumn] = value;
+                value++;
+            }
+
+            maxColumn--;
+            if (cColumn > maxColumn) break;
+
+            for (int i = maxColumn; i >= cColumn; i--) {
+                matrix[maxRow][i] = value;
+                value++;
+            }
+
+            maxRow--;
+            if (cRow > maxRow) break;
+
+            for (int i = maxRow; i >= cRow; i--) {
+                matrix[i][cColumn] = value;
+                value++;
+            }
+
+            cColumn++;
+            if (cColumn > maxColumn) break;
+
+        }
+
+        return matrix;
+
+//        执行用时：0 ms, 在所有 Java 提交中击败了 100.00% 的用户
+//        内存消耗：36.6 MB, 在所有 Java 提交中击败了 47.99% 的用户
+
     }
 }
