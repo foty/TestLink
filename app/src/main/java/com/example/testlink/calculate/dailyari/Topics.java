@@ -13,22 +13,12 @@ public class Topics {
 
     public static void main(String[] args) {
 
-        /**
-         *
-         * 1 2  3  4
-         * 5 6  7  8
-         * 9 10 11 12
-         *
-         * 123698745
-         */
 
-        int[][] ints = generateMatrix(3);
+        numDistinct("adbdadeecadeadeccaeaabdabdbcdabddddabcaaadbabaaedeeddeaeebcdeabcaaaeeaeeabcddcebddebeebedaecccbdcbcedbdaeaedcdebeecdaaedaacadbdccabddaddacdddc"
+                , "bcddceeeebecbc");
+        System.out.println();
+        System.out.println(sum);
 
-        for (int i = 0; i < ints.length; i++) {
-            for (int j = 0; j < ints[i].length; j++) {
-                System.out.println(ints[i][j]);
-            }
-        }
     }
 
 
@@ -361,7 +351,6 @@ public class Topics {
 //        内存消耗：36.6 MB, 在所有 Java 提交中击败了 48.94% 的用户
     }
 
-
     /**
      * 59、螺旋矩阵II
      */
@@ -433,4 +422,111 @@ public class Topics {
 //        内存消耗：36.6 MB, 在所有 Java 提交中击败了 47.99% 的用户
 
     }
+
+    public static void numDistinct(String s, String t) {
+
+        /**
+         * 给定一个字符串 s 和一个字符串 t ，计算在 s 的子序列中 t 出现的个数。字符串的一个 子序列 是指，通过删除一些（也可以不删除）字符
+         * 且不干扰剩余字符相对位置所组成的新字符串。（例如，"ACE" 是 "ABCDE" 的一个子序列，而 "AEC" 不是）
+         *
+         * 提示：
+         * 0 <= s.length, t.length <= 1000
+         * s 和 t 由英文字母组成
+         * 题目数据保证答案符合 32 位带符号整数范围。
+         *
+         * 示例 1：
+         * 输入：s = "rabbbit", t = "rabbit"
+         * 输出：3
+         * 解释：
+         * 如下图所示, 有 3 种可以从 s 中得到 "rabbit" 的方案。
+         * (上箭头符号 ^ 表示选取的字母)
+         * rabbbit
+         * ^^^^ ^^
+         * rabbbit
+         * ^^ ^^^^
+         * rabbbit
+         * ^^^ ^^^
+         */
+
+        // 递归耗时，无法AC，感觉代码是对的。0.0
+        find(s, 0, t, 0);
+
+
+        // 动态规划
+        /**
+         * 解法分析
+         * 动态规划的解法步骤一般是明确dp组的含义，寻找状态转移方程。
+         * 先明确dp数组的含义，定义出dp组。根据题意是要统计在字符串s中找出能组成字符串s的子串数量。比如在“rabbbit”找 “rabbit”。
+         * 它可以是(下标)[01256][013456][01456]3种情况。前面用递归写可以知道，当确定了t的“rabb”在s的数量后，再去确定“it”的数
+         * 量即可得到答案。也就是说，可以先确定t中的一部分，求另外一部分解，可以得到答案，也就是分解问题。所以对于t，用t[i]表示t中
+         * 的从下标为0到i的字符串在s中出现的数量。同样的对于s，用s[i]表示在s中从下标为0到i的字符串能找出等于字符串t的子串的数量。
+         * 题目可以转换成在s[i]找出等于t[j]的子串数量，当i = s.length(),j=j.length()时，答案为题解。分解过后就可以定义出dp数组了。
+         * 下面用二维数组dp[i][j]表示在s[i]找出等于t[j]的子串数量。
+         *
+         * 以“rabbbit”找 “rabbit”为例子，画出表格。中间数量表示在s[i]找出等于t[j]的子串数量,s[i]为行，t[j]为列。
+         *
+         *    r a b b b i t
+         *  r 1 1 1 1 1 1 1
+         *  a 0 1 1 1 1 1 1
+         *  b 0 0 1 2 3 3 3
+         *  b 0 0 0 1 3 2 2
+         *  i 0 0 0 0 0 3 3
+         *  t 0 0 0 0 0 0 3
+         *
+         *  同样的对于“babgbag”  “bag”
+         *
+         *    b a b g b a g
+         *  b 1 1 2 2 3 3 3
+         *  a 0 1 1 1 1 3 3
+         *  g 0 0 0 1 1 1 5
+         *
+         * 边界问题：s或t为空串时。
+         */
+
+        for (int i = 0; i < s.length(); i++) {
+
+        }
+
+    }
+
+    static int sum = 0;
+
+    private static boolean find(String s, int p, String t, int q) {
+
+        // 越界条件
+        if (p >= s.length()) return false;
+        if (q >= t.length()) return false;
+
+        boolean last = false;
+
+        boolean all = false;
+
+        //当前字符匹配
+        if (s.charAt(p) == t.charAt(q)) {
+            //完全匹配
+            if (q == t.length() - 1) {
+                sum++;
+                all = true;
+            }
+            last = true;
+            q++;
+        }
+
+        //完全匹配了,继续找还有没有这个。
+        if (all) {
+            find(s, p + 1, t, q - 1);
+            return true;
+
+        } else {// 匹配下一个字符
+            boolean b = find(s, p + 1, t, q);
+
+            if (b && last) {
+                find(s, p + 1, t, q - 1);
+            }
+            return b;
+        }
+
+    }   // babgbag    bag
+
 }
+
