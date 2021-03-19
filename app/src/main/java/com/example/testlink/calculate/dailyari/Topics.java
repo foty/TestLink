@@ -433,4 +433,21 @@ public class Topics {
 //        内存消耗：36.6 MB, 在所有 Java 提交中击败了 47.99% 的用户
 
     }
+
+    /**
+     * 115、不同的子序列 ?
+     */
+    public void test115(){}
+
+    /**
+     * 92、反转链表II ok
+     */
+    public void test92(){}
+
+    /**
+     * 设计一个停车系统
+     */
+    public void test1063(){
+        ParkingSystem system = new ParkingSystem(1,1,1);
+    }
 }
