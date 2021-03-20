@@ -13,8 +13,12 @@ import java.util.Stack;
 public class Topics {
 
     public static void main(String[] args) {
-        String[] s = new String[]{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"};
-        System.out.println(evalRPN(s));
+
+        int[] ints = new int[]{1, 2, 1};
+        int[] is = nextGreaterElements(ints);
+        for (int i = 0; i < is.length; i++) {
+            System.out.println(is[i]);
+        }
     }
 
 
@@ -135,41 +139,55 @@ public class Topics {
     }
 
     /**
-     * 503 下一个更大的数。?
+     * 503 下一个更大的数。
      */
-    public int[] nextGreaterElements(int[] nums) {
+    public static int[] nextGreaterElements(int[] nums) {
         // 暴力循环
         int[] result = new int[nums.length];
         Arrays.fill(result, -1);
-        for (int i = 0; i < nums.length; i++) {
-            int j;
-            if (i == nums.length - 1) {
-                j = 0;
-            } else {
-                j = i + 1;
-            }
-            while (j != i) {
-                if (nums[i] < nums[j]) {
-                    result[i] = nums[j];
-                    break;
-                }
-                j++;
-                if (j == nums.length)
-                    j = 0;
-            }
-        }
-        return result;
+//        for (int i = 0; i < nums.length; i++) {
+//            int j;
+//            if (i == nums.length - 1) {
+//                j = 0;
+//            } else {
+//                j = i + 1;
+//            }
+//            while (j != i) {
+//                if (nums[i] < nums[j]) {
+//                    result[i] = nums[j];
+//                    break;
+//                }
+//                j++;
+//                if (j == nums.length)
+//                    j = 0;
+//            }
+//        }
+//        return result;
         //    执行用时：52 ms, 在所有 Java 提交中击败了8.52%的用户
         //    内存消耗：39.1 MB, 在所有 Java 提交中击败了99.64%的用户
 
         // 解法2 单调栈。
-
         /**
-         *
-         *
+         * 思路分析：
+         * 由解法1(暴力循环)可以得知，每次要确定下一个更大的数都要走一次遍历。其实这里是做了重复工作的。
+         * 比如[3,2,1]。当去计算2、1时，其实重复遍历了。这里可以使用单调栈，对于单调递减的数，如[2,1],可以把它
+         * 们先保存起来，待遇到比栈顶的更大的数时，将它们一一出栈。这个数就是对应的下一个更大的数。这里有2点要注意：
+         * 1、为了保证最后一个数字，暴力法是将下标指针指向0.有种办法拼接一段相同的数组，除了最后一个元素。这样达到一个
+         * 循环的效果。
+         * 2、栈保存的是元素对应的下标。很显然，如果栈内存的数数组的元素，那么这将很难定位这个元素的下标。
          */
 
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < nums.length * 2 - 1; i++) {
+            while (stack.isEmpty() && nums[i % nums.length] > nums[stack.peek()]) { //替换
+                result[stack.pop()] = nums[i % nums.length];
+            }
+            stack.push(i % nums.length);
+        }
+        return result;
 
+//        执行用时：11 ms, 在所有 Java 提交中击败了 57.03% 的用户
+//        内存消耗：40.1 MB, 在所有 Java 提交中击败了 47.19% 的用户
     }
 
 
