@@ -3,6 +3,7 @@ package com.example.testlink.calculate.dailyari;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Create by lxx
@@ -12,23 +13,8 @@ import java.util.List;
 public class Topics {
 
     public static void main(String[] args) {
-
-        /**
-         *
-         * 1 2  3  4
-         * 5 6  7  8
-         * 9 10 11 12
-         *
-         * 123698745
-         */
-
-        int[][] ints = generateMatrix(3);
-
-        for (int i = 0; i < ints.length; i++) {
-            for (int j = 0; j < ints[i].length; j++) {
-                System.out.println(ints[i][j]);
-            }
-        }
+        String[] s = new String[]{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"};
+        System.out.println(evalRPN(s));
     }
 
 
@@ -94,7 +80,6 @@ public class Topics {
         //    内存消耗：42.4 MB, 在所有 Java 提交中击败了80.58%的用户
     }
 
-
     /**
      * 354、俄罗斯信封套娃
      */
@@ -150,7 +135,7 @@ public class Topics {
     }
 
     /**
-     * 503 下一个更大的数。
+     * 503 下一个更大的数。?
      */
     public int[] nextGreaterElements(int[] nums) {
         // 暴力循环
@@ -193,6 +178,9 @@ public class Topics {
      */
     public List<List<String>> partition(String s) {
         List<List<String>> ret = new ArrayList<List<String>>();
+        /**
+         *
+         */
         return ret;
     }
 
@@ -437,17 +425,76 @@ public class Topics {
     /**
      * 115、不同的子序列 ?
      */
-    public void test115(){}
+    public void test115() {
+    }
 
     /**
      * 92、反转链表II ok
      */
-    public void test92(){}
+    public void test92() {
+    }
 
     /**
      * 设计一个停车系统
      */
-    public void test1063(){
-        ParkingSystem system = new ParkingSystem(1,1,1);
+    public void test1063() {
+        ParkingSystem system = new ParkingSystem(1, 1, 1);
+    }
+
+    /**
+     * 150、逆波兰表达式求值
+     */
+    public static int evalRPN(String[] tokens) {
+
+        /**
+         * 逆波兰表达式的特点是：没有括号，运算符总是放在和它相关的操作数之后。因此，逆波兰表达式也称后缀表达式。
+         * 比如 ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]，
+         * 从最开始10,6,9都没有碰到符号，到3之后有一个+号，表示符号的前2个数做加法，所以到+号，换算成平常熟悉的中缀表达式就是
+         * [10 ? 6 ? (9+3)],?表示暂定。
+         * 继续往后，-11，*号。-11要与它的前一个数相乘，按照从左到右的顺序，与-11相乘的数是
+         * (9+3)的和，于是表达式变成了：
+         * [10 ? 6 ? ((9+3) * -11)]
+         * 再到后面的/号：
+         * [10 ? (6 / ((9+3) * -11))]
+         * 到后面的*号：
+         * [10 * (6 / ((9+3) * -11))]
+         * 再到17,+号：
+         * [(10 * (6 / ((9+3) * -11))) + 17 ]
+         * 5，+号：
+         * [((10 * (6 / ((9+3) * -11))) + 17) + 5 ]
+         * 最终由逆波兰表达式转变成平常熟悉的中缀表达式，
+         */
+
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < tokens.length; i++) {
+            if (tokens[i].equals("+")) {
+                stack.push(stack.pop() + stack.pop());
+                continue;
+            }
+            if (tokens[i].equals("-")) {
+                int i1 = stack.pop();
+                int i2 = stack.pop();
+                stack.push(i2 - i1);
+                continue;
+            }
+            if (tokens[i].equals("*")) {
+                stack.push(stack.pop() * stack.pop());
+                continue;
+            }
+
+            if (tokens[i].equals("/")) {
+                int i1 = stack.pop();
+                int i2 = stack.pop();
+                stack.push(i2 / i1);
+                continue;
+            }
+
+            stack.push(Integer.valueOf(tokens[i]));
+        }
+        return stack.pop();
+
+//        执行用时：7 ms, 在所有 Java 提交中击败了 57.67% 的用户
+//        内存消耗：38.6 MB, 在所有 Java 提交中击败了 7.19% 的用户
     }
 }
