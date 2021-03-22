@@ -5,11 +5,11 @@ package com.example.testlink.calculate.sword_for_offer;
  * Date : 2020/4/10 16:41
  */
 public class ListNode {
-    int val;
-    ListNode next;
-    ListNode head;
+    public int val;
+    public ListNode next;
+    public ListNode head;
 
-    ListNode(int val) {
+    public ListNode(int val) {
         this.val = val;
     }
 }

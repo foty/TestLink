@@ -1,5 +1,7 @@
 package com.example.testlink.calculate.dailyari;
 
+import com.example.testlink.calculate.sword_for_offer.ListNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,11 +16,8 @@ public class Topics {
 
     public static void main(String[] args) {
 
-        int[] ints = new int[]{1, 2, 1};
-        int[] is = nextGreaterElements(ints);
-        for (int i = 0; i < is.length; i++) {
-            System.out.println(is[i]);
-        }
+
+        System.out.println(hammingWeight(000000101));
     }
 
 
@@ -228,7 +227,6 @@ public class Topics {
         return "";
     }
 
-
     /**
      * 224、基本计算器 ?
      */
@@ -271,7 +269,6 @@ public class Topics {
          */
         return 0;
     }
-
 
     /**
      * 331、验证二叉树的前序序列化 ?
@@ -439,20 +436,173 @@ public class Topics {
 
     }
 
+
     /**
      * 115、不同的子序列 ?
      */
-    public void test115() {
+    public static void numDistinct(String s, String t) {
+
+        /**
+         * 给定一个字符串 s 和一个字符串 t ，计算在 s 的子序列中 t 出现的个数。字符串的一个 子序列 是指，通过删除一些（也可以不删除）字符
+         * 且不干扰剩余字符相对位置所组成的新字符串。（例如，"ACE" 是 "ABCDE" 的一个子序列，而 "AEC" 不是）
+         *
+         * 提示：
+         * 0 <= s.length, t.length <= 1000
+         * s 和 t 由英文字母组成
+         * 题目数据保证答案符合 32 位带符号整数范围。
+         *
+         * 示例 1：
+         * 输入：s = "rabbbit", t = "rabbit"
+         * 输出：3
+         * 解释：
+         * 如下图所示, 有 3 种可以从 s 中得到 "rabbit" 的方案。
+         * (上箭头符号 ^ 表示选取的字母)
+         * rabbbit
+         * ^^^^ ^^
+         * rabbbit
+         * ^^ ^^^^
+         * rabbbit
+         * ^^^ ^^^
+         */
+
+        // 1、递归耗时，但是没有AC，感觉代码是对的。0.0
+        p115Find(s, 0, t, 0);
+
+
+        // 2、动态规划
+        /**
+         * 解法分析
+         * 动态规划的解法步骤一般是明确dp组的含义，寻找状态转移方程。
+         * 先明确dp数组的含义，定义出dp组。根据题意是要统计在字符串s中找出能组成字符串s的子串数量。比如在“rabbbit”找 “rabbit”。
+         * 它可以是(下标)[01256][013456][01456]3种情况。前面用递归写可以知道，当确定了t的“rabb”在s的数量后，再去确定“it”的数
+         * 量即可得到答案。也就是说，可以先确定t中的一部分，求另外一部分解，可以得到答案，也就是分解问题。所以对于t，用t[i]表示t中
+         * 的从下标为0到i的字符串在s中出现的数量。同样的对于s，用s[i]表示在s中从下标为0到i的字符串能找出等于字符串t的子串的数量。
+         * 题目可以转换成在s[i]找出等于t[j]的子串数量，当i = s.length(),j=j.length()时，答案为题解。分解过后就可以定义出dp数组了。
+         * 下面用二维数组dp[i][j]表示在s[i]找出等于t[j]的子串数量。
+         *
+         * 以“rabbbit”找 “rabbit”为例子，画出表格。中间数量表示在s[i]找出等于t[j]的子串数量,s[i]为行，t[j]为列。
+         *
+         *    r a b b b i t
+         *  r 1 1 1 1 1 1 1
+         *  a 0 1 1 1 1 1 1
+         *  b 0 0 1 2 3 3 3
+         *  b 0 0 0 1 3 2 2
+         *  i 0 0 0 0 0 3 3
+         *  t 0 0 0 0 0 0 3
+         *
+         *  同样的对于“babgbag”  “bag”
+         *
+         *    b a b g b a g
+         *  b 1 1 2 2 3 3 3
+         *  a 0 1 1 1 1 3 3
+         *  g 0 0 0 1 1 1 5
+         *
+         * 边界问题：s或t为空串时。
+         */
+
+        int[][] result = new int[0][0];
+
+        for (int i = 0; i < t.length(); i++) {
+            for (int j = 0; j < s.length(); j++) {
+
+
+            }
+        }
+
+    }
+
+    private static int sum = 0;
+
+    private static boolean p115Find(String s, int p, String t, int q) {
+
+        // 越界条件
+        if (p >= s.length()) return false;
+        if (q >= t.length()) return false;
+
+        boolean last = false;
+
+        boolean all = false;
+
+        //当前字符匹配
+        if (s.charAt(p) == t.charAt(q)) {
+            //完全匹配
+            if (q == t.length() - 1) {
+                sum++;
+                all = true;
+            }
+            last = true;
+            q++;
+        }
+
+        //完全匹配了,继续找还有没有这个。
+        if (all) {
+            p115Find(s, p + 1, t, q - 1);
+            return true;
+
+        } else {// 匹配下一个字符
+            boolean b = p115Find(s, p + 1, t, q);
+
+            if (b && last) {
+                p115Find(s, p + 1, t, q - 1);
+            }
+            return b;
+        }
+
     }
 
     /**
      * 92、反转链表II
      */
-    public void test92() {
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (left == right) return head;
+
+        // 构造一个虚拟头结点,这么做是为了防止头结点被改变了。
+        ListNode first = new ListNode(-1);
+        first.next = head;
+
+        ListNode pre = first;
+        ListNode leftNode;
+        ListNode after;
+        ListNode rightNode;
+
+        // 找到left位置
+        for (int i = 1; i <= left - 1; i++) {
+            pre = pre.next;
+        }
+
+        leftNode = pre.next;
+
+        rightNode = leftNode;
+        //找到right位置
+        for (int i = 1; i <= right - left; i++) {
+            rightNode = rightNode.next;
+        }
+
+        after = rightNode.next;
+
+        //分割出需要反转的链表
+        pre.next = null;
+        rightNode.next = null;
+
+        //反转
+        ListNode pre1 = leftNode;
+        ListNode cur = leftNode.next;
+        while (cur != null) {
+            ListNode next = cur.next;
+            cur.next = pre1;
+            pre1 = cur;
+            cur = next;
+        }
+
+        // 拼回来
+        pre.next = rightNode;
+        leftNode.next = after;
+
+        return first.next;
     }
 
     /**
-     * 设计一个停车系统
+     * 1603、设计一个停车系统
      */
     public void test1063() {
         ParkingSystem system = new ParkingSystem(1, 1, 1);
@@ -523,115 +673,64 @@ public class Topics {
 //        内存消耗：38.6 MB, 在所有 Java 提交中击败了 7.19% 的用户
     }
 
-    public static void numDistinct(String s, String t) {
-
-        /**
-         * 给定一个字符串 s 和一个字符串 t ，计算在 s 的子序列中 t 出现的个数。字符串的一个 子序列 是指，通过删除一些（也可以不删除）字符
-         * 且不干扰剩余字符相对位置所组成的新字符串。（例如，"ACE" 是 "ABCDE" 的一个子序列，而 "AEC" 不是）
-         *
-         * 提示：
-         * 0 <= s.length, t.length <= 1000
-         * s 和 t 由英文字母组成
-         * 题目数据保证答案符合 32 位带符号整数范围。
-         *
-         * 示例 1：
-         * 输入：s = "rabbbit", t = "rabbit"
-         * 输出：3
-         * 解释：
-         * 如下图所示, 有 3 种可以从 s 中得到 "rabbit" 的方案。
-         * (上箭头符号 ^ 表示选取的字母)
-         * rabbbit
-         * ^^^^ ^^
-         * rabbbit
-         * ^^ ^^^^
-         * rabbbit
-         * ^^^ ^^^
-         */
-
-        // 递归耗时，无法AC，感觉代码是对的。0.0
-        find(s, 0, t, 0);
-
-
-        // 动态规划
-        /**
-         * 解法分析
-         * 动态规划的解法步骤一般是明确dp组的含义，寻找状态转移方程。
-         * 先明确dp数组的含义，定义出dp组。根据题意是要统计在字符串s中找出能组成字符串s的子串数量。比如在“rabbbit”找 “rabbit”。
-         * 它可以是(下标)[01256][013456][01456]3种情况。前面用递归写可以知道，当确定了t的“rabb”在s的数量后，再去确定“it”的数
-         * 量即可得到答案。也就是说，可以先确定t中的一部分，求另外一部分解，可以得到答案，也就是分解问题。所以对于t，用t[i]表示t中
-         * 的从下标为0到i的字符串在s中出现的数量。同样的对于s，用s[i]表示在s中从下标为0到i的字符串能找出等于字符串t的子串的数量。
-         * 题目可以转换成在s[i]找出等于t[j]的子串数量，当i = s.length(),j=j.length()时，答案为题解。分解过后就可以定义出dp数组了。
-         * 下面用二维数组dp[i][j]表示在s[i]找出等于t[j]的子串数量。
-         *
-         * 以“rabbbit”找 “rabbit”为例子，画出表格。中间数量表示在s[i]找出等于t[j]的子串数量,s[i]为行，t[j]为列。
-         *
-         *    r a b b b i t
-         *  r 1 1 1 1 1 1 1
-         *  a 0 1 1 1 1 1 1
-         *  b 0 0 1 2 3 3 3
-         *  b 0 0 0 1 3 2 2
-         *  i 0 0 0 0 0 3 3
-         *  t 0 0 0 0 0 0 3
-         *
-         *  同样的对于“babgbag”  “bag”
-         *
-         *    b a b g b a g
-         *  b 1 1 2 2 3 3 3
-         *  a 0 1 1 1 1 3 3
-         *  g 0 0 0 1 1 1 5
-         *
-         * 边界问题：s或t为空串时。
-         */
-
-        int[][] result = new int[0][0];
-
-        for (int i = 0; i < t.length(); i++) {
-            for (int j = 0; j < s.length(); j++) {
-
-
-            }
-        }
+    /**
+     * 73、矩阵置0 ?
+     */
+    public void setZeroes(int[][] matrix) {
 
     }
 
-    static int sum = 0;
+    /**
+     * 191、位1的个数
+     */
+    public static int hammingWeight(int n) {
+        /**
+         * 编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 '1' 的个数
+         */
 
-    private static boolean find(String s, int p, String t, int q) {
+        /**
+         * 解法
+         * 本来想偷个懒，转成字符串后搞个for找1就算了。后来发现这个输入的二进制会解析成十进制。莫得办法，
+         * 只能用位运算来统计了。
+         */
 
-        // 越界条件
-        if (p >= s.length()) return false;
-        if (q >= t.length()) return false;
+        int result = 0;
 
-        boolean last = false;
+        // 失败的方案。
+//        String s = String.valueOf(n);
+//        for (int i = 0; i < s.length(); i++) {
+//            if (s.charAt(i) == '1') {
+//                result++;
+//            }
+//        }
 
-        boolean all = false;
+        /**
+         * 应用性质为：
+         * 在位运算中，n & (n - 1) 会将 n中最低位的1消掉。
+         * 如统计5的二进制1的数量。
+         * 5的二进制为
+         *  0101
+         * 4的二进制为
+         *  0100
+         * &操作后就是：
+         *  0100 == 4
+         * 继续&3
+         * 0100
+         * &
+         * 0011
+         * =
+         * 0000
+         *
+         * 即重复次数就是1的数量
+         */
 
-        //当前字符匹配
-        if (s.charAt(p) == t.charAt(q)) {
-            //完全匹配
-            if (q == t.length() - 1) {
-                sum++;
-                all = true;
-            }
-            last = true;
-            q++;
+        while (n != 0) {
+            n = n & (n - 1);
+            result++;
         }
 
-        //完全匹配了,继续找还有没有这个。
-        if (all) {
-            find(s, p + 1, t, q - 1);
-            return true;
-
-        } else {// 匹配下一个字符
-            boolean b = find(s, p + 1, t, q);
-
-            if (b && last) {
-                find(s, p + 1, t, q - 1);
-            }
-            return b;
-        }
-
-    }   // babgbag    bag
+        return result;
+    }
 
 }
 
