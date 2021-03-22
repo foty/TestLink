@@ -23,7 +23,7 @@ public class Topics {
 
 
     /**
-     * 303、
+     * 303、数组区域和
      */
     public static void test303() {
         int[] ints = new int[]{-2, 0, 3, -5, 2, -1};
@@ -38,7 +38,7 @@ public class Topics {
     }
 
     /**
-     * 304、
+     * 304、二位数组区域和
      */
     public static void test304() {
         int[][] ints = new int[][]{{-4, -5}};
@@ -189,7 +189,6 @@ public class Topics {
 //        执行用时：11 ms, 在所有 Java 提交中击败了 57.03% 的用户
 //        内存消耗：40.1 MB, 在所有 Java 提交中击败了 47.19% 的用户
     }
-
 
     /**
      * 131、分割回文串I ?
@@ -447,7 +446,7 @@ public class Topics {
     }
 
     /**
-     * 92、反转链表II ok
+     * 92、反转链表II
      */
     public void test92() {
     }
@@ -584,8 +583,13 @@ public class Topics {
          * 边界问题：s或t为空串时。
          */
 
-        for (int i = 0; i < s.length(); i++) {
+        int[][] result = new int[0][0];
 
+        for (int i = 0; i < t.length(); i++) {
+            for (int j = 0; j < s.length(); j++) {
+
+
+            }
         }
 
     }
