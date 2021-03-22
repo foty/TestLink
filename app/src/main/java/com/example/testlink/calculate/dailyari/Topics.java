@@ -3,6 +3,7 @@ package com.example.testlink.calculate.dailyari;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Create by lxx
@@ -13,12 +14,11 @@ public class Topics {
 
     public static void main(String[] args) {
 
-
-        numDistinct("adbdadeecadeadeccaeaabdabdbcdabddddabcaaadbabaaedeeddeaeebcdeabcaaaeeaeeabcddcebddebeebedaecccbdcbcedbdaeaedcdebeecdaaedaacadbdccabddaddacdddc"
-                , "bcddceeeebecbc");
-        System.out.println();
-        System.out.println(sum);
-
+        int[] ints = new int[]{1, 2, 1};
+        int[] is = nextGreaterElements(ints);
+        for (int i = 0; i < is.length; i++) {
+            System.out.println(is[i]);
+        }
     }
 
 
@@ -84,7 +84,6 @@ public class Topics {
         //    内存消耗：42.4 MB, 在所有 Java 提交中击败了80.58%的用户
     }
 
-
     /**
      * 354、俄罗斯信封套娃
      */
@@ -142,39 +141,53 @@ public class Topics {
     /**
      * 503 下一个更大的数。
      */
-    public int[] nextGreaterElements(int[] nums) {
+    public static int[] nextGreaterElements(int[] nums) {
         // 暴力循环
         int[] result = new int[nums.length];
         Arrays.fill(result, -1);
-        for (int i = 0; i < nums.length; i++) {
-            int j;
-            if (i == nums.length - 1) {
-                j = 0;
-            } else {
-                j = i + 1;
-            }
-            while (j != i) {
-                if (nums[i] < nums[j]) {
-                    result[i] = nums[j];
-                    break;
-                }
-                j++;
-                if (j == nums.length)
-                    j = 0;
-            }
-        }
-        return result;
+//        for (int i = 0; i < nums.length; i++) {
+//            int j;
+//            if (i == nums.length - 1) {
+//                j = 0;
+//            } else {
+//                j = i + 1;
+//            }
+//            while (j != i) {
+//                if (nums[i] < nums[j]) {
+//                    result[i] = nums[j];
+//                    break;
+//                }
+//                j++;
+//                if (j == nums.length)
+//                    j = 0;
+//            }
+//        }
+//        return result;
         //    执行用时：52 ms, 在所有 Java 提交中击败了8.52%的用户
         //    内存消耗：39.1 MB, 在所有 Java 提交中击败了99.64%的用户
 
         // 解法2 单调栈。
-
         /**
-         *
-         *
+         * 思路分析：
+         * 由解法1(暴力循环)可以得知，每次要确定下一个更大的数都要走一次遍历。其实这里是做了重复工作的。
+         * 比如[3,2,1]。当去计算2、1时，其实重复遍历了。这里可以使用单调栈，对于单调递减的数，如[2,1],可以把它
+         * 们先保存起来，待遇到比栈顶的更大的数时，将它们一一出栈。这个数就是对应的下一个更大的数。这里有2点要注意：
+         * 1、为了保证最后一个数字，暴力法是将下标指针指向0.有种办法拼接一段相同的数组，除了最后一个元素。这样达到一个
+         * 循环的效果。
+         * 2、栈保存的是元素对应的下标。很显然，如果栈内存的数数组的元素，那么这将很难定位这个元素的下标。
          */
 
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < nums.length * 2 - 1; i++) {
+            while (stack.isEmpty() && nums[i % nums.length] > nums[stack.peek()]) { //替换
+                result[stack.pop()] = nums[i % nums.length];
+            }
+            stack.push(i % nums.length);
+        }
+        return result;
 
+//        执行用时：11 ms, 在所有 Java 提交中击败了 57.03% 的用户
+//        内存消耗：40.1 MB, 在所有 Java 提交中击败了 47.19% 的用户
     }
 
 
@@ -183,6 +196,9 @@ public class Topics {
      */
     public List<List<String>> partition(String s) {
         List<List<String>> ret = new ArrayList<List<String>>();
+        /**
+         *
+         */
         return ret;
     }
 
@@ -351,6 +367,7 @@ public class Topics {
 //        内存消耗：36.6 MB, 在所有 Java 提交中击败了 48.94% 的用户
     }
 
+
     /**
      * 59、螺旋矩阵II
      */
@@ -421,6 +438,90 @@ public class Topics {
 //        执行用时：0 ms, 在所有 Java 提交中击败了 100.00% 的用户
 //        内存消耗：36.6 MB, 在所有 Java 提交中击败了 47.99% 的用户
 
+    }
+
+    /**
+     * 115、不同的子序列 ?
+     */
+    public void test115() {
+    }
+
+    /**
+     * 92、反转链表II ok
+     */
+    public void test92() {
+    }
+
+    /**
+     * 设计一个停车系统
+     */
+    public void test1063() {
+        ParkingSystem system = new ParkingSystem(1, 1, 1);
+    }
+
+    /**
+     * 150、逆波兰表达式求值
+     */
+    public static int evalRPN(String[] tokens) {
+
+        /**
+         * 逆波兰表达式的特点是：没有括号，运算符总是放在和它相关的操作数之后。因此，逆波兰表达式也称后缀表达式。
+         * 比如 ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]，
+         * 从最开始10,6,9都没有碰到符号，到3之后有一个+号，表示符号的前2个数做加法，所以到+号，换算成平常熟悉的中缀表达式就是
+         * [10 ? 6 ? (9+3)],?表示暂定。
+         * 继续往后，-11，*号。-11要与它的前一个数相乘，按照从左到右的顺序，与-11相乘的数是
+         * (9+3)的和，于是表达式变成了：
+         * [10 ? 6 ? ((9+3) * -11)]
+         * 再到后面的/号：
+         * [10 ? (6 / ((9+3) * -11))]
+         * 到后面的*号：
+         * [10 * (6 / ((9+3) * -11))]
+         * 再到17,+号：
+         * [(10 * (6 / ((9+3) * -11))) + 17 ]
+         * 5，+号：
+         * [((10 * (6 / ((9+3) * -11))) + 17) + 5 ]
+         * 最终由逆波兰表达式转变成平常熟悉的中缀表达式，
+         */
+
+        /**
+         * 解法分析：
+         * 由逆波兰表达式转换到中缀表达式计算的规律可以知道，只要碰到符号，就是符号位置的前2个数字进行运算。
+         * 所以只需要保存到前2个数字即可。可以使用数组，栈都可以。要注意的一点是，对于保存起来的2个数字xy。
+         * 对于符号运算都是 x?y。？表示运算符号。对于+，*，x+y,与y+x是没有区别的，但是-与/就有区别了。注意这点
+         * 即可。
+         */
+
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < tokens.length; i++) {
+            if (tokens[i].equals("+")) {
+                stack.push(stack.pop() + stack.pop());
+                continue;
+            }
+            if (tokens[i].equals("-")) {
+                int i1 = stack.pop();
+                int i2 = stack.pop();
+                stack.push(i2 - i1);
+                continue;
+            }
+            if (tokens[i].equals("*")) {
+                stack.push(stack.pop() * stack.pop());
+                continue;
+            }
+
+            if (tokens[i].equals("/")) {
+                int i1 = stack.pop();
+                int i2 = stack.pop();
+                stack.push(i2 / i1);
+                continue;
+            }
+
+            stack.push(Integer.valueOf(tokens[i]));
+        }
+        return stack.pop();
+
+//        执行用时：7 ms, 在所有 Java 提交中击败了 57.67% 的用户
+//        内存消耗：38.6 MB, 在所有 Java 提交中击败了 7.19% 的用户
     }
 
     public static void numDistinct(String s, String t) {
