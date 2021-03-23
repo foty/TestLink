@@ -16,8 +16,7 @@ public class Topics {
 
     public static void main(String[] args) {
 
-
-        System.out.println(hammingWeight(000000101));
+        test341();
     }
 
 
@@ -730,6 +729,44 @@ public class Topics {
         }
 
         return result;
+    }
+
+    /**
+     * 341、
+     */
+    public static void test341() {
+
+        List<NestedInteger> nestedList = new ArrayList<>();
+
+
+        NestedInteger.A  a1 = new NestedInteger.A(1);
+        NestedInteger.A  a2 = new NestedInteger.A(1);
+        List<NestedInteger> list1 = new ArrayList<>();
+        list1.add(a1);
+        list1.add(a2);
+        NestedInteger.A  n1 = new NestedInteger.A(0,false,list1);
+
+        NestedInteger.A  n2 = new NestedInteger.A(2);
+
+
+        NestedInteger.A  a3 = new NestedInteger.A(1);
+        NestedInteger.A  a4 = new NestedInteger.A(1);
+        List<NestedInteger> list2 = new ArrayList<>();
+        list2.add(a3);
+        list2.add(a4);
+        NestedInteger.A  n3 = new NestedInteger.A(0,false,list2);
+
+
+        nestedList.add(n1);
+        nestedList.add(n2);
+        nestedList.add(n3);
+
+
+        NestedIterator i = new NestedIterator(nestedList);
+        while (i.hasNext()) {
+            int s = i.next();
+            System.out.print(s +"  ");
+        }
     }
 
 }
