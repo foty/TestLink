@@ -696,12 +696,12 @@ public class Topics {
         int result = 0;
 
         // 失败的方案。
-//        String s = String.valueOf(n);
-//        for (int i = 0; i < s.length(); i++) {
-//            if (s.charAt(i) == '1') {
-//                result++;
-//            }
-//        }
+        String s = String.valueOf(n);
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '1') {
+                result++;
+            }
+        }
 
         /**
          * 应用性质为：
@@ -732,7 +732,7 @@ public class Topics {
     }
 
     /**
-     * 341、
+     * 341、扁平化迭代器
      */
     public static void test341() {
 
@@ -767,6 +767,27 @@ public class Topics {
             int s = i.next();
             System.out.print(s +"  ");
         }
+    }
+
+    /**
+     * 456、132模式
+     */
+    public static void test456(int[] nums) {
+
+        /**
+         * 给你一个整数数组 nums ，数组中共有 n 个整数。132 模式的子序列 由三个整数 nums[i]、nums[j] 和 nums[k] 组成，
+         * 并同时满足：i < j < k 和 nums[i] < nums[k] < nums[j] 。
+         * 如果 nums 中存在 132 模式的子序列 ，返回 true ；否则，返回 false 。
+         * 如：
+         * 输入：nums = [3,1,4,2]
+         * 输出：true
+         * 解释：序列中有 1 个 132 模式的子序列： [1, 4, 2] 。
+         */
+
+        // 暴力法。
+
+
+
     }
 
 }
