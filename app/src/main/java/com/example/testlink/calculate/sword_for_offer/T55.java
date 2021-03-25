@@ -4,18 +4,19 @@ package com.example.testlink.calculate.sword_for_offer;
  * Create by lxx
  * Date : 2020/10/23 16:03
  * Use by 在一个排序的链表中，存在重复的节点，要求删除链表中的重复节点，重复的节点不保留。
+ * 与 LC 82题相同
  */
 public class T55 {
 
     public static void main(String[] args) {
         ListNode head = new ListNode(0);
-        ListNode node1 = new ListNode(1);
-        ListNode node2 = new ListNode(1);
-        ListNode node3 = new ListNode(1);
-        ListNode node4 = new ListNode(1);
-        ListNode node5 = new ListNode(1);
-        ListNode node6 = new ListNode(1);
-        ListNode node7 = new ListNode(1);
+        ListNode node1 = new ListNode(0);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(2);
+        ListNode node4 = new ListNode(4);
+        ListNode node5 = new ListNode(4);
+        ListNode node6 = new ListNode(4);
+        ListNode node7 = new ListNode(5);
 
         head.next = node1;
         node1.next = node2;
@@ -35,8 +36,10 @@ public class T55 {
 
     public static ListNode solve(ListNode nodeHead) {
         if (nodeHead == null) return null;
+        ListNode nullNode = new ListNode(-1);
+        nullNode.next = nodeHead;
 
-        ListNode lastNode = nodeHead;
+        ListNode lastNode = nullNode;
         ListNode curNode = nodeHead;
         while (curNode != null && curNode.next != null) {
 
@@ -48,7 +51,6 @@ public class T55 {
                 //删除第一个相同节点
                 lastNode.next = curNode.next;
                 if (curNode.next != null) {
-                    lastNode = curNode.next;
                     curNode = lastNode.next;
                 }
             } else {
@@ -56,6 +58,6 @@ public class T55 {
                 curNode = curNode.next;
             }
         }
-        return nodeHead;
+        return nullNode.next;
     }
 }

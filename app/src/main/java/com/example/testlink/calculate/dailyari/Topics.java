@@ -739,22 +739,22 @@ public class Topics {
         List<NestedInteger> nestedList = new ArrayList<>();
 
 
-        NestedInteger.A  a1 = new NestedInteger.A(1);
-        NestedInteger.A  a2 = new NestedInteger.A(1);
+        NestedInteger.A a1 = new NestedInteger.A(1);
+        NestedInteger.A a2 = new NestedInteger.A(1);
         List<NestedInteger> list1 = new ArrayList<>();
         list1.add(a1);
         list1.add(a2);
-        NestedInteger.A  n1 = new NestedInteger.A(0,false,list1);
+        NestedInteger.A n1 = new NestedInteger.A(0, false, list1);
 
-        NestedInteger.A  n2 = new NestedInteger.A(2);
+        NestedInteger.A n2 = new NestedInteger.A(2);
 
 
-        NestedInteger.A  a3 = new NestedInteger.A(1);
-        NestedInteger.A  a4 = new NestedInteger.A(1);
+        NestedInteger.A a3 = new NestedInteger.A(1);
+        NestedInteger.A a4 = new NestedInteger.A(1);
         List<NestedInteger> list2 = new ArrayList<>();
         list2.add(a3);
         list2.add(a4);
-        NestedInteger.A  n3 = new NestedInteger.A(0,false,list2);
+        NestedInteger.A n3 = new NestedInteger.A(0, false, list2);
 
 
         nestedList.add(n1);
@@ -765,7 +765,7 @@ public class Topics {
         NestedIterator i = new NestedIterator(nestedList);
         while (i.hasNext()) {
             int s = i.next();
-            System.out.print(s +"  ");
+            System.out.print(s + "  ");
         }
     }
 
@@ -787,8 +787,56 @@ public class Topics {
         // 暴力法。
 
 
-
     }
 
+    /**
+     * 82、删除排序链表中的重复元素II
+     */
+    public ListNode deleteDuplicates(ListNode head) {
+
+        /**
+         * 存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除链表中所有存在数字重复情况的节点，只保留原始链表中 没有重复出现 的数字。
+         * 返回同样按升序排列的结果链表。
+         * 例如：
+         * 输入：head = [1,2,3,3,4,4,5]
+         * 输出：[1,2,5]
+         */
+
+
+        /**
+         * 分析：题目意思很明确，删除掉所有重复过的元素。确立好一个前指针，一个当前指针。前指针指向都是非重复的数，
+         * 当前指针对比是否是重复元素。删除重复节点分2个步骤：1、先删除除了第一个相同节点外的全部相同节点；2、删除
+         * 第一个相同节点。
+         *
+         * 注意：
+         * 有时候第一个节点就是要被删除的节点，也就是说头结点要变化。这时候可以造一个假头结点，就不用考虑第一个节点
+         * 被改变的情况了。这个小技巧适用其他链表问题。
+         */
+
+        if (head == null) return null;
+        ListNode nullNode = new ListNode(-1);
+        nullNode.next = head;
+
+        ListNode lastNode = nullNode;
+        ListNode curNode = head;
+
+        while (curNode != null && curNode.next != null) {
+            if (curNode.val == curNode.next.val) {
+                //循环删除相同的节点
+                while (curNode.next != null && curNode.val == curNode.next.val) {
+                    curNode.next = curNode.next.next;
+                }
+                //删除第一个相同节点
+                lastNode.next = curNode.next;
+                if (curNode.next != null) {
+                    curNode = lastNode.next;
+                }
+            } else {
+                lastNode = curNode;
+                curNode = curNode.next;
+            }
+        }
+        return head;
+    }
 }
 
