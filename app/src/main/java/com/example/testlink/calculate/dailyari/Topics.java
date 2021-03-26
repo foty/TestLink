@@ -792,7 +792,7 @@ public class Topics {
     /**
      * 82、删除排序链表中的重复元素II
      */
-    public ListNode deleteDuplicates(ListNode head) {
+    public ListNode deleteDuplicatesII(ListNode head) {
 
         /**
          * 存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除链表中所有存在数字重复情况的节点，只保留原始链表中 没有重复出现 的数字。
@@ -837,6 +837,68 @@ public class Topics {
             }
         }
         return head;
+    }
+
+
+    /**
+     * 83. 删除排序链表中的重复元素
+     */
+    public ListNode deleteDuplicatesI(ListNode head) {
+
+        /**
+         * 存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除所有重复的元素，使每个元素 只出现一次 。
+         * 返回同样按升序排列的结果链表。
+         * 例子：
+         * 输入：head = [1,1,2]
+         * 输出：[1,2]
+         */
+
+        /**
+         * 很显然，和上一题一个解题思路。
+         */
+
+        if (head == null) return null;
+
+//        ListNode nullNode = new ListNode(-1);
+//        nullNode.next = head;
+//
+//        ListNode lastNode = nullNode;
+//        ListNode curNode = head;
+//
+//        while (curNode != null && curNode.next != null) {
+//            if (curNode.val == curNode.next.val) {
+//                //循环删除相同的节点
+//                while (curNode.next != null && curNode.val == curNode.next.val) {
+//                    curNode.next = curNode.next.next;
+//                }
+//                if (curNode.next != null) {
+//                    curNode = lastNode.next;
+//                }
+//            } else {
+//                lastNode = curNode;
+//                curNode = curNode.next;
+//            }
+//        }
+//        return head;
+
+//        执行用时：1 ms, 在所有 Java 提交中击败了 32.99% 的用户
+//        内存消耗：37.7 MB, 在所有 Java 提交中击败了 85.08% 的用户
+
+
+        //优化版：(和II相差无几，但是这里就不用一个while去循环，直接判断即可)
+        // [1,1,1,2,3,3]
+
+        ListNode curNode = head;
+        while (curNode != null && curNode.next != null) {
+            if (curNode.val == curNode.next.val) {
+                //循环删除相同的节点
+                curNode.next = curNode.next.next;
+            } else {
+                curNode = curNode.next;
+            }
+        }
+        return head;
+
     }
 }
 
