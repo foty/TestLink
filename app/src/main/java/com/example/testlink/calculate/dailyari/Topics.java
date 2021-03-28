@@ -900,5 +900,19 @@ public class Topics {
         return head;
 
     }
+
+    /**
+     * 61、旋转链表
+     */
+    public ListNode rotateRight(ListNode head, int k) {
+        return new ListNode(-1);
+    }
+
+    /**
+     * 173、二叉树迭代器
+     */
+    public void test173(){
+
+    }
 }
 
