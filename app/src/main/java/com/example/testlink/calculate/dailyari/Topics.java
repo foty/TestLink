@@ -362,7 +362,6 @@ public class Topics {
 //        内存消耗：36.6 MB, 在所有 Java 提交中击败了 48.94% 的用户
     }
 
-
     /**
      * 59、螺旋矩阵II
      */
@@ -434,7 +433,6 @@ public class Topics {
 //        内存消耗：36.6 MB, 在所有 Java 提交中击败了 47.99% 的用户
 
     }
-
 
     /**
      * 115、不同的子序列 ?
@@ -839,7 +837,6 @@ public class Topics {
         return head;
     }
 
-
     /**
      * 83. 删除排序链表中的重复元素
      */
@@ -911,15 +908,14 @@ public class Topics {
     /**
      * 173、二叉树迭代器 ?
      */
-    public void test173(){
+    public void test173() {
 
     }
 
     /**
      * 190、颠倒二进制位
-     * @return
      */
-    public int test190(){
+    public int test190() {
         /**
          * 颠倒给定的 32 位无符号整数的二进制位。
          * 输入: 00000010100101000001111010011100
@@ -931,5 +927,55 @@ public class Topics {
          */
         return 0;
     }
+
+    /**
+     * 74、搜索二维矩阵
+     */
+    public static boolean searchMatrix(int[][] matrix, int target) {
+        /**
+         * 编写一个高效的算法来判断 m x n 矩阵中，是否存在一个目标值。该矩阵具有如下特性：
+         * 每行中的整数从左到右按升序排列。
+         * 每行的第一个整数大于前一行的最后一个整数。
+         * 例如：
+         * 输入：matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3
+         * 输出：true
+         */
+
+        if (matrix.length == 0) return false;
+        // 二分查找行
+        int low = 0;
+        int high = matrix.length - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (matrix[mid][0] > target) {
+                high = mid - 1;
+            } else if (matrix[mid][0] < target) {
+                low = mid + 1;
+            } else
+                return true;
+        }
+        if (high < 0) {
+            low = 0;
+        } else if (low > high) {
+            low = high;
+        }
+        //二分查找列
+        int clow = 0;
+        int chigh = matrix[low].length - 1;
+        while (clow <= chigh) {
+            int mid = (clow + chigh) / 2;
+            if (matrix[low][mid] > target) {
+                chigh = mid - 1;
+            } else if (matrix[low][mid] < target) {
+                clow = mid + 1;
+            } else
+                return true;
+        }
+        return false;
+    }
+
+//    执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+//    内存消耗：38 MB, 在所有 Java 提交中击败了43.05%的用户
 }
 
