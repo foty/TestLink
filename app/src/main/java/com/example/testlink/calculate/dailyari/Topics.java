@@ -978,5 +978,37 @@ public class Topics {
         //    内存消耗：38 MB, 在所有 Java 提交中击败了43.05%的用户
     }
 
+    /**
+     * 90、子集(扩展题，不属于今天)
+     */
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        /**
+         * 给你一个整数数组 nums ，数组中的元素 互不相同 。返回该数组所有可能的子集（幂集）。
+         * 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
+         */
+
+        // [1,2,2]
+        // [[],[1],[1,2],[1,2,2],[2],[2,2]]
+
+        List<Integer> list = new ArrayList<>();
+        addChild(nums, 0, list);
+
+        return lists;
+    }
+
+    List<List<Integer>> lists = new ArrayList<>();
+
+    private void addChild(int[] nums, int position, List<Integer> list) {
+        if (position >= nums.length) {
+            List<Integer> r = new ArrayList<>(list);
+            lists.add(r);
+            return;
+        }
+
+        list.add(nums[position]);
+        addChild(nums, position + 1, list);
+        list.remove(list.size() - 1);
+        addChild(nums, position + 1, list);
+    }
 }
 
