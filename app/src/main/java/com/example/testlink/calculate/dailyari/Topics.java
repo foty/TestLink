@@ -979,9 +979,9 @@ public class Topics {
     }
 
     /**
-     * 90、子集(扩展题，不属于今天)
+     * 78、子集(扩展题)
      */
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
+    public List<List<Integer>> test90(int[] nums) {
         /**
          * 给你一个整数数组 nums ，数组中的元素 互不相同 。返回该数组所有可能的子集（幂集）。
          * 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
@@ -1009,6 +1009,20 @@ public class Topics {
         addChild(nums, position + 1, list);
         list.remove(list.size() - 1);
         addChild(nums, position + 1, list);
+    }
+
+    /**
+     * 90、子集II(3.31)
+     */
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+
+        /**
+         *  给你一个整数数组 nums ，其中可能包含重复元素，请你返回该数组所有可能的子集（幂集）。
+         *  解集 不能 包含重复的子集。返回的解集中，子集可以按 任意顺序 排列。
+         */
+
+
+        return lists;
     }
 }
 
