@@ -1053,7 +1053,7 @@ public class Topics {
                     stack.push(i * stack.pop());
                     break;
                 case "/":
-                    stack.push(stack.pop()/i);
+                    stack.push(stack.pop() / i);
                     break;
 
                 case "+":
@@ -1067,7 +1067,7 @@ public class Topics {
         }
 
         int sum = 0;
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             sum += stack.pop();
         }
 
@@ -1076,5 +1076,34 @@ public class Topics {
 //        执行用时：16 ms, 在所有 Java 提交中击败了 7.74% 的用户
 //        内存消耗：37.5 MB, 在所有 Java 提交中击败了 18.06% 的用户
     }
+
+    /**
+     * 80、删除有序数组中的重复项
+     */
+    public int removeDuplicates(int[] nums) {
+
+        /**
+         * 给你一个有序数组 nums ，请你 原地 删除重复出现的元素，使每个元素 最多出现两次 ，返回删除后数组的新长度。
+         * 不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
+         *
+         * 例子:
+         * 输入：nums = [1,1,1,2,2,3]
+         * 输出：5, nums = [1,1,2,2,3]
+         * 解释：函数应返回新长度 length = 5, 并且原数组的前五个元素被修改为 1, 1, 2, 2, 3 。 不需要考虑数组中超出新长度后面的元素。
+         *
+         */
+
+        int length = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (length < 2 || nums[i] > nums[length - 2]) {
+                nums[length] = nums[i];
+                length++;
+            }
+        }
+        return length;
+//        执行用时：1 ms, 在所有 Java 提交中击败了 80.95% 的用户
+//        内存消耗：38.5 MB, 在所有 Java 提交中击败了 79.84% 的用户
+    }
+
 }
 
