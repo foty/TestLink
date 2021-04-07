@@ -1093,6 +1093,14 @@ public class Topics {
          *
          */
 
+        /**
+         * 解题：
+         * 从题目上还是很容易理解的。要在原地修改数组；并且每个相同的元素最多出现2次；还是有序数组。这些条件满足下，很容易就想到数组置换，使用双指
+         * 针的办法实现。一个p指针代表在符合题意下所放的元素位置，另一个指针q循环遍历数组。当符合条件时，将q所指向的元素放到p所在的位置即可。很明确的条
+         * 件有：前2个元素可以不用考虑，因为相同元素可以出现2次。从第三个元素开始。那么要怎样判断相同的元素已经添加了2个？这里就用到了另外一个条件：有序数组。
+         * 只要后来的元素不等于指针p-2位置上的元素，那就可以了。
+         */
+
         int length = 0;
         for (int i = 0; i < nums.length; i++) {
             if (length < 2 || nums[i] > nums[length - 2]) {
@@ -1103,6 +1111,71 @@ public class Topics {
         return length;
 //        执行用时：1 ms, 在所有 Java 提交中击败了 80.95% 的用户
 //        内存消耗：38.5 MB, 在所有 Java 提交中击败了 79.84% 的用户
+    }
+
+
+    /**
+     * 81. 搜索旋转排序数组 II
+     */
+    public boolean search(int[] nums, int target) {
+        /**
+         * 已知存在一个按非降序排列的整数数组 nums ，数组中的值不必互不相同。
+         * 在传递给函数之前，nums 在预先未知的某个下标 k（0 <= k < nums.length）上进行了 旋转 ，使数组变为 [nums[k], nums[k+1], ...,
+         * nums[n-1], nums[0], nums[1], ..., nums[k-1]]（下标 从 0 开始 计数）。例如， [0,1,2,4,4,4,5,6,6,7] 在下标 5 处经旋转后可能变为
+         * [4,5,6,6,7,0,1,2,4,4] 。
+         * 给你 旋转后 的数组 nums 和一个整数 target ，请你编写一个函数来判断给定的目标值是否存在于数组中。如果 nums 中存在这个目标值 target ，
+         * 则返回 true ，否则返回 false 。
+         *
+         * 示例 1：
+         * 输入：nums = [2,5,6,0,0,1,2], target = 0
+         * 输出：true
+         *
+         * 提示：
+         * 1 <= nums.length <= 5000
+         * -104 <= nums[i] <= 104
+         * 题目数据保证 nums 在预先未知的某个下标上进行了旋转
+         * -104 <= target <= 104
+         *
+         */
+
+
+        /**
+         * 直接遍历也行。考点是二分。
+         */
+
+        if (nums.length <= 0) return false;
+        if (nums.length == 1) return nums[0] == target;
+
+        int l = 0;
+        int r = nums.length - 1;
+        int mid;
+        while (l <= r) {
+
+            mid = (l + r) / 2;
+
+            if (nums[mid] == target) return true;
+            if (nums[l] == nums[mid] && nums[mid] == nums[r]) {
+                l++;
+                r--;
+            } else if (nums[l] <= nums[mid]) { //看左半边情况,表示左半边是有序的。
+                // 取=，表示这些左半边全相等；或者数组后半边全相等，但是以mid位置旋转；或者整个数组都是相等。
+
+                if (nums[mid] > target && target >= nums[l]) { //看是否在左半边
+                    r = mid - 1;
+                } else {
+                    l = mid + 1;
+                }
+            } else {   // 右半边有序
+                if (target > nums[mid] && target <= nums[r]) { // 是否在右半边
+                    l = mid + 1;
+                } else {
+                    r = mid - 1;
+                }
+            }
+        }
+        return false;
+//        执行用时：1 ms, 在所有 Java 提交中击败了 88.78% 的用户
+//        内存消耗：38.2 MB, 在所有 Java 提交中击败了 52.34% 的用户
     }
 
 }
