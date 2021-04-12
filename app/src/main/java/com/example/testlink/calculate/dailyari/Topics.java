@@ -1113,7 +1113,6 @@ public class Topics {
 //        内存消耗：38.5 MB, 在所有 Java 提交中击败了 79.84% 的用户
     }
 
-
     /**
      * 81. 搜索旋转排序数组 II
      */
@@ -1209,6 +1208,46 @@ public class Topics {
 //        内存消耗：35.1 MB, 在所有 Java 提交中击败了 97.55% 的用户
     }
 
+    /**
+     * 264、丑数II
+     */
+    public static int nthUglyNumber(int n) {
+        /**
+         * 给你一个整数 n ，请你找出并返回第 n 个 丑数 。
+         * 丑数 就是只包含质因数 2、3 和/或 5 的正整数。
+         */
+
+        /**
+         * 题解:
+         * 1也会被称为丑数。
+         *
+         * 2 3 5
+         * 1 2 3 4 5 6 8
+         */
+        if (n == 1) return 1;
+        int[] dp = new int[n + 1];
+        dp[1] = 1;
+        int a2 = 1, a3 = 1, a5 = 1;
+
+        for (int i = 2; i <= n; i++) {
+
+            int i1 = dp[a2] * 2, i2 = dp[a3] * 3, i3 = dp[a5] * 5;
+            dp[i] = Math.min(Math.min(i1, i2), i3);
+
+            if (dp[i] == i1) {
+                a2++;
+            }
+            if (dp[i] == i2) {
+                a3++;
+            }
+            if (dp[i] == i3) {
+                a5++;
+            }
+        }
+        return dp[n];
+//        执行用时：2 ms, 在所有 Java 提交中击败了 94.05% 的用户
+//        内存消耗：37.3 MB, 在所有 Java 提交中击败了 82.58% 的用户
+    }
 
 }
 
