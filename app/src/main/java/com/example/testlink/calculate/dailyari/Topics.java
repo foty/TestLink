@@ -4,6 +4,7 @@ import com.example.testlink.calculate.sword_for_offer.ListNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
 
@@ -1249,5 +1250,44 @@ public class Topics {
 //        内存消耗：37.3 MB, 在所有 Java 提交中击败了 82.58% 的用户
     }
 
+    /**
+     * 179、最大数
+     */
+    public String largestNumber(int[] nums) {
+        /**
+         * 给定一组非负整数 nums，重新排列每个数的顺序（每个数不可拆分）使之组成一个最大的整数。
+         * 注意：输出结果可能非常大，所以你需要返回一个字符串而不是整数。
+         * 提示：
+         * 1 <= nums.length <= 100
+         * 0 <= nums[i] <= 109
+         */
+
+
+        /**
+         * 思路：
+         * 转换成2个字符字符串相加，比较。
+         */
+
+        String[] sths = new String[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            sths[i] = nums[i] + "";
+        }
+        if (nums.length <= 1) return sths[0];
+
+        Arrays.sort(sths, (o1, o2) -> {
+            String s1 = o1 + o2;
+            String s2 = o2 + o1;
+            return s2.compareTo(s1); // 从小到大使用s1.compareTo(s2),这里使用从大到小。
+        });
+
+        if (sths[0].equals("0")) return sths[0];
+
+        StringBuilder sb = new StringBuilder();
+        for (String sth : sths) sb.append(sth);
+        return sb.toString();
+
+//        执行用时：12 ms, 在所有 Java 提交中击败了 19.35% 的用户
+//        内存消耗：38.2 MB, 在所有 Java 提交中击败了 25.91% 的用户
+    }
 }
 
