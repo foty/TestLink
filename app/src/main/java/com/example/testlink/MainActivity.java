@@ -24,6 +24,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.testlink.binder.TestBinderActivity;
 import com.example.testlink.data_structure.tree.BinarySearchTree;
+import com.example.testlink.design.chain_responsibility.AHandler;
+import com.example.testlink.design.chain_responsibility.ApprovalHandler;
+import com.example.testlink.design.chain_responsibility.BHandler;
+import com.example.testlink.design.chain_responsibility.CHandler;
 import com.example.testlink.design.observer.Clock;
 import com.example.testlink.design.observer.Timer;
 import com.example.testlink.design.proxy.DynamicProxy;
@@ -339,11 +343,19 @@ public class MainActivity extends AppCompatActivity {
 //        earPhone.listen();
 
         // 17、观察者模式
-        Clock clock = new Clock();
-        Timer timer = new Timer();
-        timer.setObserver(clock);
-        //整点到了
-        timer.ring();
+//        Clock clock = new Clock();
+//        Timer timer = new Timer();
+//        timer.setObserver(clock);
+//        //整点到了
+//        timer.ring();
+
+        // 18、责任链模式
+        AHandler a = new AHandler();
+        BHandler b = new BHandler();
+        CHandler c = new CHandler();
+        a.setHandler(b);
+        b.setHandler(c);
+        a.approval(1);
 
     }
 

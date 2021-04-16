@@ -1,106 +1,170 @@
-定义: 观察者模式也称发布/订阅模式。它定义对象间一种一对多的依赖关系，使得一个对象状态发生改变，所有依赖它
-的对象都能够得到通知并自动更新。观察者模式是一种行为型设计模式。
+定义: 责任链模式，多个对象处理请求时，为了避免请求的发送者和接收者之间的耦合关系，将这些对象连成一条链。并沿着这条链传递该请求，直到有对象处理它为止。
+责任链模式的重点就在一个“链”字上，沿着这个条链处理这个请求，返回结果。观察者模式是一种行为型设计模式。
 
 模型角色： 
-* 抽象主题角色: 即被观察对象，能添加，删除观察者,发出通知更新观察者。
-* 抽象观察者角色: 该接口为所有观察者定义了一个更新自己的方法。
-* 具体主题角色: 具体被观察者对象，保存了所有相关的观察者对象，当自身状态发生变化时，发出更新通知。
-* 具体观察者角色: 实现抽象观察者更新方法，根据被观察者改变自动更新。
+* 抽象处理者角色:抽象处理逻辑，定义一个方法设定和返回下一个处理者；
+* 具体处理者: 具体的处理请求逻辑。接到请求后可以选择处理掉请求，或者将请求传递给下一个处理者。
 
-以一个时间+铃响的简单例子模拟这种设计模式。上代码  
-抽象主题(抽象被观察者)，通常下，抽象被观察者都会定义一套注册，反注册观察者的接口，这是能通知到观察者的中药一环。
+责任链设计模式在我印象中最深的就是OkHttp中拦截链的设计。下面是添加拦截器一个方法。
 ```
-public interface Subject {
-    void addObserver(Observer ob);
+  Response getResponseWithInterceptorChain() throws IOException {
+    // 添加拦截器，构建处理链
+    List<Interceptor> interceptors = new ArrayList<>();
+    interceptors.addAll(client.interceptors());
+    interceptors.add(retryAndFollowUpInterceptor);
+    interceptors.add(new BridgeInterceptor(client.cookieJar()));
+    interceptors.add(new CacheInterceptor(client.internalCache()));
+    interceptors.add(new ConnectInterceptor(client));
+    if (!forWebSocket) {
+      interceptors.addAll(client.networkInterceptors());
+    }
+    interceptors.add(new CallServerInterceptor(forWebSocket));
 
-    void removeObserver(Observer ob);
+    Interceptor.Chain chain = new RealInterceptorChain(
+        interceptors, null, null, null, 0, originalRequest);
+    return chain.proceed(originalRequest);
+  }
+```
+`Interceptor`就是抽象处理者
+```
+public interface Interceptor {
+  Response intercept(Chain chain) throws IOException;
+  interface Chain {
+    Request request();
+    Response proceed(Request request) throws IOException;
+    @Nullable Connection connection();
+  }
+}
+```
+具体处理者1：
+```
+public final class BridgeInterceptor implements Interceptor {
+  @Override public Response intercept(Chain chain) throws IOException {
+    // 。。。省略部分代码逻辑
+    Response networkResponse = chain.proceed(requestBuilder.build()); // 传递给下一个处理者
+    // 。。。省略部分代码逻辑
+    return responseBuilder.build();
+  } 
+```
+具体处理者2：
+```
+public final class CacheInterceptor implements Interceptor {
+ @Override public Response intercept(Chain chain) throws IOException {
+ // 。。。省略部分代码逻辑
+    Response networkResponse = null;
+    try {
+      networkResponse = chain.proceed(networkRequest);
+    } finally {
+      if (networkResponse == null && cacheCandidate != null) {
+        closeQuietly(cacheCandidate.body());
+      }
+    }
+  // 。。。省略部分代码逻辑 
+ } 
+} 
+```
+上面只列举了2个具体处理者，此外还有ConnectInterceptor、CallServerInterceptor等等以及自定义的拦截器。它们都处理一部分自己的逻辑，然后传递给下一个处理者。可
+这能光看这几行代码看不出来哪里像责任链了。主要是OkHttp在处理方式上变化了一下，每个具体处理者都将传递给下个处理者的逻辑交给了一个类去处理(RealInterceptorChain)
+注意是同个类，不是同一个对象。每个具体处理者`chain.proceed()`实际都是调用 RealInterceptorChain#proceed():
+```
+public final class RealInterceptorChain implements Interceptor.Chain {
+
+  public Response proceed(Request request, StreamAllocation streamAllocation, HttpCodec httpCodec,
+      RealConnection connection) throws IOException {
+      //。。省略代码
+      
+      RealInterceptorChain next = new RealInterceptorChain( 
+      interceptors, streamAllocation, httpCodec, connection, index + 1, request);
+      Interceptor interceptor = interceptors.get(index); // 获取下一个处理者
+      Response response = interceptor.intercept(next); // 下一个处理者的处理逻辑
+      
+      // 。。省略代码
+  }
+}
+```
+用个简单点的例子再模拟。公司请假流程大家都知道，假定员工请假大于3天需要部门经理同意，大于7天需要老板同意，此外只需要组长级别同意即可。整个请假流程大概是：
+员工-> 组长 -> 经理 -> 老板。这个审批流程实际就是一条审批链。下面用代码实现：   
+抽象处理者：定义出抽象审批方法，提供设置下一个处理者的方法
+```
+public abstract class ApprovalHandler {
+
+    private ApprovalHandler handler;
     
-     void notifyObserver();
-}
-```
-抽象观察者：声明一个更新自己的方法。
-```
-public interface Observer {
+    public abstract void approval(int day);
 
-    void update();
-}
-```
-具体被观察者：实现抽象观察者具体接口，并且保存所有观察自己的观察者，发送通知
-```
-public class TimeSubject implements Subject {
-
-    private List<Observer> observers = new ArrayList<>();
-
-    @Override
-    public void addObserver(Observer ob) {
-        observers.add(ob);
+    protected void setHandler(ApprovalHandler handler) {
+        this.handler = handler;
     }
-
-    @Override
-    public void removeObserver(Observer ob) {
-        observers.remove(ob);
-    }
-
-    @Override
-    public void notifyObserver() {
-        for (Observer ob:observers) {
-            ob.update();
+    public void next(int day) {
+        if (handler == null) {
+            Log.d("TAG", "审批结束");
+        } else {
+            handler.approval(day);
         }
     }
 }
 ```
-具体观察者：实现自己的更新自己的方法。
+具体处理者：
 ```
-public class Clock implements Observer {
+// 1级领导
+public class AHandler extends ApprovalHandler {
 
     @Override
-    public void update() {
-       System.out.println("咚~~~");
+    public void approval(int day) {
+        if (day < 3) {
+            Log.d("TAG", "审批结束，同意请假" + day + "天");
+        } else {
+            Log.d("TAG", "组长：同意");
+            next(day);
+        }
+    }
+}
+
+// 2级领导
+public class BHandler extends ApprovalHandler {
+
+    @Override
+    public void approval(int day) {
+        if (day <= 7) {
+            Log.d("TAG", "审批结束，同意请假" + day + "天");
+        } else {
+            Log.d("TAG", "经理：同意");
+            next(day);
+        }
+    }
+}
+
+// 最高领导
+public class CHandler extends ApprovalHandler {
+
+    @Override
+    public void approval(int day) {
+        Log.d("TAG", "老板：同意");
+        Log.d("TAG", "审批结束，同意请假" + day + "天");
     }
 }
 ```
-对于类TimeSubject，实际上很少会这样直接使用，而是再次封装成另一种形态。为了贴近这种场景，声明一个新的类作为被观察者:
+使用：
 ```
-public class Timer {
-
-    private TimeSubject subject;
-
-    public Timer(){
-        subject = new TimeSubject();
-    }
-
-    public void setObserver(Observer observer) {
-        subject.addObserver(observer);
-    }
-
-    public void ring() {
-        subject.notifyObserver();
-    }
-}
+AHandler a = new AHandler();
+BHandler b = new BHandler();
+CHandler c = new CHandler();
+a.setHandler(b);
+b.setHandler(c);
+a.approval(1);
 ```
-场景使用:
-```
-    Clock clock = new Clock();
-    Timer timer = new Timer();
-    timer.setObserver(clock);
-    
-    //通知铃响
-    timer.ring();
-```
+具体观察者：实现自己的更新自己的方法。
 应用场景：
-* 关联行为。一个方面改变另一方面需要作出调整。
-* 形成触发链，多级触发事件
+* 一个请求需要一系列的处理工作
+* 业务流的处理
+* 对系统进行补充扩展
 
 优点： 
-* 观察者与被观察者是抽象耦合的，这意味着具体主题与具体观察者更加容易拓展。
-* 被观察者有着所有注册过的观察者，可以向所有的观察者发出通知，形成一条触发链，或者说一种触发机制。
+* 提高系统的灵活性；
+* 将请求和处理者分隔开，请求不知道是哪个处理者处理的，处理者不用知道请求的全貌；
 
 缺点：
-* 如果一个被观察者对象有很多观察者，通知到所有的观察者会花费很多时间；
-* 线程安全问题。如果通知观察者是在另外的线程中操作时，需要考虑。
-* 通知顺序问题。如果观察者、被观察者之前存在循环依赖关系，将会触发循环通知机制，产生严重后果。
+* 降低程序性能，需要从链头处理到链尾，整个链条很长的时候，性能大幅度下降。
+* 调试困难，请求与处理者分隔开，无法直接命中是哪一个处理者完成的请求
 
 **小结**  
-观察者模式是一种应用广泛的设计模式，很多地方都能见到他的身影。例如ListView，RecyclerView。他的一大好处就是
-充分解耦。只有最顶层抽象观察者与被观察者耦合(这也算是一个缺点吗?)，可以将这二者封装在独立的对象中，可以各自改变和
-复用。像EventBus，Rx系列等等，个中妙处谁用谁知道。总之在联动行为场景，又想解耦，用观察者模式设计代码就对了。
