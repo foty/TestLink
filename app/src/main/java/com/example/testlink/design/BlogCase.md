@@ -82,9 +82,9 @@ public final class RealInterceptorChain implements Interceptor.Chain {
   }
 }
 ```
-用个简单点的例子再模拟。公司请假流程大家都知道，假定员工请假大于3天需要部门经理同意，大于7天需要老板同意，此外只需要组长级别同意即可。整个请假流程大概是：
+用个简单的公司请假流程例子模拟:假定员工请假大于3天需要部门经理同意，大于7天需要老板同意，此外只需要组长级别同意即可。整个请假流程大概是：
 员工-> 组长 -> 经理 -> 老板。这个审批流程实际就是一条审批链。下面用代码实现：   
-抽象处理者：定义出抽象审批方法，提供设置下一个处理者的方法
+抽象处理者：定义出抽象审批方法，提供设置下一个处理者的方法：
 ```
 public abstract class ApprovalHandler {
 
@@ -111,10 +111,10 @@ public class AHandler extends ApprovalHandler {
 
     @Override
     public void approval(int day) {
+        Log.d("TAG", "组长：同意");
         if (day < 3) {
-            Log.d("TAG", "审批结束，同意请假" + day + "天");
+            Log.d("TAG", "审批结束，请假" + day + "天");
         } else {
-            Log.d("TAG", "组长：同意");
             next(day);
         }
     }
@@ -126,9 +126,9 @@ public class BHandler extends ApprovalHandler {
     @Override
     public void approval(int day) {
         if (day <= 7) {
-            Log.d("TAG", "审批结束，同意请假" + day + "天");
-        } else {
             Log.d("TAG", "经理：同意");
+            Log.d("TAG", "审批结束，请假" + day + "天");
+        } else {
             next(day);
         }
     }
@@ -140,7 +140,7 @@ public class CHandler extends ApprovalHandler {
     @Override
     public void approval(int day) {
         Log.d("TAG", "老板：同意");
-        Log.d("TAG", "审批结束，同意请假" + day + "天");
+        Log.d("TAG", "审批结束，请假" + day + "天");
     }
 }
 ```
@@ -152,7 +152,16 @@ CHandler c = new CHandler();
 a.setHandler(b);
 b.setHandler(c);
 a.approval(1);
+// a.approval(10);
 ```
+log输出:
+>组长：同意  
+审批结束，同意请假1天  
+
+>组长：同意  
+ 经理：同意  
+ 老板：同意  
+ 审批结束，同意请假10天  
 
 应用场景：
 * 一个请求需要一系列的处理工作
@@ -161,10 +170,14 @@ a.approval(1);
 
 优点： 
 * 提高系统的灵活性；
-* 将请求和处理者分隔开，请求不知道是哪个处理者处理的，处理者不用知道请求的全貌；
+* 将请求和处理者分隔开，降低耦合度，请求不知道是哪个处理者处理的，处理者不用知道请求的全貌；
 
 缺点：
 * 降低程序性能，需要从链头处理到链尾，整个链条很长的时候，性能大幅度下降。
 * 调试困难，请求与处理者分隔开，无法直接命中是哪一个处理者完成的请求
 
 **小结**  
+责任链一般用于处理类似流程节点之类的业务场景中。从它的命名上就可以看出一点端倪，一是责任分离，大伙儿各司其职；二是"链"，按照
+执行顺序，依次处理。责任链上的各个角色都有机会处理请求，却不一定都会去处理请求，甚至都不处理请求(不属于责任范围内)。此外，责任
+链(包括其他设计模式)还有很多的变种写法。就比如前面例子1(okHttp)和例子2。Ok中的例子反而更像是一条“链”，例子2中的“链”流程形
+态体现更加明显。无论哪种写法，只要符合责任链的核心思想(责任分工，形成了"链")它都是责任链设计模式。
