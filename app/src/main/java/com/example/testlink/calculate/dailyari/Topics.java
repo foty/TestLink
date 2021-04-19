@@ -1,6 +1,7 @@
 package com.example.testlink.calculate.dailyari;
 
 import com.example.testlink.calculate.sword_for_offer.ListNode;
+import com.example.testlink.calculate.sword_for_offer.TreeNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1079,9 +1080,9 @@ public class Topics {
     }
 
     /**
-     * 80、删除有序数组中的重复项
+     * 80、删除有序数组中的重复项II
      */
-    public int removeDuplicates(int[] nums) {
+    public int removeDuplicates2(int[] nums) {
 
         /**
          * 给你一个有序数组 nums ，请你 原地 删除重复出现的元素，使每个元素 最多出现两次 ，返回删除后数组的新长度。
@@ -1288,6 +1289,147 @@ public class Topics {
 
 //        执行用时：12 ms, 在所有 Java 提交中击败了 19.35% 的用户
 //        内存消耗：38.2 MB, 在所有 Java 提交中击败了 25.91% 的用户
+    }
+
+    /**
+     * 783、二叉搜索树节点最小距离(4-13)
+     */
+    public int minDiffInBST(TreeNode root) {
+        /**
+         * 给你一个二叉搜索树的根节点 root ，返回 树中任意两不同节点值之间的最小差值 。
+         * 输入：root = [4,2,6,1,3]
+         * 输出：1
+         * 输入：root = [1,0,48,null,null,12,49]
+         * 输出：1
+         */
+        return root.val;
+    }
+
+    /**
+     * 208、实现Trie(前缀树)(4-14)
+     */
+    public void test208() {
+        Trie trie = new Trie();
+    }
+
+    /**
+     * 213、打家劫舍II(4-15)
+     */
+    public int rob(int[] nums) {
+        /**
+         * 你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都 围成一圈 ，这意味着第一个
+         * 房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，
+         * 系统会自动报警 。
+         * 给定一个代表每个房屋存放金额的非负整数数组，计算你 在不触动警报装置的情况下 ，今晚能够偷窃到的最高金额。
+         *
+         * 示例 1：
+         * 输入：nums = [2,3,2]
+         * 输出：3
+         * 解释：你不能先偷窃 1 号房屋（金额 = 2），然后偷窃 3 号房屋（金额 = 2）, 因为他们是相邻的。
+         */
+        return 0;
+    }
+
+    /**
+     * 87、扰乱字符串 (4-16)
+     */
+    public boolean isScramble(String s1, String s2) {
+        /**
+         * 使用下面描述的算法可以扰乱字符串 s 得到字符串 t ：
+         * 如果字符串的长度为 1 ，算法停止
+         * 如果字符串的长度 > 1 ，执行下述步骤：
+         * 在一个随机下标处将字符串分割成两个非空的子字符串。即，如果已知字符串 s ，则可以将其分成两个子字符串 x 和 y ，且满足 s = x + y 。
+         * 随机 决定是要「交换两个子字符串」还是要「保持这两个子字符串的顺序不变」。即，在执行这一步骤之后，s 可能是 s = x + y 或者 s = y + x 。
+         * 在 x 和 y 这两个子字符串上继续从步骤 1 开始递归执行此算法。
+         * 给你两个 长度相等 的字符串 s1 和 s2，判断 s2 是否是 s1 的扰乱字符串。如果是，返回 true ；否则，返回 false 。
+         *
+         * 如：
+         * 输入：s1 = "abcde", s2 = "caebd"
+         * 输出：false
+         *
+         * 提示：
+         * s1.length == s2.length
+         * 1 <= s1.length <= 30
+         * s1 和 s2 由小写英文字母组成
+         */
+        return false;
+    }
+
+    /**
+     * 220、存在重复元素III (4-17)
+     */
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        /**
+         * 给你一个整数数组 nums 和两个整数 k 和 t 。请你判断是否存在 两个不同下标 i 和 j，使得 abs(nums[i] - nums[j]) <= t ，同时又满足
+         * abs(i - j) <= k 。如果存在则返回 true，不存在返回 false。
+         * 示例 1：
+         * 输入：nums = [1,2,3,1], k = 3, t = 0
+         * 输出：true
+         *
+         * 提示：
+         * 0 <= nums.length <= 2 * 104
+         * -231 <= nums[i] <= 231 - 1
+         * 0 <= k <= 104
+         * 0 <= t <= 231 - 1
+         */
+        return false;
+    }
+
+    /**
+     * 26、删除有序数组中的重复项 (4-18)
+     */
+    public int removeDuplicates(int[] nums) {
+        /**
+         * 给你一个有序数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。
+         * 不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
+         * 例子：
+         * 输入：nums = [1,1,2]
+         * 输出：2, nums = [1,2]
+         * 解释：函数应该返回新的长度 2 ，并且原数组 nums 的前两个元素被修改为 1, 2 。不需要考虑数组中超出新长度后面的元素。
+         *
+         *  提示：
+         * 0 <= nums.length <= 3 * 104
+         * -104 <= nums[i] <= 104
+         * nums 已按升序排列
+         */
+        /**
+         * 参考： removeDuplicates2()
+         */
+        return 0;
+    }
+
+    /**
+     * 27、移除元素
+     */
+    public int removeElement(int[] nums, int val) {
+        /**
+         * 给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。
+         * 不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。
+         * 元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。
+         *
+         *  提示：
+         * 0 <= nums.length <= 100
+         * 0 <= nums[i] <= 50
+         * 0 <= val <= 100
+         */
+
+        if (nums.length <= 0) return 0;
+        if (nums.length == 1) return nums[0] == val ? 0 : 1;
+        int p = 0;
+        for (int i = 0; i < nums.length; i++) { // [3.2.2.3] 3
+            if (nums[i] != val) {
+                if (p != i) {
+                    nums[p] = nums[i];
+                    nums[i] = 0;
+                }
+                p++;
+            } else {
+
+            }
+        }
+        return p;
+//        执行用时：0 ms, 在所有 Java 提交中击败了 100.00% 的用户
+//        内存消耗：37.3 MB, 在所有 Java 提交中击败了 8.45% 的用户
     }
 }
 

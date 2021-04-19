@@ -5,14 +5,21 @@ package com.example.testlink.calculate.sword_for_offer;
  * Date : 2020/4/10 16:43
  */
 public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
 
-    TreeNode() {
+    public TreeNode() {
     }
 
-    TreeNode(int x) {
+    public TreeNode(int x) {
         val = x;
     }
+
+    public TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+
 }
