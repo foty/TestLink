@@ -1431,5 +1431,29 @@ public class Topics {
 //        执行用时：0 ms, 在所有 Java 提交中击败了 100.00% 的用户
 //        内存消耗：37.3 MB, 在所有 Java 提交中击败了 8.45% 的用户
     }
+
+    /**
+     * 28、实现strStr()
+     */
+    public int strStr(String haystack, String needle) {
+
+        /**
+         * 实现 strStr() 函数。
+         * 给你两个字符串 haystack 和 needle ，请你在 haystack 字符串中找出 needle 字符串出现的第一个位置（下标从 0 开始）。
+         * 如果不存在，则返回  -1 。
+         *  
+         * 说明：
+         * 当 needle 是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。
+         * 对于本题而言，当 needle 是空字符串时我们应当返回 0 。这与 C 语言的 strstr() 以及 Java 的 indexOf() 定义相符。
+         *
+         */
+        //实际上应该是自己实现一个indexOf方法，而不是直接调用这个api
+        //不过 真香。哈哈哈
+        return haystack.indexOf(needle);
+
+        /**
+         * 本题最佳解法 kmp，还没学会
+         */
+    }
 }
 
