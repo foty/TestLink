@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+import javassist.expr.NewArray;
+
 /**
  * Create by lxx
  * Date : 2021/3/1 10:50
@@ -16,8 +18,11 @@ import java.util.Stack;
 public class Topics {
 
     public static void main(String[] args) {
-
-        test303();
+        int[] ints = new int[]{4, 8, 10, 240};
+        List<Integer> list = largestDivisibleSubset(ints);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.print(list.get(i) + " ");
+        }
     }
 
 
@@ -1578,28 +1583,99 @@ public class Topics {
          * 先用前缀和
          */
         int m = mat.length, n = mat[0].length;
-            int[][] sum = new int[m + 1][n + 1];
-            for (int i = 1; i <= m; i++) {
-                for (int j = 1; j <= n; j++) {
-                    sum[i][j] = sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1] + mat[i - 1][j - 1];
-                }
+        int[][] sum = new int[m + 1][n + 1];
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                sum[i][j] = sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1] + mat[i - 1][j - 1];
             }
-            int ans = Integer.MIN_VALUE;
-            for (int i = 1; i <= m; i++) {
-                for (int j = 1; j <= n; j++) {
-                    for (int p = i; p <= m; p++) {
-                        for (int q = j; q <= n; q++) {
-                            int cur = sum[p][q] - sum[i - 1][q] - sum[p][j - 1] + sum[i - 1][j - 1];
-                            if (cur <= k) {
-                                ans = Math.max(ans, cur);
-                            }
+        }
+        int ans = Integer.MIN_VALUE;
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                for (int p = i; p <= m; p++) {
+                    for (int q = j; q <= n; q++) {
+                        int cur = sum[p][q] - sum[i - 1][q] - sum[p][j - 1] + sum[i - 1][j - 1];
+                        if (cur <= k) {
+                            ans = Math.max(ans, cur);
                         }
                     }
                 }
             }
-            return ans;
+        }
+        return ans;
 //        执行用时：288 ms, 在所有 Java 提交中击败了 30.89% 的用户
 //        内存消耗：38.5 MB, 在所有 Java 提交中击败了 76.13% 的用户
+    }
+
+    /**
+     * 368、 最大整除子集
+     */
+    public static List<Integer> largestDivisibleSubset(int[] nums) {
+        /**
+         * 给你一个由 无重复 正整数组成的集合 nums ，请你找出并返回其中最大的整除子集 answer ，子集中每一元素对 (answer[i], answer[j]) 都应当满足：
+         * answer[i] % answer[j] == 0 ，或
+         * answer[j] % answer[i] == 0
+         * 如果存在多个有效解子集，返回其中任何一个均可。
+         *
+         * 示例 1：
+         * 输入：nums = [1,2,3]
+         * 输出：[1,2]
+         * 解释：[1,3] 也会被视为正确答案。
+         * 示例 2：
+         * 输入：nums = [1,2,4,8]
+         * 输出：[1,2,4,8]
+         *
+         * 提示：
+         * 1 <= nums.length <= 1000
+         * 1 <= nums[i] <= 2 * 109
+         * nums 中的所有整数 互不相同
+         *
+         */
+
+        /**
+         * 思路:
+         * 题目中最大整除子集就是这个集合中任意2个数之间为倍数关系。即(A/B==0 || B/A==0)。要求最大，也就是集合内size最长。
+         *
+         */
+
+        List<Integer> result = new ArrayList<>();
+        if (nums.length == 1) {
+            result.add(nums[0]);
+            return result;
+        }
+
+        Arrays.sort(nums);
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
+
+        int maxSize = 0;
+        int maxValue = 0;
+
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] % nums[j] == 0) {// 题目声明没有重复元素
+                    dp[i] = Math.max(dp[i], dp[j] + 1); // 动态规划求最大集合长度
+                }
+            }
+            if (dp[i] > maxSize) {
+                maxSize = dp[i];
+                maxValue = nums[i];
+            }
+        }
+
+        // 倒推获取元素
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (dp[i] == maxSize && maxValue % nums[i] == 0) {
+                result.add(nums[i]);
+                maxValue = nums[i];
+                maxSize--;
+            }
+            if (maxSize < 0) break;
+        }
+
+        return result;
+//        执行用时：19 ms, 在所有 Java 提交中击败了 98.30% 的用户
+//        内存消耗：38.7 MB, 在所有 Java 提交中击败了 51.71% 的用户
     }
 }
 
