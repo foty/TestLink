@@ -8,8 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
-import javassist.expr.NewArray;
-
 /**
  * Create by lxx
  * Date : 2021/3/1 10:50
@@ -1635,7 +1633,17 @@ public class Topics {
         /**
          * 思路:
          * 题目中最大整除子集就是这个集合中任意2个数之间为倍数关系。即(A/B==0 || B/A==0)。要求最大，也就是集合内size最长。
+         * 有一个比较好的思路就是对数组先排序，从小到大。对于数组中的每个数nums[i]都除以前面的数，凡是能整除的数都能成为以nums[i]
+         * 为最大元素的集合中的元素（注意还不能确定是否是以nums[i]为最大数的最大整除集合，因为A/B=0,A/C=0,但不能保证B/C=0）。
+         * 使用动态规划。
+         * 按照上面思路，数组nums是有序的，而且A/B=0,C/A=0,那么一定有C/B=0,其中C>A>B。假如知道了在数组nums中对于A能被它整除的数的数量，那么
+         * 对于任何一个数B能将A整除，那么B同样能整除A能整除的数。于是有知道了A的最大整除子集p，那么B的最大整除子集为p+1。
          *
+         * 定义DP数组：使用dp[i]表示在数组中前i个数的最大整除子集数量。
+         * base case：每个数资审都是自己的子集，所以dp[i]的初始状态都是1。
+         * 边界条件：数组的size
+         * 转移方程：当两个数组下标i、j，nums[i]/nums[j]=0时，dp[i] = dp[i]+dp[j],dp[i]默认等于1，也可以写成
+         * dp[i] = 1+dp[j]
          */
 
         List<Integer> result = new ArrayList<>();
@@ -1654,7 +1662,7 @@ public class Topics {
         for (int i = 1; i < nums.length; i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[i] % nums[j] == 0) {// 题目声明没有重复元素
-                    dp[i] = Math.max(dp[i], dp[j] + 1); // 动态规划求最大集合长度
+                    dp[i] = Math.max(dp[i], dp[j] + 1); // 动态规划求最大集合长度,因为还没有遍历到i，需要比较取得最大的dp[i]
                 }
             }
             if (dp[i] > maxSize) {
