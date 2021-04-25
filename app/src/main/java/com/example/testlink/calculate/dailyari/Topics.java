@@ -1633,12 +1633,13 @@ public class Topics {
         /**
          * 思路:
          * 题目中最大整除子集就是这个集合中任意2个数之间为倍数关系。即(A/B==0 || B/A==0)。要求最大，也就是集合内size最长。
+         * 法1：
          * 有一个比较好的思路就是对数组先排序，从小到大。对于数组中的每个数nums[i]都除以前面的数，凡是能整除的数都能成为以nums[i]
          * 为最大元素的集合中的元素（注意还不能确定是否是以nums[i]为最大数的最大整除集合，因为A/B=0,A/C=0,但不能保证B/C=0）。
-         * 使用动态规划。
+         *
+         * 法2：使用动态规划。
          * 按照上面思路，数组nums是有序的，而且A/B=0,C/A=0,那么一定有C/B=0,其中C>A>B。假如知道了在数组nums中对于A能被它整除的数的数量，那么
          * 对于任何一个数B能将A整除，那么B同样能整除A能整除的数。于是有知道了A的最大整除子集p，那么B的最大整除子集为p+1。
-         *
          * 定义DP数组：使用dp[i]表示在数组中前i个数的最大整除子集数量。
          * base case：每个数资审都是自己的子集，所以dp[i]的初始状态都是1。
          * 边界条件：数组的size
@@ -1741,6 +1742,49 @@ public class Topics {
         return dp[target];
 //        执行用时：1 ms, 在所有 Java 提交中击败了 98.30% 的用户
 //        内存消耗：35.5 MB, 在所有 Java 提交中击败了 96.65% 的用户
+    }
+
+    /**
+     * 897、递增顺序搜索树
+     */
+    public TreeNode increasingBST(TreeNode root) {
+        /**
+         * 给你一棵二叉搜索树，请你 按中序遍历 将其重新排列为一棵递增顺序搜索树，使树中最左边的节点成为树的根节点，并且每个节点没有左子节点，只有一个右子节点。
+         * 如：
+         * 输入：root = [5,1,7]
+         * 输出：[1,null,5,null,7]
+         *  
+         * 提示：
+         *
+         * 树中节点数的取值范围是 [1, 100]
+         * 0 <= Node.val <= 1000
+         */
+
+        /**
+         * 思路：
+         * 中序遍历后使用容器保存节点数据，重新构建新的顺序搜索树
+         */
+
+        List<Integer> list = new ArrayList<>();
+        ss(root, list);
+
+        TreeNode head = new TreeNode(-1);
+        TreeNode last = head;
+        for (int i : list) {
+            TreeNode node = new TreeNode(i);
+            last.right = node;
+            last = node;
+        }
+        return head.right;
+//        执行用时：0 ms, 在所有 Java 提交中击败了 100.00% 的用户
+//        内存消耗：35.9 MB, 在所有 Java 提交中击败了 82.07% 的用户
+    }
+
+    private void ss(TreeNode root, List<Integer> list) {
+        if (root == null) return;
+        ss(root.left, list);
+        list.add(root.val);
+        ss(root.right, list);
     }
 }
 
