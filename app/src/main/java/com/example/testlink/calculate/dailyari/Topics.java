@@ -2,7 +2,6 @@ package com.example.testlink.calculate.dailyari;
 
 import com.example.testlink.calculate.sword_for_offer.ListNode;
 import com.example.testlink.calculate.sword_for_offer.TreeNode;
-import com.example.testlink.design.state.Day;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,11 +16,8 @@ import java.util.Stack;
 public class Topics {
 
     public static void main(String[] args) {
-        int[] ints = new int[]{4, 8, 10, 240};
-        List<Integer> list = largestDivisibleSubset(ints);
-        for (int i = 0; i < list.size(); i++) {
-            System.out.print(list.get(i) + " ");
-        }
+        int[] ints = new int[]{1,2,3,4,5,6,7,8,9,10};
+        shipWithinDays(ints,5);
     }
 
 
@@ -1791,14 +1787,13 @@ public class Topics {
     /**
      * 1011、 在D天内送达包裹的能力
      */
-    public int shipWithinDays(int[] weights, int D) {
+    public static int shipWithinDays(int[] weights, int D) {
         /**
          * 传送带上的包裹必须在 D 天内从一个港口运送到另一个港口。
          * 传送带上的第 i 个包裹的重量为 weights[i]。每一天，我们都会按给出重量的顺序往传送带上装载包裹。我们装载的重量不会超过船的最大运载重量。
          * 返回能在 D 天内将传送带上的所有包裹送达的船的最低运载能力。
          *
-         * 示例 1：
-         *
+         * 示例 1
          * 输入：weights = [1,2,3,4,5,6,7,8,9,10], D = 5
          * 输出：15
          * 解释：
@@ -1837,25 +1832,27 @@ public class Topics {
         int mid = 0;
         sum = 0;
         int day;
-        while (l > r) {
+        while (l < r) {
             mid = (l + r) / 2;
-            day = 1;
-            for (int i = 0; i < weights.length; i++) {
+            day = 0;
+            for (int i = 0; i < weights.length; ) {
                 while (i < weights.length && sum + weights[i] <= mid) {
-                    sum = +weights[i];
+                    sum += weights[i];
                     i++;
                 }
                 day++;
+                System.out.print(sum+" , " + weights[i]);
                 sum = 0;
             }
-
-            if (day - 1 <= D) { // 判断能不能在D天内运完，不能运完则尝试增大承运能力，能运完则尝试减小承运能力
+            if (day <= D) { // 判断能不能在D天内运完，不能运完则尝试增大承运能力，能运完则尝试减小承运能力
                 r = mid;
             } else {
                 l = mid + 1;
             }
         }
         return l;
+//        执行用时：13 ms, 在所有 Java 提交中击败了 45.71% 的用户
+//        内存消耗：41.4 MB, 在所有 Java 提交中击败了 93.46% 的用户
     }
 
 }
