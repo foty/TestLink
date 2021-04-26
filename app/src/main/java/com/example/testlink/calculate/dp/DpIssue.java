@@ -159,24 +159,39 @@ public class DpIssue {
         /**
          * 思路
          * 1、定义dp数组
+         * 要求是获取最大利润，那么肯定就是最低点买入，最高点卖出。前提条件之一：卖出不能在买入之前。我的理解是规定了一种减法顺序，只能是用后面元素减前面的元素。
+         * 设dp[i]表示在第i天卖出时的利润。那么在知道第i-1天卖出的利润后，第i天的利润等于第i-1天卖出的利润加上第i-1天买入第i天卖出的利润。注意第i-1天买入第i
+         * 天卖出产生的利润有可能是负数，也就是亏本。但是对于求dp[i]来说是合理的。(ps说点废话:对于dp[i]更加直接的求法是price[i] - price[min],min为买入点,
+         * 但是如果这样写也实在是没有必要写dp了，hhh)。所以转移方程为：
+         * dp[i] = dp[i-1] + price[i] - price[i-1]。
+         * 前面一切基于确定了最低点的情况下。但是实际上最低点也是在变化的。可以使用一个变量min表示dp[i]的最低点，当碰到比min还低时，重新计算最低点，此时当天的
+         * 利润也就等于0了。最后从dp数组中取出最大的元素即为题目的最大利润(注意不是dp[price.length])。
          *
          * 2、明确base case
+         * dp[0] = 0，今天买入今天卖出或者只买入不卖出，当天的利润都是0
+         *
          * 3、边界条件
+         * 使用一个变量min表示dp[i]的最低点，当碰到比min还低时，重新计算最低点，此时当天的利润也就等于0了。最后从dp数组中取出最大的元素即为题目的最大利
+         * 润(注意不是dp[price.length])
+         *
          * 4、转移方程
+         * 当前比买入点要高时：dp[i] = dp[i-1] + price[i] - price[i-1]。
+         *
          * 5、状态压缩
+         * 将空间复杂度从O(n)优化到O(1),n为数组长度。
          */
         int min = 0;
         int max = 0;
         int[] dp = new int[prices.length];
         dp[0] = 0;
         for (int i = 1; i < prices.length; i++) {
-            if (prices[i] < prices[min]){
+            if (prices[i] < prices[min]) {
                 dp[i] = 0; //今天买入
                 min = i;
                 continue;
             }
-            dp[i] = dp[i - 1] + prices[i] - prices[i-1];
-            max = Math.max(max,dp[i]);
+            dp[i] = dp[i - 1] + prices[i] - prices[i - 1];
+            max = Math.max(max, dp[i]);
         }
         return max;
 //        执行用时：4 ms, 在所有 Java 提交中击败了 27.39% 的用户
