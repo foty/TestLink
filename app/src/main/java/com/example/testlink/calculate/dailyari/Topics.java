@@ -2,6 +2,7 @@ package com.example.testlink.calculate.dailyari;
 
 import com.example.testlink.calculate.sword_for_offer.ListNode;
 import com.example.testlink.calculate.sword_for_offer.TreeNode;
+import com.example.testlink.design.state.Day;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1786,5 +1787,76 @@ public class Topics {
         list.add(root.val);
         ss(root.right, list);
     }
+
+    /**
+     * 1011、 在D天内送达包裹的能力
+     */
+    public int shipWithinDays(int[] weights, int D) {
+        /**
+         * 传送带上的包裹必须在 D 天内从一个港口运送到另一个港口。
+         * 传送带上的第 i 个包裹的重量为 weights[i]。每一天，我们都会按给出重量的顺序往传送带上装载包裹。我们装载的重量不会超过船的最大运载重量。
+         * 返回能在 D 天内将传送带上的所有包裹送达的船的最低运载能力。
+         *
+         * 示例 1：
+         *
+         * 输入：weights = [1,2,3,4,5,6,7,8,9,10], D = 5
+         * 输出：15
+         * 解释：
+         * 船舶最低载重 15 就能够在 5 天内送达所有包裹，如下所示：
+         * 第 1 天：1, 2, 3, 4, 5
+         * 第 2 天：6, 7
+         * 第 3 天：8
+         * 第 4 天：9
+         * 第 5 天：10
+         *
+         * 请注意，货物必须按照给定的顺序装运，因此使用载重能力为 14 的船舶并将包装分成 (2, 3, 4, 5), (1, 6, 7), (8), (9), (10) 是不允许的。
+         * 提示：
+         * 1 <= D <= weights.length <= 50000
+         * 1 <= weights[i] <= 500
+         */
+
+        /**
+         * 思路：二分解法。
+         * 假设x为题目答案的最低承运能力。那么对于数组中weights的元素来说都有:
+         * weights[i] < x,都不能一天运走 ;weights[i] >= x，都能被一天运走；
+         * 既然用到二分，那肯定要先确定二分的数列。假设这个数列为y，y的取值范围应该是在[weights[max],sum(weights)]的。
+         * 先看最大值部分，能够一天就运走所有包裹显然就是最大的承运能力。所以max(x) = sum[weights]。对于最小承运能力能不能
+         * 从1开始算。显然不行，假如我有一个包裹重为3，那不得拆分成3天运？这很明显不合理。因为1<= D <= weights.length。
+         * 以1来计算实际运完天数肯定大于D。min(y) = weights[min]也不行，运完天数一样会大于D。所以min(y)=weights[max]
+         * 才是最合理的。以这个值来算，运完所需要天数刚好等于D。
+         */
+
+        int max = 0;
+        int sum = 0;
+        for (int i = 0; i < weights.length; i++) {
+            sum += weights[i];
+            max = Math.max(max, weights[i]);
+        }
+        int l = max; //
+        int r = sum;
+        int mid = 0;
+        sum = 0;
+        int day;
+        while (l > r) {
+            mid = (l + r) / 2;
+            day = 1;
+            for (int i = 0; i < weights.length; i++) {
+                while (i < weights.length && sum + weights[i] <= mid) {
+                    sum = +weights[i];
+                    i++;
+                }
+                day++;
+                sum = 0;
+            }
+
+            if (day - 1 <= D) { // 判断能不能在D天内运完，不能运完则尝试增大承运能力，能运完则尝试减小承运能力
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l;
+    }
+
 }
 
