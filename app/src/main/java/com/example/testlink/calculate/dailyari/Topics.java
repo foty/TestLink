@@ -16,8 +16,8 @@ import java.util.Stack;
 public class Topics {
 
     public static void main(String[] args) {
-        int[] ints = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        shipWithinDays(ints, 5);
+
+        System.out.println(Math.sqrt(3));
     }
 
 
@@ -1896,6 +1896,41 @@ public class Topics {
             sum += root.val;
         int right = dfs(root.right, low, high);
         return sum + left + right;
+    }
+
+
+    /**
+     * 633、平方数之和
+     */
+    public boolean judgeSquareSum(int c) {
+        /**
+         * 给定一个非负整数 c ，你要判断是否存在两个整数 a 和 b，使得 a2 + b2 = c 。
+         *
+         * 示例 1：
+         *
+         * 输入：c = 5
+         * 输出：true
+         * 解释：1 * 1 + 2 * 2 = 5
+         *
+         * 提示：
+         * 0 <= c <= 231 - 1
+         */
+
+        /**
+         * 思路： 暴力枚举
+         * 当一个数开根号后的数(double类型)与这个数的int类型相等，那么可以说是完全开平方，即通过平方得到。比如根号3 = 1.73， int后等于1。
+         * 就是不能完全开平方出来。根号4 = 2.0，int后等于2,2.0 == 2，可以完全开平方出来。
+         */
+        int max = (int) Math.sqrt(c);
+        for (int i = 0; i <= max; i++) {
+            double sqrt = Math.sqrt(c - i * i);
+            if (sqrt == (int) sqrt) {
+                return true;
+            }
+        }
+        return false;
+//        执行用时：5 ms, 在所有 Java 提交中击败了 21.32% 的用户
+//        内存消耗：35 MB, 在所有 Java 提交中击败了 93.38% 的用户
     }
 }
 
