@@ -5,7 +5,9 @@ import com.example.testlink.calculate.sword_for_offer.TreeNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -1933,7 +1935,7 @@ public class Topics {
     }
 
     /**
-     * 403、青蛙过河
+     * 403、青蛙过河 ?
      */
     public boolean canCross(int[] stones) {
         /**
@@ -1963,5 +1965,32 @@ public class Topics {
 
         return false;
     }
+
+
+    /**
+     * 137、只出现一次的数字 II
+     */
+    public int singleNumber(int[] nums) {
+        /**
+         * 给你一个整数数组 nums ，除某个元素仅出现 一次 外，其余每个元素都恰出现 三次 。请你找出并返回那个只出现了一次的元素。
+         */
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        int ans = 0;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            int num = entry.getKey(), occ = entry.getValue();
+            if (occ == 1) {
+                ans = num;
+                break;
+            }
+        }
+        return ans;
+//        执行用时：8 ms, 在所有 Java 提交中击败了 5.37% 的用户
+//        内存消耗：38.1 MB, 在所有 Java 提交中击败了 82.80% 的用户
+    }
+
+
 }
 
