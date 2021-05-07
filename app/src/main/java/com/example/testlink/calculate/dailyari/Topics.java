@@ -2031,5 +2031,38 @@ public class Topics {
 //        内存消耗：39.2 MB, 在所有 Java 提交中击败了 91.13% 的用户
     }
 
+    /**
+     * 1486、数组异或操作
+     */
+    public int xorOperation(int n, int start) {
+        /**
+         * 给你两个整数，n 和 start 。
+         * 数组 nums 定义为：nums[i] = start + 2*i（下标从 0 开始）且 n == nums.length 。
+         * 请返回 nums 中所有元素按位异或（XOR）后得到的结果。
+         *
+         * 示例 1：
+         * 输入：n = 5, start = 0
+         * 输出：8
+         * 解释：数组 nums 为 [0, 2, 4, 6, 8]，其中 (0 ^ 2 ^ 4 ^ 6 ^ 8) = 8 。
+         *      "^" 为按位异或 XOR 运算符。
+         *
+         * 提示：
+         * 1 <= n <= 1000
+         * 0 <= start <= 1000
+         * n == nums.length
+         */
+
+        /**
+         * 思路：
+         * 没啥特别的，根据题目描述即可
+         */
+
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            ans ^= (start + i * 2);
+        }
+        return ans;
+    }
+
 }
 
