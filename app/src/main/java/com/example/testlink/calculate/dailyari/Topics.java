@@ -18,8 +18,8 @@ import java.util.Stack;
 public class Topics {
 
     public static void main(String[] args) {
-
-        System.out.println(Math.sqrt(3));
+        int[] ints = new int[]{1, 2, 4, 7, 8};
+        minimumTimeRequired(ints, 2);
     }
 
 
@@ -1966,7 +1966,6 @@ public class Topics {
         return false;
     }
 
-
     /**
      * 137、只出现一次的数字 II
      */
@@ -1990,7 +1989,6 @@ public class Topics {
 //        执行用时：8 ms, 在所有 Java 提交中击败了 5.37% 的用户
 //        内存消耗：38.1 MB, 在所有 Java 提交中击败了 82.80% 的用户
     }
-
 
     /**
      * 1720、解码异或后的数组
@@ -2064,5 +2062,49 @@ public class Topics {
         return ans;
     }
 
+    /**
+     * 1723、完成所有工作的最短时间
+     */
+    public static int minimumTimeRequired(int[] jobs, int k) {
+
+        Arrays.sort(jobs);
+        int l = 0; // max(jobs)
+        int r = 0; // sum(jobs)
+        for (int i = 0; i < jobs.length; i++) {
+            r += jobs[i];
+            l = Math.max(l, jobs[i]);
+        }
+        int mid;
+        while (l < r) {
+            mid = (l + r) / 2;
+            System.out.println(mid);
+
+            if (check1723(jobs, k, mid)) { //判断是否能分配完工作，不能分配完则增大最大工作时间。
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+            // 1,2,4,7,8  [8,22]
+        }
+        return l;
+    }
+
+    private static boolean check1723(int[] jobs, int k, int maxTime) {
+        int sum = 0;
+        for (int i = 0; i < jobs.length; ) { // 这里要穷举所有可能的组合，使用递归实现。
+            while (i < jobs.length && sum + jobs[i] <= maxTime) {
+                sum += jobs[i];
+                i++;
+            }
+            k--;
+            System.out.print(sum+" ,");
+            sum = 0;
+        }
+        System.out.println(k);
+        if (k >= 0) { // k大于0，表示有人没有安排到工作，可以减小最大工作时间,k小于0表示当前最大工作时间还不能分配完，需要增大工作时间
+            return true;
+        }
+        return false;
+    }
 }
 
