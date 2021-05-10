@@ -2063,9 +2063,27 @@ public class Topics {
     }
 
     /**
-     * 1723、完成所有工作的最短时间
+     * 1723、完成所有工作的最短时间 [hard]
      */
     public static int minimumTimeRequired(int[] jobs, int k) {
+
+        /**
+         * 给你一个整数数组 jobs ，其中 jobs[i] 是完成第 i 项工作要花费的时间。
+         * 请你将这些工作分配给 k 位工人。所有工作都应该分配给工人，且每项工作只能分配给一位工人。工人的 工作时间 是完成分配给他们的所有工作
+         * 花费时间的总和。请你设计一套最佳的工作分配方案，使工人的 最大工作时间 得以 最小化 。
+         * 返回分配方案中尽可能 最小 的 最大工作时间 。
+         *
+         * 输入：jobs = [1,2,4,7,8], k = 2
+         * 输出：11
+         * 解释：按下述方式分配工作：
+         * 1 号工人：1、2、8（工作时间 = 1 + 2 + 8 = 11）
+         * 2 号工人：4、7（工作时间 = 4 + 7 = 11）
+         * 最大工作时间是 11 。
+         *
+         * 提示：
+         * 1 <= k <= jobs.length <= 12
+         * 1 <= jobs[i] <= 107
+         */
 
         /**
          * 思路：
@@ -2125,6 +2143,47 @@ public class Topics {
             }
         }
         return false;
+    }
+
+    /**
+     * 872、叶子相似的树
+     */
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        /**
+         * 请考虑一棵二叉树上所有的叶子，这些叶子的值按从左到右的顺序排列形成一个 叶值序列 。
+         * 举个例子，如上图所示，给定一棵叶值序列为 (6, 7, 4, 9, 8) 的树。
+         * 如果有两棵二叉树的叶值序列是相同，那么我们就认为它们是 叶相似 的。
+         * 如果给定的两个根结点分别为 root1 和 root2 的树是叶相似的，则返回 true；否则返回 false 。
+         *
+         * 输入：root1 = [3,5,1,6,2,9,8,null,null,7,4], root2 = [3,5,1,6,7,4,2,null,null,null,null,null,null,9,8]
+         * 输出：true
+         * 示例 2：
+         *
+         * 输入：root1 = [1], root2 = [1]
+         * 输出：true
+         */
+
+        /**
+         * 思路遍历出树的叶子节点，比较即可。
+         */
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        dfs872(root1, sb1);
+        dfs872(root2, sb2);
+        System.out.println(sb1.toString());
+        System.out.println(sb2.toString());
+        return sb1.toString().equals(sb2.toString());
+    }
+
+    private void dfs872(TreeNode node, StringBuilder sb) {
+        if (node == null) return;
+        if (node.left == null && node.right == null) {
+            sb.append(node.val);
+            sb.append(","); // 坑在 1,14 与 11,4的区别上了。mmp，加个，用作区别
+            return;
+        }
+        dfs872(node.left, sb);
+        dfs872(node.right, sb);
     }
 
 }
