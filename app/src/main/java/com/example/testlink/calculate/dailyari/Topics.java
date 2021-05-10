@@ -2067,7 +2067,15 @@ public class Topics {
      */
     public static int minimumTimeRequired(int[] jobs, int k) {
 
-        Arrays.sort(jobs);
+        /**
+         * 思路：
+         * 整体思路与‘在D天内送达包裹的能力 1011’基本一样。基本代码都是一样的。区别是1011是严格按照顺序执行的，而此题可以使用组合，随意搭配。难也就是难
+         * 在这里。具体看代码，还是很好理解的。
+         * 此题有一个关键点就是剪枝。如果没有剪枝操作的话，是无法提交的，会超时。关于剪枝的理解也看代码内。不一样的是官方答案中做了降序处理，
+         * 对于`(workloads[j] == 0 || workloads[j] + cur == maxTime)`中的workloads[j] + cur == maxTime 可能会更好理解。
+         * 测试过没有处理降序，也不增加workloads[j] + cur == maxTime判断提交，也是一样可以AC的。
+         */
+
         int l = 0; // max(jobs)
         int r = 0; // sum(jobs)
         for (int i = 0; i < jobs.length; i++) {
@@ -2077,34 +2085,47 @@ public class Topics {
         int mid;
         while (l < r) {
             mid = (l + r) / 2;
-            System.out.println(mid);
-
             if (check1723(jobs, k, mid)) { //判断是否能分配完工作，不能分配完则增大最大工作时间。
                 r = mid;
             } else {
                 l = mid + 1;
             }
-            // 1,2,4,7,8  [8,22]
         }
         return l;
     }
 
     private static boolean check1723(int[] jobs, int k, int maxTime) {
-        int sum = 0;
-        for (int i = 0; i < jobs.length; ) { // 这里要穷举所有可能的组合，使用递归实现。
-            while (i < jobs.length && sum + jobs[i] <= maxTime) {
-                sum += jobs[i];
-                i++;
-            }
-            k--;
-            System.out.print(sum+" ,");
-            sum = 0;
+        int[] worker = new int[k];
+        // 这里要穷举所有可能的组合，使用递归实现。
+        return dispatchWork(jobs, worker, 0, maxTime);
+    }
+
+    /**
+     * @param index 安排的第几个工作。
+     */
+    private static boolean dispatchWork(int[] jobs, int[] workloads, int index, int maxTime) {
+        if (index >= jobs.length) {
+            return true;  // 所有工作能够安排完，表示此分配方案可行(不代表一定是最佳)
         }
-        System.out.println(k);
-        if (k >= 0) { // k大于0，表示有人没有安排到工作，可以减小最大工作时间,k小于0表示当前最大工作时间还不能分配完，需要增大工作时间
-            return true;
+        int cur = jobs[index];
+        for (int j = 0; j < workloads.length; j++) { //将工作循环分配给工人，看是否合适
+            if (workloads[j] + cur <= maxTime) {
+                workloads[j] += cur;
+                if (dispatchWork(jobs, workloads, index + 1, maxTime)) { // 当前人员工作未达到预期max，可以继续安排，使用递归。
+                    return true;
+                }
+                workloads[j] -= cur;// 执行到这表示将cur分配给j是不行的，尝试分配给下一个工人，对于当前工人需要减去这部分工作。
+            }
+            // 剪枝处理。
+            // 如果当前工人未被分配工作，那么下一个工人也必然未被分配工作(即时最后分配成功了也表示有一人工作量不饱和，不是最优解，可以提前排除这种分配方案)
+            // 或者当前工作恰能使该工人的工作量达到了上限()
+            // 这两种情况下我们无需尝试继续分配工作
+            if (workloads[j] == 0 || workloads[j] + cur == maxTime) {
+                break;
+            }
         }
         return false;
     }
+
 }
 
