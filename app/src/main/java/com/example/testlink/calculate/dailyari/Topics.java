@@ -1860,7 +1860,6 @@ public class Topics {
 //        内存消耗：41.4 MB, 在所有 Java 提交中击败了 93.46% 的用户
     }
 
-
     /**
      * 938. 二叉搜索树的范围和
      */
@@ -2186,7 +2185,6 @@ public class Topics {
         dfs872(node.right, sb);
     }
 
-
     /**
      * 1734、解码异或后的排列
      */
@@ -2238,6 +2236,72 @@ public class Topics {
             result[i + 1] = encoded[i] ^ result[i];
         }
         return result;
+    }
+
+    /**
+     * 1310、子数组异或查询
+     */
+    public int[] xorQueries(int[] arr, int[][] queries) {
+
+        /**
+         * 有一个正整数数组 arr，现给你一个对应的查询数组 queries，其中 queries[i] = [Li, Ri]。
+         * 对于每个查询 i，请你计算从 Li 到 Ri 的 XOR 值（即 arr[Li] xor arr[Li+1] xor ... xor arr[Ri]）作为本次查询的结果。
+         * 并返回一个包含给定查询 queries 所有结果的数组。
+         *
+         * 示例 1：
+         * 输入：arr = [1,3,4,8], queries = [[0,1],[1,2],[0,3],[3,3]]
+         * 输出：[2,7,14,8]
+         * 解释：
+         * 数组中元素的二进制表示形式是：
+         * 1 = 0001
+         * 3 = 0011
+         * 4 = 0100
+         * 8 = 1000
+         * 查询的 XOR 值为：
+         * [0,1] = 1 xor 3 = 2
+         * [1,2] = 3 xor 4 = 7
+         * [0,3] = 1 xor 3 xor 4 xor 8 = 14
+         * [3,3] = 8
+         *
+         * 提示：
+         *
+         * 1 <= arr.length <= 3 * 10^4
+         * 1 <= arr[i] <= 10^9
+         * 1 <= queries.length <= 3 * 10^4
+         * queries[i].length == 2
+         * 0 <= queries[i][0] <= queries[i][1] < arr.length
+         */
+
+        /**
+         * 思路：
+         * 与`1734、解码异或后的排列`有点类似，都是利用^的性质,一个数同时异或2次同一个数等于它本身。即a ^ b ^ b = a.
+         * 首先可以直接根据题目意思直接根据queries[i][0]、queries[i][1]写for依次异或arr数组即可，但是这样会有大量的重复计算，
+         * 比如[1,2],[1,3]。[1,3]的计算其实就是包含了[1,2]的计算。那么可以先构建一个数组xor，保存从0到i的异或结果。接下来就是
+         * 根据xor如何求得queries[i]区间的值。
+         * 举个例子：arr=[1,2,3,4,5] 要求[2,3]的值。在xor中知道xor[2]= 1^2^3;xor[3] = 1^2^3^4,f(2,3) = 3^4;仔细观察分析
+         * 就能知道: f(2,3) = xor[3] ^ xor[2] ^ 3
+         *                = 1^2^3^4 ^ 1^2^3 ^ 3
+         *                = 1^2^3^4 ^ 1^2 ^ 3^3
+         *                = 1^2 ^ 3^4 ^ 1^2
+         *                = 3^4
+         * 而3就是arr中的第queries[i][0]个元素。总的来说就是怎么通过异或来得到自己想要的那一部分。
+         */
+
+        int[] xors = new int[arr.length];
+        xors[0] = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            xors[i] = arr[i] ^ xors[i - 1];
+        }
+        int[] result = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            if (queries[i][1] == queries[i][0]) {
+                result[i] = arr[queries[i][0]];
+            } else
+                result[i] = xors[queries[i][0]] ^ arr[queries[i][0]] ^ xors[queries[i][1]];
+        }
+        return result;
+//        执行用时：2 ms, 在所有 Java 提交中击败了 100.00% 的用户
+//        内存消耗：49.5 MB, 在所有 Java 提交中击败了 42.24% 的用户
     }
 }
 
