@@ -305,8 +305,8 @@ public class Topics {
          */
 
         /**
-         * 解答分析：
-         * 不需要特别的知识点即可。唯一的难点是矩阵的边界变化。使用4个指针，最小行，最小列，最大行，最大列划分遍
+         * 思路：
+         * 不需要特别的知识点。难点是矩阵的边界变化,拿出纸笔画出图看更明显。使用4个指针，最小行，最小列，最大行，最大列划分遍
          * 历边界即可。分别从左到右，从上到下，从右到左，从下到上遍历。其中最小(行。列)始终是要小于(或等于)最大(行、列)的。
          * 可以根据这个作为跳出循环的条件。等于的情况看如何变化4个指针。如果每次一个方向遍历完了，相对应的指针就加减，那么
          * 就需要划等号，保证能够访问完整。
@@ -383,7 +383,7 @@ public class Topics {
          */
 
         /**
-         * 解法参考上一题的螺旋矩阵。解法通用
+         * 解法参考上一题的螺旋矩阵。解法通用，只是结果要使用二维数组保存
          */
 
         int[][] matrix = new int[n][n];
@@ -639,7 +639,7 @@ public class Topics {
          * 解法分析：
          * 由逆波兰表达式转换到中缀表达式计算的规律可以知道，只要碰到符号，就是符号位置的前2个数字进行运算。
          * 所以只需要保存到前2个数字即可。可以使用数组，栈都可以。要注意的一点是，对于保存起来的2个数字xy。
-         * 对于符号运算都是 x?y。？表示运算符号。对于+，*，x+y,与y+x是没有区别的，但是-与/就有区别了。注意这点
+         * 对于符号运算都是 x?y。?表示运算符号。对于+，*，x+y,与y+x是没有区别的，但是-与/就有区别了。注意这点
          * 即可。
          */
 
@@ -742,7 +742,6 @@ public class Topics {
 
         List<NestedInteger> nestedList = new ArrayList<>();
 
-
         NestedInteger.A a1 = new NestedInteger.A(1);
         NestedInteger.A a2 = new NestedInteger.A(1);
         List<NestedInteger> list1 = new ArrayList<>();
@@ -760,11 +759,9 @@ public class Topics {
         list2.add(a4);
         NestedInteger.A n3 = new NestedInteger.A(0, false, list2);
 
-
         nestedList.add(n1);
         nestedList.add(n2);
         nestedList.add(n3);
-
 
         NestedIterator i = new NestedIterator(nestedList);
         while (i.hasNext()) {
@@ -947,6 +944,11 @@ public class Topics {
          * 输出：true
          */
 
+        /**
+         * 思路
+         * 因为题目有规律，分别对行、列使用二分查找，提升查找效率
+         */
+
         if (matrix.length == 0) return false;
         // 二分查找行
         int low = 0;
@@ -995,6 +997,12 @@ public class Topics {
 
         // [1,2,2]
         // [[],[1],[1,2],[1,2,2],[2],[2,2]]
+
+        /**
+         * 思路
+         *
+         * 回溯+递归
+         */
 
         List<Integer> list = new ArrayList<>();
         addChild(nums, 0, list);
@@ -1093,7 +1101,7 @@ public class Topics {
     public int removeDuplicates2(int[] nums) {
 
         /**
-         * 给你一个有序数组 nums ，请你 原地 删除重复出现的元素，使每个元素 最多出现两次 ，返回删除后数组的新长度。
+         * 给你一个有序数组 nums ，请你原地删除重复出现的元素，使每个元素 最多出现两次 ，返回删除后数组的新长度。
          * 不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
          *
          * 例子:
@@ -1108,7 +1116,7 @@ public class Topics {
          * 从题目上还是很容易理解的。要在原地修改数组；并且每个相同的元素最多出现2次；还是有序数组。这些条件满足下，很容易就想到数组置换，使用双指
          * 针的办法实现。一个p指针代表在符合题意下所放的元素位置，另一个指针q循环遍历数组。当符合条件时，将q所指向的元素放到p所在的位置即可。很明确的条
          * 件有：前2个元素可以不用考虑，因为相同元素可以出现2次。从第三个元素开始。那么要怎样判断相同的元素已经添加了2个？这里就用到了另外一个条件：有序数组。
-         * 只要后来的元素不等于指针p-2位置上的元素，那就可以了。
+         * 只要后来的元素不等于指针p-2位置上的元素，也就是那就可以了。
          */
 
         int length = 0;
@@ -1300,7 +1308,7 @@ public class Topics {
     }
 
     /**
-     * 783、二叉搜索树节点最小距离(4-13)
+     * 783、二叉搜索树节点最小距离(4-13) ?
      */
     public int minDiffInBST(TreeNode root) {
         /**
@@ -1314,14 +1322,14 @@ public class Topics {
     }
 
     /**
-     * 208、实现Trie(前缀树)(4-14)
+     * 208、实现Trie(前缀树)(4-14) ?
      */
     public void test208() {
         Trie trie = new Trie();
     }
 
     /**
-     * 213、打家劫舍II(4-15)
+     * 213、打家劫舍II(4-15) ?
      */
     public int rob(int[] nums) {
         /**
@@ -1339,7 +1347,7 @@ public class Topics {
     }
 
     /**
-     * 87、扰乱字符串 (4-16)
+     * 87、扰乱字符串 (4-16) ?
      */
     public boolean isScramble(String s1, String s2) {
         /**
@@ -1364,7 +1372,7 @@ public class Topics {
     }
 
     /**
-     * 220、存在重复元素III (4-17)
+     * 220、存在重复元素III (4-17) ?
      */
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
         /**
@@ -1384,7 +1392,7 @@ public class Topics {
     }
 
     /**
-     * 26、删除有序数组中的重复项 (4-18)
+     * 26、删除有序数组中的重复项 (4-18) ?
      */
     public int removeDuplicates(int[] nums) {
         /**
@@ -1423,6 +1431,12 @@ public class Topics {
          * 0 <= val <= 100
          */
 
+        /**
+         * 思路
+         *
+         * 双指针
+         */
+
         if (nums.length <= 0) return 0;
         if (nums.length == 1) return nums[0] == val ? 0 : 1;
         int p = 0;
@@ -1433,8 +1447,6 @@ public class Topics {
                     nums[i] = 0;
                 }
                 p++;
-            } else {
-
             }
         }
         return p;
