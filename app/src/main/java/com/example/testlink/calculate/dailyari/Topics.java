@@ -2482,7 +2482,49 @@ public class Topics {
 //        return roman.toString();
 //        执行用时：6 ms, 在所有 Java 提交中击败了 49% 的用户
 //        内存消耗：38.4 MB, 在所有 Java 提交中击败了 29% 的用户
-
     }
+
+    /**
+     * 13、罗马数字转整数
+     */
+    public int romanToInt(String s) {
+        /**
+         * 题目参考12题，就是条件与结果对调，给出罗马数字求整数。
+         *
+         * 示例 4:
+         * 输入: "LVIII"
+         * 输出: 58
+         * 解释: L = 50, V= 5, III = 3.
+         *
+         * 提示：
+         * 1 <= s.length <= 15
+         * s 仅含字符 ('I', 'V', 'X', 'L', 'C', 'D', 'M')
+         * 题目数据保证 s 是一个有效的罗马数字，且表示整数在范围 [1, 3999] 内
+         * 题目所给测试用例皆符合罗马数字书写规则，不会出现跨位等情况。
+         * IL 和 IM 这样的例子并不符合题目要求，49 应该写作 XLIX，999 应该写作 CMXCIX 。
+         * 关于罗马数字的详尽书写规则，可以参考 罗马数字 - Mathematics 。
+         */
+
+
+        HashMap<Character, Integer> map = new HashMap<>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+        int sum = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int value = map.get(s.charAt(i));
+            if (i < s.length() - 1 && value < map.get(s.charAt(i + 1))) {// 后面的比前面的数大，IV这种情况
+                sum = sum - value;
+            } else {
+                sum = sum + value;
+            }
+        }
+        return sum;
+    }
+
 }
 
