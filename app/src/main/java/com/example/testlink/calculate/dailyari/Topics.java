@@ -6,8 +6,10 @@ import com.example.testlink.calculate.sword_for_offer.TreeNode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -2524,6 +2526,108 @@ public class Topics {
             }
         }
         return sum;
+    }
+
+
+    /**
+     * 421、数组中两个数的最大异或值
+     */
+    public int findMaximumXOR(int[] nums) {
+
+        /**
+         * 给你一个整数数组 nums ，返回 nums[i] XOR nums[j] 的最大运算结果，其中 0 ≤ i ≤ j < n 。
+         *
+         * 提示：
+         * 1 <= nums.length <= 2 * 104
+         * 0 <= nums[i] <= 231 - 1
+         *
+         * 进阶：你可以在 O(n) 的时间解决这个问题吗？
+         */
+
+        /**
+         * 思路
+         *
+         * 不追求O(n) 的情况下，双层for循环遍历时间复杂度O(n^2)
+         */
+        int result = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int temp = nums[i];
+            for (int j = i + 1; j < nums.length; j++) {
+                result = Math.max(temp ^ nums[j], result);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 993、二叉树的堂兄弟节点
+     */
+
+    public boolean isCousins(TreeNode root, int x, int y) {
+
+        /**
+         * 在二叉树中，根节点位于深度 0 处，每个深度为 k 的节点的子节点位于深度 k+1 处。
+         * 如果二叉树的两个节点深度相同，但 父节点不同 ，则它们是一对堂兄弟节点。
+         * 我们给出了具有唯一值的二叉树的根节点 root ，以及树中两个不同节点的值 x 和 y 。
+         * 只有与值 x 和 y 对应的节点是堂兄弟节点时，才返回 true 。否则，返回 false。
+         *
+         * 示例：
+         * 输入：root = [1,2,3,4], x = 4, y = 3
+         * 输出：false
+         *
+         * 示例：
+         * 输入：root = [1,2,3,null,4], x = 2, y = 3
+         * 输出：false
+         *
+         * 提示：
+         * 二叉树的节点数介于 2 到 100 之间。
+         * 每个节点的值都是唯一的、范围为 1 到 100 的整数。
+         *
+         */
+
+        /**
+         * 思路
+         * 分别找到x、y的父节点以及对应的深度。深度使用递归很好获取，然后比较两个父节点以及深度是否一致。
+         * 注意一点的是，因为是整个数遍历，当x、y有一方的父节点等于null，即未赋值时，也就是x、y有一方是根
+         * 节点来的，此时结果必定为false。
+         */
+
+        if (root == null) return false;
+        dfs993(root, x, y, 0);
+        if (tx == null || ty == null) return false;
+        return tx.val != ty.val && dx == dy;
+
+//        执行用时：0 ms, 在所有 Java 提交中击败了 100.00% 的用户
+//        内存消耗：36.1 MB, 在所有 Java 提交中击败了 75.46% 的用户
+    }
+
+    TreeNode tx = null, ty = null;
+    int dx = 0, dy = 0;
+
+    private boolean dfs993(TreeNode node, int x, int y, int deep) {
+        if (node == null) return false;
+        boolean b = node.val == x || node.val == y;
+        if (dfs993(node.left, x, y, deep + 1)) {
+            if (node.left.val == x) {
+                tx = node;
+                dx = deep + 1;
+            }
+            if (node.left.val == y) {
+                ty = node;
+                dy = deep + 1;
+            }
+        }
+        if (dfs993(node.right, x, y, deep + 1)) {
+            if (node.right.val == x) {
+                tx = node;
+                dx = deep + 1;
+            }
+            if (node.right.val == y) {
+                ty = node;
+                dy = deep + 1;
+            }
+        }
+        return b;
     }
 
 }
