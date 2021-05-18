@@ -2630,5 +2630,74 @@ public class Topics {
         return b;
     }
 
+    /**
+     * 1442、形成两个异或相等数组的三元组数目
+     */
+    public int countTriplets(int[] arr) {
+        /**
+         * 给你一个整数数组 arr 。
+         * 现需要从数组中取三个下标 i、j 和 k ，其中 (0 <= i < j <= k < arr.length) 。
+         * a 和 b 定义如下：
+         * a = arr[i] ^ arr[i + 1] ^ ... ^ arr[j - 1]
+         * b = arr[j] ^ arr[j + 1] ^ ... ^ arr[k]
+         * 注意：^ 表示 按位异或 操作。
+         *
+         * 请返回能够令 a == b 成立的三元组 (i, j , k) 的数目。
+         */
+
+        /**
+         * 思路：
+         * 暴力循环解决
+         */
+
+        int a = 0, b = 0;
+        int count = 0;
+        int len = arr.length;
+        for (int i = 0; i < len - 1; i++) {
+            for (int j = i + 1; j < len; j++) {
+                a = 0;
+                for (int x = i; x < j; x++) {
+                    a = a ^ arr[x];
+                }
+
+                for (int k = j; k < len; k++) {
+                    b = 0;
+                    for (int y = j; y <= k; y++) {
+                        b = b ^ arr[y];
+                    }
+                    if (a == b) count++;
+                }
+            }
+        }
+
+        /**
+         * 为什么可以简写成这样?
+         * 从题目知道
+         * a = arr[i] ^ arr[i + 1] ^ ... ^ arr[j - 1]
+         * b = arr[j] ^ arr[j + 1] ^ ... ^ arr[k]
+         * 那么a ^ b = arr[i] ^ arr[i + 1] ^ ... ^ arr[j - 1] ^ arr[j] ^ arr[j + 1] ^ ... ^ arr[k]，
+         * 也就是从i到k的所有数^一遍，看是否等于0，2数异或结果等于0要么俩数相等，要么有一方等于0。于是可以使用2层循环完成。
+         * 外循环i从0到arr.length-1,内循环j从i到arr.length。保存异或的结果，如果结果等于0，统计数量。这个数量也不是单纯的++
+         * 就可以了，因为涉及到3个下标的组合。比如i= 0,j= 5的时候异或结果等于0了，3个数i、j、确定了2个数，那么k可以是除去i、j后
+         * 中间的任意一个数，因为最终结果都是等于0，也就是a==b，所以count的数量 = j-i。
+         * 此外还有几个隐藏注意点就是下标i < j，k是可以等于j的，可以忽略；
+         * 内循环是要从i的位置开始，而不是i+1。因为最终计算count的数量是根据j、i内部数量来计算的，本身就已经排除了i、j所以内循环开
+         * 始位置是i，也就是j=i。有人可能会想到:j=i,这样开始执行异或的时候不都是等于0了么，这俩个数是相等的。这个简单只要在判断结果
+         * 的时候加上j>i就可以了，而且本身统计数量的时候就会应用到j-i。
+         */
+
+        int s;
+        for (int i = 0; i < len - 1; i++) {
+            s = 0;
+            for (int j = i; j < len; j++) {
+                s = s ^ arr[j];
+                if (s == 0 && j > i) {
+                    count = count + j - i;
+                }
+            }
+        }
+        return count;
+    }
+
 }
 
