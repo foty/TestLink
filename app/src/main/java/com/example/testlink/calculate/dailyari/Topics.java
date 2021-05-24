@@ -2739,7 +2739,6 @@ public class Topics {
          *
          */
 
-
         /**
          * 思路：
          * 为了方便，题意可以理解为：二维数组 matrix ,大小为 m x n。还有一个与matrix大小一样的数组b，在数组b中
@@ -2753,7 +2752,7 @@ public class Topics {
          * [1,0] i=[0,1],j=[0]; m[i,j] = [0,0]=5,[1,0]=1
          * [1,1] i=[0,1],j=[0,1] m[i,j] = [0,0][0,1][1,0][1,1] 5,2,1,6
          *
-         * 类似这种数组累加(乘)的一般可以使用前缀和的方法。
+         * 类似这种数组累加(乘)的一般可以使用前缀和的方法。其实就是题目难懂一些，解题不算很难。
          */
 
         int a = matrix.length;
@@ -2819,6 +2818,55 @@ public class Topics {
             xor ^= num;
         }
         return xor == 0;
+    }
+
+    /**
+     * 692、前K个高频单词
+     */
+    public List<String> topKFrequent(String[] words, int k) {
+        /**
+         * 给一非空的单词列表，返回前 k 个出现次数最多的单词。
+         * 返回的答案应该按单词出现频率由高到低排序。如果不同的单词有相同出现频率，按字母顺序排序。
+         *
+         * 示例 1：
+         * 输入: ["i", "love", "leetcode", "i", "love", "coding"], k = 2
+         * 输出: ["i", "love"]
+         * 解析: "i" 和 "love" 为出现次数最多的两个单词，均为2次。
+         *     注意，按字母顺序 "i" 在 "love" 之前。
+         *
+         * 示例 2：
+         * 输入: ["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"], k = 4
+         * 输出: ["the", "is", "sunny", "day"]
+         * 解析: "the", "is", "sunny" 和 "day" 是出现次数最多的四个单词，
+         *     出现次数依次为 4, 3, 2 和 1 次。
+         *
+         * 注意：
+         *
+         * 假定 k 总为有效值， 1 ≤ k ≤ 集合元素数。
+         * 输入的单词均由小写字母组成。
+         */
+
+        /**
+         * 思路：
+         * 普通方式解决。先统计数量，排序即可。不最求高效率的话，还是比较简单的一题
+         */
+
+
+        // 先统计每个字符串出现的次数
+        HashMap<String, Integer> cnt = new HashMap<>();
+        for (String word : words) {
+            cnt.put(word, cnt.getOrDefault(word, 0) + 1);
+        }
+        // 使用一个集合保存字符串(不相同)
+        List<String> rec = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : cnt.entrySet()) {
+            rec.add(entry.getKey());
+        }
+        //对保存的字符串集合进行排序
+        Collections.sort(rec, (word1, word2) -> cnt.get(word1) == cnt.get(word2) ?
+                word1.compareTo(word2) : cnt.get(word2) - cnt.get(word1));
+
+        return rec.subList(0, k);
     }
 }
 
