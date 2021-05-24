@@ -5,6 +5,8 @@ import com.example.testlink.calculate.sword_for_offer.TreeNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -2695,6 +2697,90 @@ public class Topics {
             }
         }
         return count;
+    }
+
+    /**
+     * 1738、找出第 K 大的异或坐标值
+     */
+    public int kthLargestValue(int[][] matrix, int k) {
+
+        /**
+         * 给你一个二维矩阵 matrix 和一个整数 k ，矩阵大小为 m x n 由非负整数组成。
+         * 矩阵中坐标 (a, b) 的 值 可由对所有满足 0 <= i <= a < m 且 0 <= j <= b < n 的元素 matrix[i][j]（下标从 0 开始计数）执行异或运算得到。
+         * 请你找出 matrix 的所有坐标中第 k 大的值（k 的值从 1 开始计数）。
+         *
+         * 示例 ：
+         * 输入：matrix = [[5,2],[1,6]], k = 1
+         * 输出：7
+         * 解释：坐标 (0,1) 的值是 5 XOR 2 = 7 ，为最大的值。
+         *
+         * 示例 ：
+         * 输入：matrix = [[5,2],[1,6]], k = 2
+         * 输出：5
+         * 解释：坐标 (0,0) 的值是 5 = 5 ，为第 2 大的值。
+         *
+         * 示例 ：
+         * 输入：matrix = [[5,2],[1,6]], k = 3
+         * 输出：4
+         * 解释：坐标 (1,0) 的值是 5 XOR 1 = 4 ，为第 3 大的值。
+         *
+         * 示例 ：
+         * 输入：matrix = [[5,2],[1,6]], k = 4
+         * 输出：0
+         * 解释：坐标 (1,1) 的值是 5 XOR 2 XOR 1 XOR 6 = 0 ，为第 4 大的值。
+         *
+         *
+         * 提示：
+         * m == matrix.length
+         * n == matrix[i].length
+         * 1 <= m, n <= 1000
+         * 0 <= matrix[i][j] <= 106
+         * 1 <= k <= m * n
+         *
+         */
+
+
+        /**
+         * 思路：
+         * 为了方便，题意可以理解为：二维数组 matrix ,大小为 m x n。还有一个与matrix大小一样的数组b，在数组b中
+         * b(i,j) = matrix[0][0]^...^matrix[i][0]^...^matrix[i][j-1]^matrix[i][j],其中 0<=i<m 且 0<=j<n。然后求
+         * 二位数组b中第K打的元素。注意数组b中i对应的是matrix.length。二维数组b的排列格式应该是：
+         * {5,1
+         * 2,6}
+         * 计算：
+         * [0,0] i = 0,j = 0; m[i,j] = [0,0] = 5
+         * [0,1] i= [0],j=[0,1]; m[i,j] = [0,0]=5,[0,1]=2
+         * [1,0] i=[0,1],j=[0]; m[i,j] = [0,0]=5,[1,0]=1
+         * [1,1] i=[0,1],j=[0,1] m[i,j] = [0,0][0,1][1,0][1,1] 5,2,1,6
+         *
+         * 类似这种数组累加(乘)的一般可以使用前缀和的方法。
+         */
+
+        int a = matrix.length;
+        int b = matrix[0].length;
+
+        int[][] arrs = new int[a][b];
+        List<Integer> list = new ArrayList<>();
+
+        for (int i = 0; i < a; i++) {  // 这里可以优化一下，将数组大小创建为[a+1][b+1],因为0^任意数等于数本身，就可以省略对i、j边界判断
+            for (int j = 0; j < b; j++) {
+                arrs[i][j] = matrix[i][j];
+                if (i > 0 && j > 0)
+                    arrs[i][j] = arrs[i][j] ^ arrs[i - 1][j] ^ arrs[i][j - 1] ^ arrs[i - 1][j - 1];
+                else if (i > 0)
+                    arrs[i][j] = arrs[i][j] ^ arrs[i - 1][j];
+                else if (j > 0)
+                    arrs[i][j] = arrs[i][j] ^ arrs[i][j - 1];
+
+                list.add(arrs[i][j]);
+            }
+        }
+
+        Collections.sort(list, (o1, o2) -> o2 - o1);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+        return list.get(k - 1);
     }
 
     /**
