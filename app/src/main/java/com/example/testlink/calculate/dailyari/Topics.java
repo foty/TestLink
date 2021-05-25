@@ -2783,44 +2783,6 @@ public class Topics {
     }
 
     /**
-     * 810、黑板异或游戏
-     */
-    public boolean xorGame(int[] nums) {
-
-        /**
-         * 黑板上写着一个非负整数数组 nums[i] 。Alice 和 Bob 轮流从黑板上擦掉一个数字，Alice 先手。如果擦除一个数字后，剩余的所有数字按位异或运算得出的结
-         * 果等于 0 的话，当前玩家游戏失败。 (另外，如果只剩一个数字，按位异或运算得到它本身；如果无数字剩余，按位异或运算结果为 0。）
-         * 换种说法就是，轮到某个玩家时，如果当前黑板上所有数字按位异或运算结果等于 0，这个玩家获胜。
-         * 假设两个玩家每步都使用最优解，当且仅当 Alice 获胜时返回 true。
-         *  
-         * 示例：
-         * 输入: nums = [1, 1, 2]
-         * 输出: false
-         * 解释:
-         * Alice 有两个选择: 擦掉数字 1 或 2。
-         * 如果擦掉 1, 数组变成 [1, 2]。剩余数字按位异或得到 1 XOR 2 = 3。那么 Bob 可以擦掉任意数字，因为 Alice 会成为擦掉最后一个数字的人，她总是会输。
-         * 如果 Alice 擦掉 2，那么数组变成[1, 1]。剩余数字按位异或得到 1 XOR 1 = 0。Alice 仍然会输掉游戏。
-         *
-         * 提示：
-         * 1 <= N <= 1000
-         * 0 <= nums[i] <= 2^16
-         */
-
-        /**
-         * 思路
-         * 具体看官方题解，数学推理这玩意不太擅长，大概意思就是从数组的奇偶方向考虑证明
-         */
-        if (nums.length % 2 == 0) {
-            return true;
-        }
-        int xor = 0;
-        for (int num : nums) {
-            xor ^= num;
-        }
-        return xor == 0;
-    }
-
-    /**
      * 692、前K个高频单词
      */
     public List<String> topKFrequent(String[] words, int k) {
@@ -2892,6 +2854,159 @@ public class Topics {
          * 1 <= nums1.length <= 500
          * 1 <= nums2.length <= 500
          * 1 <= nums1[i], nums2[i] <= 2000
+         */
+        return 0;
+    }
+
+    /**
+     * 810、黑板异或游戏
+     */
+    public boolean xorGame(int[] nums) {
+
+        /**
+         * 黑板上写着一个非负整数数组 nums[i] 。Alice 和 Bob 轮流从黑板上擦掉一个数字，Alice 先手。如果擦除一个数字后，剩余的所有数字按位异或运算得出的结
+         * 果等于 0 的话，当前玩家游戏失败。 (另外，如果只剩一个数字，按位异或运算得到它本身；如果无数字剩余，按位异或运算结果为 0。）
+         * 换种说法就是，轮到某个玩家时，如果当前黑板上所有数字按位异或运算结果等于 0，这个玩家获胜。
+         * 假设两个玩家每步都使用最优解，当且仅当 Alice 获胜时返回 true。
+         *  
+         * 示例：
+         * 输入: nums = [1, 1, 2]
+         * 输出: false
+         * 解释:
+         * Alice 有两个选择: 擦掉数字 1 或 2。
+         * 如果擦掉 1, 数组变成 [1, 2]。剩余数字按位异或得到 1 XOR 2 = 3。那么 Bob 可以擦掉任意数字，因为 Alice 会成为擦掉最后一个数字的人，她总是会输。
+         * 如果 Alice 擦掉 2，那么数组变成[1, 1]。剩余数字按位异或得到 1 XOR 1 = 0。Alice 仍然会输掉游戏。
+         *
+         * 提示：
+         * 1 <= N <= 1000
+         * 0 <= nums[i] <= 2^16
+         */
+
+        /**
+         * 思路
+         * 具体看官方题解，数学推理这玩意不太擅长，大概意思就是从数组的奇偶方向考虑证明
+         */
+        if (nums.length % 2 == 0) {
+            return true;
+        }
+        int xor = 0;
+        for (int num : nums) {
+            xor ^= num;
+        }
+        return xor == 0;
+    }
+
+    /**
+     * 1707、与数组中元素的最大异或值
+     */
+    public int[] maximizeXor(int[] nums, int[][] queries) {
+
+        /**
+         * 给你一个由非负整数组成的数组 nums 。另有一个查询数组 queries ，其中 queries[i] = [xi, mi] 。
+         * 第 i 个查询的答案是 xi 和任何 nums 数组中不超过 mi 的元素按位异或（XOR）得到的最大值。换句话说，答案是 max(nums[j] XOR xi) ，
+         * 其中所有 j 均满足 nums[j] <= mi 。如果 nums 中的所有元素都大于 mi，最终答案就是 -1 。
+         * 返回一个整数数组 answer 作为查询的答案，其中 answer.length == queries.length 且 answer[i] 是第 i 个查询的答案。
+         *
+         * 示例 1：
+         * 输入：nums = [0,1,2,3,4], queries = [[3,1],[1,3],[5,6]]
+         * 输出：[3,3,7]
+         * 解释：
+         * 1) 0 和 1 是仅有的两个不超过 1 的整数。0 XOR 3 = 3 而 1 XOR 3 = 2 。二者中的更大值是 3 。
+         * 2) 1 XOR 2 = 3.
+         * 3) 5 XOR 2 = 7.
+         *
+         * 示例 2
+         * 输入：nums = [5,2,4,6,6,3], queries = [[12,4],[8,1],[6,3]]
+         * 输出：[15,-1,5]
+         *  
+         * 提示：
+         * 1 <= nums.length, queries.length <= 105
+         * queries[i].length == 2
+         * 0 <= nums[j], xi, mi <= 109
+         */
+
+        /**
+         * 暴力法超时
+         */
+        int[] result = new int[queries.length];
+        int len = queries.length;
+        Arrays.sort(nums);
+        for (int i = 0; i < len; i++) {
+            int j = queries[i][0];
+            int k = queries[i][1];
+            int max = -1;
+            for (int l = 0; l < nums.length; l++) {
+                if (nums[l] > k) {
+                    break;
+                }
+                max = Math.max(j ^ nums[l], max);
+            }
+            result[i] = max;
+        }
+//        return result;
+
+        /**
+         * 字典树
+         */
+
+        return nums;
+    }
+
+    /**
+     * 664、奇怪的打印机
+     */
+    public int strangePrinter(String s) {
+
+        /**
+         * 有台奇怪的打印机有以下两个特殊要求：
+         * 打印机每次只能打印由 同一个字符 组成的序列。
+         * 每次可以在任意起始和结束位置打印新字符，并且会覆盖掉原来已有的字符。
+         * 给你一个字符串 s ，你的任务是计算这个打印机打印它需要的最少打印次数。
+         *
+         * 示例 1：
+         * 输入：s = "aaabbb"
+         * 输出：2
+         * 解释：首先打印 "aaa" 然后打印 "bbb"。
+         * 示例 2：
+         *
+         * 输入：s = "aba"
+         * 输出：2
+         * 解释：首先打印 "aaa" 然后在第二个位置打印 "b" 覆盖掉原来的字符 'a'。
+         *  
+         * 提示：
+         * 1 <= s.length <= 100
+         * s 由小写英文字母组成
+         */
+        return 0;
+    }
+
+    /**
+     * 1787、使所有区间的异或结果为零
+     */
+    public int minChanges(int[] nums, int k) {
+        /**
+         * 给你一个整数数组 nums​​​ 和一个整数 k​​​​​ 。区间 [left, right]（left <= right）的 异或结果 是对下标位于 left 和 right（包括
+         * left 和 right ）之间所有元素进行 XOR 运算的结果：nums[left] XOR nums[left+1] XOR ... XOR nums[right] 。
+         * 返回数组中 要更改的最小元素数 ，以使所有长度为 k 的区间异或结果等于零。
+         *  
+         * 示例 1：
+         * 输入：nums = [1,2,0,3,0], k = 1
+         * 输出：3
+         * 解释：将数组 [1,2,0,3,0] 修改为 [0,0,0,0,0]
+         *
+         * 示例 2：
+         * 输入：nums = [3,4,5,2,1,7,3,4,7], k = 3
+         * 输出：3
+         * 解释：将数组 [3,4,5,2,1,7,3,4,7] 修改为 [3,4,7,3,4,7,3,4,7]
+         *
+         * 示例 3：
+         * 输入：nums = [1,2,4,1,2,5,1,2,6], k = 3
+         * 输出：3
+         * 解释：将数组[1,2,4,1,2,5,1,2,6] 修改为 [1,2,3,1,2,3,1,2,3]
+         *  
+         * 提示：
+         * 1 <= k <= nums.length <= 2000
+         * 0 <= nums[i] < 210
          */
         return 0;
     }
