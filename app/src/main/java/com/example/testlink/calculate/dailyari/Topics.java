@@ -3010,5 +3010,73 @@ public class Topics {
          */
         return 0;
     }
+
+    /**
+     * 1190、反转每对括号间的子串
+     */
+    public String reverseParentheses(String s) {
+        /**
+         * 给出一个字符串 s（仅含有小写英文字母和括号）。
+         * 请你按照从括号内到外的顺序，逐层反转每对匹配括号中的字符串，并返回最终的结果。
+         * 注意，您的结果中 不应 包含任何括号。
+         *
+         *
+         * 示例 1：
+         * 输入：s = "(abcd)"
+         * 输出："dcba"
+         *
+         * 示例 2：
+         * 输入：s = "(u(love)i)"
+         * 输出："iloveu"
+         *
+         * 示例 3：
+         * 输入：s = "(ed(et(oc))el)"
+         * 输出："leetcode"
+         *
+         * 示例 4：
+         * 输入：s = "a(bcdefghijkl(mno)p)q"
+         * 输出："apmnolkjihgfedcbq"
+         *  
+         * 提示：
+         * 0 <= s.length <= 2000
+         * s 中只有小写英文字母和括号
+         * 我们确保所有括号都是成对出现的
+         */
+
+        /**
+         * 借助栈实现字符反转。多个()层级可以使用集合保存每个栈，每次反转完成都从集合删除这个栈，这样保证反转()内的元素都是有序的。
+         * 注意的是，反转完一个栈的元素后，如果还处于()中，也就是集合内还有栈，要将反转的元素放到前一个栈中保存。
+         */
+
+        List<Stack<Character>> list = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                Stack<Character> stack = new Stack<>();
+                list.add(stack);
+            } else if (s.charAt(i) == ')') {
+                Stack<Character> stack = list.get(list.size() - 1);
+                list.remove(list.size() - 1);
+                if (list.size() > 0) {
+                    while (!stack.isEmpty()) {
+                        list.get(list.size() - 1).push(stack.pop());
+                    }
+                } else {
+                    while (!stack.isEmpty()) {
+                        sb.append(stack.pop());
+                    }
+                }
+            } else {
+                if (list.size() <= 0) {
+                    sb.append(s.charAt(i));
+                } else {
+                    list.get(list.size() - 1).push(s.charAt(i));
+                }
+            }
+        }
+        return sb.toString();
+//        执行用时：4 ms, 在所有 Java 提交中击败了 61.12% 的用户
+//        内存消耗：36.9 MB, 在所有 Java 提交中击败了 57.80% 的用户
+    }
 }
 
