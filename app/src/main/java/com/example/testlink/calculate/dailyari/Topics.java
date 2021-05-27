@@ -701,6 +701,8 @@ public class Topics {
 
         int result = 0;
 
+        // Integer.bitCount(n); // 使用系统api
+
         // 失败的方案。
         String s = String.valueOf(n);
         for (int i = 0; i < s.length(); i++) {
@@ -3077,6 +3079,38 @@ public class Topics {
         return sb.toString();
 //        执行用时：4 ms, 在所有 Java 提交中击败了 61.12% 的用户
 //        内存消耗：36.9 MB, 在所有 Java 提交中击败了 57.80% 的用户
+    }
+
+    /**
+     * 461、汉明距离
+     */
+    public int hammingDistance(int x, int y) {
+
+        /** 两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。
+         * 给出两个整数 x 和 y，计算它们之间的汉明距离。
+         *
+         * 注意：
+         * 0 ≤ x, y < 231.
+         *
+         *
+         * 示例:
+         * 输入: x = 1, y = 4
+         * 输出: 2
+         *
+         * 解释:
+         * 1   (0 0 0 1)
+         * 4   (0 1 0 0)
+         *        ↑   ↑
+         * 上面的箭头指出了对应二进制位不同的位置。
+         */
+
+        /**
+         * 思路：异或运算
+         * 在二进制中，异或运算是位置相同为0，不同则为1。当2个数执行异或运算后，不同位置的数量就是异或结果1的数量。(还记得有个题目统
+         * 计二进制中1的个数吗?题目:191)
+         */
+
+        return Integer.bitCount(x ^ y);
     }
 }
 
