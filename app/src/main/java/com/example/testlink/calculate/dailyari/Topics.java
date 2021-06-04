@@ -3364,7 +3364,6 @@ public class Topics {
 //        return ans;
 
 
-
         // [sum,sum + candiesCount[c]
         // [day,s]
         //  result[i] = day <= preSum[type] + candiesCount[type] && preSum[type]  < day * max;
@@ -3388,6 +3387,113 @@ public class Topics {
             result[i] = sum + candiesCount[c] > day && s > sum;
         }
         return result;
+    }
+
+    /**
+     * 525、连续数组
+     */
+    public int findMaxLength(int[] nums) {
+        /** 给定一个二进制数组 nums , 找到含有相同数量的 0 和 1 的最长连续子数组，并返回该子数组的长度。
+         *
+         * 示例 1:
+         * 输入: nums = [0,1]
+         *
+         * 输出: 2
+         * 说明: [0, 1] 是具有相同数量0和1的最长连续子数组。
+         *
+         * 示例 2:
+         * 输入: nums = [0,1,0]
+         * 输出: 2
+         * 说明: [0, 1] (或 [1, 0]) 是具有相同数量0和1的最长连续子数组。
+         *
+         * 提示：
+         * 1 <= nums.length <= 105
+         * nums[i] 不是 0 就是 1
+         */
+
+        /**
+         * 0与1的数量相等，则数量(0)-数量(1)等于0。可以使用一个变量去表示，当遇到0做减法，遇到1做加法。
+         *
+         */
+
+        int length = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int counter = 0;
+        map.put(counter, -1);
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            int num = nums[i];
+            if (num == 1) {
+                counter++;
+            } else {
+                counter--;
+            }
+            if (map.containsKey(counter)) { // 表示这一段1与0的数量是相同的了。
+                int prevIndex = map.get(counter);
+                length = Math.max(length, i - prevIndex);
+            } else {
+                map.put(counter, i);
+            }
+        }
+        return length;
+    }
+
+    /**
+     * 160、相交链表
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+
+        /** 给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表没有交点，返回 null 。
+         * 题目数据 保证 整个链式结构中不存在环。
+         * 注意，函数返回结果后，链表必须 保持其原始结构 。
+         *
+         * 示例 1：
+         * 输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,0,1,8,4,5], skipA = 2, skipB = 3
+         * 输出：Intersected at '8'
+         * 解释：相交节点的值为 8 （注意，如果两个链表相交则不能为 0）。
+         * 从各自的表头开始算起，链表 A 为 [4,1,8,4,5]，链表 B 为 [5,0,1,8,4,5]。
+         * 在 A 中，相交节点前有 2 个节点；在 B 中，相交节点前有 3 个节点。
+         *
+         * 示例 2：
+         * 输入：intersectVal = 2, listA = [0,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1
+         * 输出：Intersected at '2'
+         * 解释：相交节点的值为 2 （注意，如果两个链表相交则不能为 0）。
+         * 从各自的表头开始算起，链表 A 为 [0,9,1,2,4]，链表 B 为 [3,2,4]。
+         * 在 A 中，相交节点前有 3 个节点；在 B 中，相交节点前有 1 个节点。
+         *
+         * 示例 3：
+         * 输入：intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2
+         * 输出：null
+         * 解释：从各自的表头开始算起，链表 A 为 [2,6,4]，链表 B 为 [1,5]。
+         * 由于这两个链表不相交，所以 intersectVal 必须为 0，而 skipA 和 skipB 可以是任意值。
+         * 这两个链表不相交，因此返回 null 。
+         *
+         * 提示：
+         * listA 中节点数目为 m
+         * listB 中节点数目为 n
+         * 0 <= m, n <= 3 * 104
+         * 1 <= Node.val <= 105
+         * 0 <= skipA <= m
+         * 0 <= skipB <= n
+         * 如果 listA 和 listB 没有交点，intersectVal 为 0
+         * 如果 listA 和 listB 有交点，intersectVal == listA[skipA + 1] == listB[skipB + 1]
+         *
+         * 进阶：你能否设计一个时间复杂度 O(n) 、仅用 O(1) 内存的解决方案？
+         */
+
+        /**
+         * 思路
+         * 链A的长度为n，链B的长度为m。让2个指针走(n+m)次。最后相等时要么是相交点，要么都是等于null(走完了m+n)。
+         */
+
+        if (headA == null || headB == null) return null;
+        ListNode A = headA;
+        ListNode B = headB;
+        while (headA != headB) {
+            headA = headA == null ? B : headA.next;
+            headB = headB == null ? A : headB.next;
+        }
+        return headA;
     }
 }
 
