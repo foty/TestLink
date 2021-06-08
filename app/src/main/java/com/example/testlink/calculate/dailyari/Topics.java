@@ -1010,14 +1010,14 @@ public class Topics {
          */
 
         List<Integer> list = new ArrayList<>();
-        addChild(nums, 0, list);
+        addChild90(nums, 0, list);
 
         return lists;
     }
 
     List<List<Integer>> lists = new ArrayList<>();
 
-    private void addChild(int[] nums, int position, List<Integer> list) {
+    private void addChild90(int[] nums, int position, List<Integer> list) {
         if (position >= nums.length) {
             List<Integer> r = new ArrayList<>(list);
             lists.add(r);
@@ -1025,9 +1025,9 @@ public class Topics {
         }
 
         list.add(nums[position]);
-        addChild(nums, position + 1, list);
+        addChild90(nums, position + 1, list);
         list.remove(list.size() - 1);
-        addChild(nums, position + 1, list);
+        addChild90(nums, position + 1, list);
     }
 
     /**
@@ -1785,7 +1785,7 @@ public class Topics {
          */
 
         List<Integer> list = new ArrayList<>();
-        ss(root, list);
+        ss897(root, list);
 
         TreeNode head = new TreeNode(-1);
         TreeNode last = head;
@@ -1799,11 +1799,11 @@ public class Topics {
 //        内存消耗：35.9 MB, 在所有 Java 提交中击败了 82.07% 的用户
     }
 
-    private void ss(TreeNode root, List<Integer> list) {
+    private void ss897(TreeNode root, List<Integer> list) {
         if (root == null) return;
-        ss(root.left, list);
+        ss897(root.left, list);
         list.add(root.val);
-        ss(root.right, list);
+        ss897(root.right, list);
     }
 
     /**
@@ -1899,20 +1899,20 @@ public class Topics {
          * 中序遍历后，形成的有序数列，再将范围内的数相加即可。
          */
 
-        return dfs(root, low, high);
+        return dfs938(root, low, high);
 //        执行用时：1 ms, 在所有 Java 提交中击败了 55.17% 的用户
 //        内存消耗：46.6 MB, 在所有 Java 提交中击败了 18.17% 的用户
     }
 
-    private int dfs(TreeNode root, int low, int high) {
+    private int dfs938(TreeNode root, int low, int high) {
         if (root == null) {
             return 0;
         }
         int sum = 0;
-        int left = dfs(root.left, low, high);
+        int left = dfs938(root.left, low, high);
         if (root.val >= low && root.val <= high)
             sum += root.val;
-        int right = dfs(root.right, low, high);
+        int right = dfs938(root.right, low, high);
         return sum + left + right;
     }
 
@@ -2131,13 +2131,13 @@ public class Topics {
     private static boolean check1723(int[] jobs, int k, int maxTime) {
         int[] worker = new int[k];
         // 这里要穷举所有可能的组合，使用递归实现。
-        return dispatchWork(jobs, worker, 0, maxTime);
+        return dispatchWork1732(jobs, worker, 0, maxTime);
     }
 
     /**
      * @param index 安排的第几个工作。
      */
-    private static boolean dispatchWork(int[] jobs, int[] workloads, int index, int maxTime) {
+    private static boolean dispatchWork1732(int[] jobs, int[] workloads, int index, int maxTime) {
         if (index >= jobs.length) {
             return true;  // 所有工作能够安排完，表示此分配方案可行(不代表一定是最佳)
         }
@@ -2145,7 +2145,7 @@ public class Topics {
         for (int j = 0; j < workloads.length; j++) { //将工作循环分配给工人，看是否合适
             if (workloads[j] + cur <= maxTime) {
                 workloads[j] += cur;
-                if (dispatchWork(jobs, workloads, index + 1, maxTime)) { // 当前人员工作未达到预期max，可以继续安排，使用递归。
+                if (dispatchWork1732(jobs, workloads, index + 1, maxTime)) { // 当前人员工作未达到预期max，可以继续安排，使用递归。
                     return true;
                 }
                 workloads[j] -= cur;// 执行到这表示将cur分配给j是不行的，尝试分配给下一个工人，对于当前工人需要减去这部分工作。
@@ -2351,6 +2351,7 @@ public class Topics {
          */
 
         /**
+         * 思路：动态规划
          * 1、定义dp
          * dp[i][j]表示走了i步，到达位置j点的方案数。0<= i <=step; 0<=j <= arrLen。最终所求结果为dp[step][0],走了step步，回到原点。
          *
@@ -2510,7 +2511,11 @@ public class Topics {
          * 关于罗马数字的详尽书写规则，可以参考 罗马数字 - Mathematics 。
          */
 
-
+        /**
+         * 思路
+         * [12、整数转罗马数字]是数字转罗马，通过保存罗马匹配数字，这题可以保存数字匹配罗马实现。依次对每个罗马字符匹配的每个数字相加，
+         * 如果出现相反的情况就相减。
+         */
         HashMap<Character, Integer> map = new HashMap<>();
         map.put('I', 1);
         map.put('V', 5);
@@ -2777,11 +2782,7 @@ public class Topics {
                 list.add(arrs[i][j]);
             }
         }
-
         Collections.sort(list, (o1, o2) -> o2 - o1);
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
         return list.get(k - 1);
     }
 
@@ -2828,14 +2829,14 @@ public class Topics {
             rec.add(entry.getKey());
         }
         //对保存的字符串集合进行排序
-        Collections.sort(rec, (word1, word2) -> cnt.get(word1) == cnt.get(word2) ?
+        Collections.sort(rec, (word1, word2) -> cnt.get(word1).equals(cnt.get(word2)) ?
                 word1.compareTo(word2) : cnt.get(word2) - cnt.get(word1));
 
         return rec.subList(0, k);
     }
 
     /**
-     * 1035、不相交的线
+     * 1035、不相交的线 ?
      */
     public int maxUncrossedLines(int[] nums1, int[] nums2) {
         /**
@@ -2900,7 +2901,7 @@ public class Topics {
     }
 
     /**
-     * 1707、与数组中元素的最大异或值
+     * 1707、与数组中元素的最大异或值 ?
      */
     public int[] maximizeXor(int[] nums, int[][] queries) {
 
@@ -2956,7 +2957,7 @@ public class Topics {
     }
 
     /**
-     * 664、奇怪的打印机
+     * 664、奇怪的打印机 ?
      */
     public int strangePrinter(String s) {
 
@@ -2984,7 +2985,7 @@ public class Topics {
     }
 
     /**
-     * 1787、使所有区间的异或结果为零
+     * 1787、使所有区间的异或结果为零 ?
      */
     public int minChanges(int[] nums, int k) {
         /**
@@ -3196,6 +3197,7 @@ public class Topics {
         int[][] arr = new int[a][b];
 
         int count = 0;
+        // 前缀和
         for (int i = 1; i < a; i++) {
             for (int j = 1; j < b; j++) {
                 arr[i][j] = arr[i - 1][j] + arr[i][j - 1] - arr[i - 1][j - 1] + matrix[i][j];
@@ -3279,8 +3281,9 @@ public class Topics {
          */
 
         /**
-         * 如果这个数不是2的n次幂，那么也一定不是4的n次幂。
-         * 对数n开平方，如果结果是偶数则是4的n次幂，不是则不是数的n次幂。
+         * 思路分析：
+         * 1、如果这个数不是2的n次幂，那么也一定不是4的n次幂。
+         * 2、对数n开平方，如果结果是偶数则是4的n次幂，不是则不是4的n次幂。
          */
 
         if (n == 0) return false;
@@ -3363,7 +3366,6 @@ public class Topics {
 //        }
 //        return ans;
 
-
         // [sum,sum + candiesCount[c]
         // [day,s]
         //  result[i] = day <= preSum[type] + candiesCount[type] && preSum[type]  < day * max;
@@ -3412,8 +3414,8 @@ public class Topics {
          */
 
         /**
+         * 思路
          * 0与1的数量相等，则数量(0)-数量(1)等于0。可以使用一个变量去表示，当遇到0做减法，遇到1做加法。
-         *
          */
 
         int length = 0;
@@ -3593,6 +3595,41 @@ public class Topics {
             df494(nums, index + 1, sum + nums[index], target);
             df494(nums, index + 1, sum - nums[index], target);
         }
+    }
+
+    /**
+     * 1049. 最后一块石头的重量 II
+     */
+    public int lastStoneWeightII(int[] stones) {
+
+        /** 有一堆石头，用整数数组 stones 表示。其中 stones[i] 表示第 i 块石头的重量。
+         * 每一回合，从中选出任意两块石头，然后将它们一起粉碎。假设石头的重量分别为 x 和 y，且 x <= y。那么粉碎的可能结果如下：
+         * 如果 x == y，那么两块石头都会被完全粉碎；
+         * 如果 x != y，那么重量为 x 的石头将会完全粉碎，而重量为 y 的石头新重量为 y-x。
+         * 最后，最多只会剩下一块 石头。返回此石头 最小的可能重量 。如果没有石头剩下，就返回 0。
+         *
+         * 示例 1：
+         * 输入：stones = [2,7,4,1,8,1]
+         * 输出：1
+         * 解释：
+         * 组合 2 和 4，得到 2，所以数组转化为 [2,7,1,8,1]，
+         * 组合 7 和 8，得到 1，所以数组转化为 [2,1,1,1]，
+         * 组合 2 和 1，得到 1，所以数组转化为 [1,1,1]，
+         * 组合 1 和 1，得到 0，所以数组转化为 [1]，这就是最优值。
+         *
+         * 示例 2：
+         * 输入：stones = [31,26,33,21,40]
+         * 输出：5
+         *
+         * 示例 3：
+         * 输入：stones = [1,2]
+         * 输出：1
+         *
+         * 提示：
+         * 1 <= stones.length <= 30
+         * 1 <= stones[i] <= 100
+         */
+        return 0;
     }
 }
 
