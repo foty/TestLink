@@ -3629,6 +3629,15 @@ public class Topics {
          * 1 <= stones.length <= 30
          * 1 <= stones[i] <= 100
          */
+
+        /**
+         * 思路
+         * 动态规划，转换成01背包问题，没看懂，后面看
+         */
+        Arrays.sort(stones);
+        for (int i = stones.length - 1; i >= 0; i -= 2) {
+            stones[i] = Math.abs(stones[i] - stones[i - 1]);
+        }
         return 0;
     }
 }
