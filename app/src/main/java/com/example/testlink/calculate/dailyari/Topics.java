@@ -3632,13 +3632,38 @@ public class Topics {
 
         /**
          * 思路
-         * 动态规划，转换成01背包问题，没看懂，后面看
+         * 动态规划，转换成01背包问题
+         *
+         * 说了可以转换成01背包问题解决。那么怎么转换呢。题目意思是求剩下最后一块石头重量尽可能小，也就是最接近0。那么对于产生最后一块石头的
+         * 2块石头的重量就要尽可能的相等。对此，可以先将这一堆石头分成2堆，总重量分别记作A，B。然后再相减得出差值即可。A、B差值要尽可能小，那
+         * 么A、B要尽可能的相等。怎么求A、B的重量呢，如果要去求俩堆石头的重量，难度会大一些，可以通过转换变成求其中一堆石头的重量，这样就容易
+         * 多了。我们知道石头堆总重量为S，且S = A + B;对于目标 t = A - B => (S-B) - B => S - 2B。t的值要小，S是固定值，那么B的值就要越大。
+         * 到这已经有点01背包的影子了。B的值 = 背包价值，都是取最大。还有一个变量：背包的容量？在此题中其实背包容量也是等于价值的。对于一堆石头分
+         * 成2堆，最理想的情况就是A = B。所以背包容量最大值为S/2。到此石头问题已经完全转换成01背包问题了。
+         * 注意最后结果 t = S - 2B。背包问题求得是B，所以最后结果应该使用总数减去2倍的B。
          */
-        Arrays.sort(stones);
-        for (int i = stones.length - 1; i >= 0; i -= 2) {
-            stones[i] = Math.abs(stones[i] - stones[i - 1]);
+
+        int sum = 0;
+        for (int i = 0; i < stones.length; i++) {
+            sum += stones[i];
         }
-        return 0;
+        int max = sum / 2;
+
+        int[][] dp = new int[stones.length][max + 1];
+
+        for (int i = 0; i <= max; i++) {
+            dp[0][i] = i >= stones[0] ? stones[0] : 0;
+        }
+
+        for (int i = 1; i < stones.length; i++) {
+            for (int j = 0; j <= max; j++) {
+                int n = dp[i - 1][j];
+
+                int m = j >= stones[i] ? dp[i - 1][j - stones[i]] + stones[i] : 0;
+                dp[i][j] = Math.max(n, m);
+            }
+        }
+        return sum - 2 * dp[stones.length - 1][max];
     }
 }
 
