@@ -237,26 +237,52 @@ public class DpIssue {
          * 拿与不拿有条件限制，就是物品容量不能超过背包总容量。
          *
          * 5、状态压缩
+         * 对于i这一纬度，所有状态只跟i与i-1相关，所以可以使用固定大小为2的纬度，相应的将dp上的i-1，i加上 %2或者&1即可，非常方便。
+         * 这种方法称之为滚动数组。
          */
 
         // 背包容量是可以等于V的，对于数组从0开始需要+1;
         int[][] dp = new int[N][V + 1];
-        // 处理base case。
+
+        // 处理base case。第一件物品。 i:背包剩余容量
         for (int i = 0; i <= V; i++) {
-            dp[0][i] = i >= v[i] ? w[0] : 0;
+            dp[0][i] = i >= v[0] ? w[0] : 0;
         }
         for (int i = 1; i < N; i++) {
             for (int j = 0; j <= V; j++) {
                 //不拿：容量没变，价值等于前一个物品价值。
                 int x = dp[i - 1][j];
                 //拿：
-                int y = 0;
-                if (j >= v[i])
-                    y = dp[i - 1][j - v[i]] + w[i];
-
+                int y = (j >= v[i]) ? dp[i - 1][j - v[i]] + w[i] : 0;
                 dp[i][j] = Math.max(x, y);
             }
         }
-        return dp[N-1][V]; // 待验证
+        return dp[N - 1][V];
+
+        // 状态压缩：滚动数组
+//        int[][] dp = new int[2][V + 1];
+//        for (int i = 0; i <= V; i++) {
+//            dp[0][i] = i >= v[0] ? w[0] : 0;
+//        }
+//        for (int i = 1; i < N; i++) {
+//            for (int j = 0; j <= V; j++) {
+//                int x = dp[(i - 1)&1][j];
+//                int y = (j >= v[i]) ? dp[(i - 1)&1][j - v[i]] + w[i] : 0;
+//                dp[i&1][j] = Math.max(x, y);
+//            }
+//        }
+//        return dp[(N - 1)&1][V];
+
+        // 状态压缩：二维空间变一维空间，只保留剩余空间变量,将二维0到V倒过来即可(V到0)
+//        int[] dp = new int[V + 1];
+
+//        for (int i = 0; i < N; i++) {
+//            for (int j = V; j >= v[i]; j++) {
+//                int x = dp[j];
+//                int y =  dp[j - v[i]] + w[i];
+//                dp[j] = Math.max(x, y);
+//            }
+//        }
+//        return dp[V];
     }
 }
