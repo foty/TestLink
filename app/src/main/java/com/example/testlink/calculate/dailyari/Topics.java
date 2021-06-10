@@ -21,8 +21,10 @@ public class Topics {
     public static void main(String[] args) {
         int[] ints = new int[]{1, 2, 4, 7, 8};
         //numWays(3, 2);
-        System.out.println(Math.sqrt(16) % 2 == 0);
-        System.out.println(1 & 0);
+//        System.out.println(Math.sqrt(16) % 2 == 0);
+//        System.out.println(1 & 0);
+
+        profitableSchemes(5, 3, new int[]{2, 2}, new int[]{2, 3});
     }
 
 
@@ -3664,6 +3666,72 @@ public class Topics {
             }
         }
         return sum - 2 * dp[stones.length - 1][max];
+    }
+
+    /**
+     * 879、盈利计划
+     */
+    public static int profitableSchemes(int n, int minProfit, int[] group, int[] profit) {
+
+        /**
+         * 集团里有 n 名员工，他们可以完成各种各样的工作创造利润。
+         * 第 i 种工作会产生 profit[i] 的利润，它要求 group[i] 名成员共同参与。如果成员参与了其中一项工作，就不能参与另一项工作。
+         * 工作的任何至少产生 minProfit 利润的子集称为 盈利计划 。并且工作的成员总数最多为 n 。
+         * 有多少种计划可以选择？因为答案很大，所以 返回结果模 10^9 + 7 的值。
+         *
+         * 示例 1：
+         * 输入：n = 5, minProfit = 3, group = [2,2], profit = [2,3]
+         * 输出：2
+         * 解释：至少产生 3 的利润，该集团可以完成工作 0 和工作 1 ，或仅完成工作 1 。
+         * 总的来说，有两种计划。
+         *
+         * 示例 2：
+         * 输入：n = 10, minProfit = 5, group = [2,3,5], profit = [6,7,8]
+         * 输出：7
+         * 解释：至少产生 5 的利润，只要完成其中一种工作就行，所以该集团可以完成任何工作。
+         * 有 7 种可能的计划：(0)，(1)，(2)，(0,1)，(0,2)，(1,2)，以及 (0,1,2) 。
+         *
+         * 提示：
+         *
+         * 1 <= n <= 100
+         * 0 <= minProfit <= 100
+         * 1 <= group.length <= 100
+         * 1 <= group[i] <= 100
+         * profit.length == group.length
+         * 0 <= profit[i] <= 100
+         */
+
+        /**
+         * 思路: 动态规划。往01背包问题上靠,属于01背包问题的变种。关键就是它比背包问题多出一个至少盈利变量，
+         * 所以可以由二维转成三维数组。
+         *
+         * 3个变量：工作数量，人数，至少盈利数。
+         * dp[i][j][k]表示： 前i件工作，使用人数不超过j，所得利润至少为k的方案数。
+         */
+
+        int p = group.length;
+        int[][][] dp = new int[p + 1][n + 1][minProfit + 1]; // 前i件工作，所以可以去到i，数组+1。
+
+        // 初始化：前0件工作，使用人数为i，利润最少为0，认为是一种解决方案。
+        for (int i = 0; i <= n; i++) {
+            dp[0][i][0] = 1;
+        }
+        for (int i = 1; i < p; i++) {
+            // 当前工作需要的人数
+            int w = group[i];
+            //当前工作能产生的利润
+            int pr = profit[i];
+            for (int j = 0; j <= n; j++) {
+                for (int k = 0; k <= minProfit; k++) {
+                    // 不做
+                    dp[i][j][k] = dp[i - 1][j][k];
+                    // 做
+                    if (j >= w) // 不做的方案+做的方案。
+                        dp[i][j][k] = (dp[i][j][k] + dp[i - 1][j - w][Math.max(0, k - pr)]) % 1000000007;
+                }
+            }
+        }
+        return dp[p - 1][n][minProfit];
     }
 }
 
