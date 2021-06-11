@@ -1,5 +1,7 @@
 package com.example.testlink.calculate.dailyari;
 
+import android.content.Intent;
+
 import com.example.testlink.calculate.sword_for_offer.ListNode;
 import com.example.testlink.calculate.sword_for_offer.TreeNode;
 
@@ -3823,6 +3825,61 @@ public class Topics {
             }
         }
         return dp[amount];
+    }
+
+    /**
+     * 279、完全平方数
+     */
+    public int numSquares(int n) {
+
+        /** 给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
+         * 给你一个整数 n ，返回和为 n 的完全平方数的 最少数量 。
+         * 完全平方数 是一个整数，其值等于另一个整数的平方；换句话说，其值等于一个整数自乘的积。例如，1、4、9 和 16 都是完全平方数，而 3 和 11 不是。
+         *
+         * 示例 1：
+         * 输入：n = 12
+         * 输出：3
+         * 解释：12 = 4 + 4 + 4
+         *
+         * 示例 2：
+         * 输入：n = 13
+         * 输出：2
+         * 解释：13 = 4 + 9
+         *
+         * 提示：
+         * 1 <= n <= 10^4
+         */
+
+        /**
+         * 1、定义dp
+         * dp[i]为当和为i时，需要的完全平方数的最小数量。
+         *
+         * 2、base case
+         * dp[0] = 0,一个都选，数量就是0.
+         *
+         * 3、转移方程
+         * 其实跟前面一题有点类似。对于dp[i]，假如我确定了一个完全平方数x,组成和为i的完全平方数就有i = (i-x) + x。要求i的数量，只需要求出(i-x)部
+         * 分的数量再加1就等于了求i的数量。即dp[i] = dp[i-x] +1。所以只需要求出i范围内的所有完全平方数的每种组合方案数量，取最小值即可。
+         *
+         * 4、边界条件
+         * i范围内的完全平方数。
+         *
+         * 5、状态压缩
+         */
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            //初始化：最坏的情况，全部都是1组成
+            dp[i] = i;
+            // 枚举范围内的所有完全平方数的可能性，记得取最小值。
+            for (int j = 1; j * j <= i; j++) {
+                dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
+                // 关于为什么要+1。首先dp[i]表示的是数量，当(j*j)确立之后，对于i剩余的数就是i - j * j。也就是说在
+                // dp[i-j*j]数量下加上j*j就组成了和为i的数了。j*j当做一个完全平方数，所以
+                // dp[i]需要在dp[i-j^2]的数量基础上+1，才是dp[i]的值。
+            }
+        }
+        return dp[n];
     }
 }
 
