@@ -3967,5 +3967,60 @@ public class Topics {
         }
         return left;
     }
+
+    /**
+     * 852. 山脉数组的峰顶索引
+     */
+    public int peakIndexInMountainArray(int[] arr) {
+
+        /** 符合下列属性的数组 arr 称为 山脉数组 ：
+         * arr.length >= 3
+         * 存在 i（0 < i < arr.length - 1）使得：
+         * arr[0] < arr[1] < ... arr[i-1] < arr[i]
+         * arr[i] > arr[i+1] > ... > arr[arr.length - 1]
+         * 给你由整数组成的山脉数组 arr ，返回任何满足 arr[0] < arr[1] < ... arr[i - 1] < arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
+         * 的下标 i 。
+         *
+         * 示例 1：
+         * 输入：arr = [0,10,5,2]
+         * 输出：1
+         *
+         * 示例 2：
+         * 输入：arr = [3,4,5,1]
+         * 输出：2
+         *
+         * 示例 3：
+         * 输入：arr = [24,69,100,99,79,78,67,36,26,19]
+         * 输出：2
+         *
+         * 提示：
+         * 3 <= arr.length <= 104
+         * 0 <= arr[i] <= 106
+         * 题目数据保证 arr 是一个山脉数组
+         */
+
+        /**
+         * 思路
+         * 直接遍历找最大值，时间复杂度O(n)，题目应该是考的二分。
+         */
+
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i] > arr[i + 1]) return i;
+        }
+
+        // 二分法
+        int max = 0;
+        int left = 1, right = arr.length - 2;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] > arr[mid + 1]) {
+                max = mid; // 有可能就是这个值，先保存，也有可能是在下降阶段，目标在左边。
+                right = mid - 1;
+            } else {
+                left = mid + 1; //说明还在上升阶段，目标在右边
+            }
+        }
+        return max;
+    }
 }
 
