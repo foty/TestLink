@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -24,7 +27,12 @@ public class Topics {
 //        System.out.println(Math.sqrt(16) % 2 == 0);
 //        System.out.println(1 & 0);
 
-        profitableSchemes(5, 3, new int[]{2, 2}, new int[]{2, 3});
+//        profitableSchemes(5, 3, new int[]{2, 2}, new int[]{2, 3});
+        List<String> list = new ArrayList<>();
+        list.add("yy");
+        list.add("uu");
+
+        maxLength(list);
     }
 
 
@@ -4120,6 +4128,76 @@ public class Topics {
             }
         }
         return Long.toString(nVal - 1);
+    }
+
+    /**
+     * 1239、串联字符串的最大长度
+     */
+    public static int maxLength(List<String> arr) {
+
+        /**
+         * 给定一个字符串数组 arr，字符串 s 是将 arr 某一子序列字符串连接所得的字符串，如果 s 中的每一个字符都只出现过一次，那么它就是一个可行解。
+         * 请返回所有可行解 s 中最长长度。
+         *
+         * 示例 1：
+         * 输入：arr = ["un","iq","ue"]
+         * 输出：4
+         * 解释：所有可能的串联组合是 "","un","iq","ue","uniq" 和 "ique"，最大长度为 4。
+         *
+         * 示例 2：
+         * 输入：arr = ["cha","r","act","ers"]
+         * 输出：6
+         * 解释：可能的解答有 "chaers" 和 "acters"。
+         *
+         * 示例 3：
+         * 输入：arr = ["abcdefghijklmnopqrstuvwxyz"]
+         * 输出：26
+         *
+         * 提示：
+         * 1 <= arr.length <= 16
+         * 1 <= arr[i].length <= 26
+         * arr[i] 中只含有小写英文字母
+         */
+
+        /**
+         * 思路：暴力枚举后，选择最大长度的字符。
+         * 回溯+dfs
+         */
+
+        Set<Character> set = new HashSet<>();
+        dfs1239(arr, 0, set);
+        return max1239;
+    }
+
+    private static int max1239 = 0;
+
+    private static void dfs1239(List<String> arr, int index, Set<Character> set) {
+        // 终止条件
+        if (index == arr.size()) {
+            max1239 = Math.max(set.size(), max1239);
+            return;
+        }
+        // 判断是否有重复，没有重复则添加到set
+        String s = arr.get(index);
+        boolean add = true;
+        Set<Character> set1 = new HashSet<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            set1.add(c);
+            if (set.contains(c) || set1.contains(c)) { // 保证当前字符串也是没有重复的元素。
+                add = false;
+            }
+        }
+        //是否添加
+        if (add) {
+            set.addAll(set1);
+        }
+        dfs1239(arr, index + 1, set);
+        //回溯
+        if (add) {
+            set.removeAll(set1);
+            dfs1239(arr, index + 1, set);
+        }
     }
 }
 
