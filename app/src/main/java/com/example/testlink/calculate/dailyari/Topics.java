@@ -4033,6 +4033,8 @@ public class Topics {
 
     /**
      * 65、有效数字
+     * <p>
+     * {@link com.example.testlink.calculate.sword_for_offer.T53}
      */
     public boolean isNumber(String s) {
         /** 有效数字（按顺序）可以分成以下几个部分：
@@ -4076,7 +4078,7 @@ public class Topics {
          * s 仅含英文字母（大写和小写），数字（0-9），加号 '+' ，减号 '-' ，或者点 '.' 。
          */
 
-        // 看剑指offer T53。一样的题目
+        // 看剑指offer T53。一样的题目,应用到有限状态机。
 
         return false;
     }
@@ -4233,6 +4235,57 @@ public class Topics {
             }
         }
         return ans;
+    }
+
+    /**
+     * 剑指Offer 38. 字符串的排列
+     * {@link com.example.testlink.calculate.sword_for_offer.T28}
+     */
+    public String[] permutation(String s) {
+        /**
+         * 输入一个字符串，打印出该字符串中字符的所有排列。
+         * 你可以以任意顺序返回这个字符串数组，但里面不能有重复元素。
+         *
+         * 示例:
+         * 输入：s = "abc"
+         * 输出：["abc","acb","bac","bca","cab","cba"]
+         *
+         * 限制：
+         * 1 <= s 的长度 <= 8
+         */
+
+        /**
+         * 剑指offer T28
+         */
+        return null;
+    }
+
+    /**
+     * 剑指 Offer 15.二进制中1的个数
+     * {@link com.example.testlink.calculate.sword_for_offer.T10}
+     * {@link #hammingWeight(int)}
+     */
+    public int t191(int i) {
+        /**
+         * 请实现一个函数，输入一个整数（以二进制串形式），输出该数二进制表示中 1 的个数。例如，把 9 表示成二进制是 1001，有 2 位是 1。
+         * 因此，如果输入 9，则该函数输出 2。
+         *
+         * 示例 1：
+         * 输入：00000000000000000000000000001011
+         * 输出：3
+         * 解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 '1'。
+         *
+         * 提示：
+         * 输入必须是长度为 32 的 二进制串 。
+         */
+
+        // 与T10、hammingWeight()一样。看这2个解法即可。写个最舒服的方式,利用了&的一个特性
+        int sum = 0;
+        while (i != 0) {
+            i = i & (i - 1);
+            sum++;
+        }
+        return sum;
     }
 }
 
