@@ -4287,5 +4287,52 @@ public class Topics {
         }
         return sum;
     }
+
+    /**
+     * 149、直线上最多的点数
+     */
+    public int maxPoints(int[][] points) {
+
+        /**
+         *  给你一个数组 points ，其中 points[i] = [xi, yi] 表示 X-Y 平面上的一个点。求最多有多少个点在同一条直线上。
+         *
+         * 示例 1：
+         * 输入：points = [[1,1],[2,2],[3,3]]
+         * 输出：3
+         *
+         * 示例 2：
+         * 输入：points = [[1,1],[3,2],[5,3],[4,1],[2,3],[1,4]]
+         * 输出：4
+         *
+         * 提示：
+         * 1 <= points.length <= 300
+         * points[i].length == 2
+         * -104 <= xi, yi <= 104
+         * points 中的所有点 互不相同
+         */
+
+        /**
+         * 思路，暴力枚举每2个点的斜率，借助这2个点，判断第三个点是不是在同一条直线上，这样可以绕过求斜率跟截距
+         * 时产生的问题。具体操作就是根据俩个点分别求出Δx与Δy，求出一条直线，然后在用其中的一个点与第三个点确立另一条直线，
+         * 如果是同一条直线的话有：Δy1/Δx1 = Δy2/Δx2,交叉相乘有：Δy1*Δx2 = Δx1*Δy2。根据这个可以不用求出斜率来。
+         */
+
+        int max = 0;
+        for (int i = 0; i < points.length - 1; i++) {
+            for (int j = i + 1; j < points.length; j++) {
+                long dy = points[j][1] - points[i][1];
+                long dx = points[j][0] - points[i][0];
+                int count = 2;
+                for (int k = j + 1; k < points.length; k++) {
+                    if (dx * (points[k][1] - points[i][1]) == dy * (points[k][0] - points[i][0]))
+                        count++;
+                }
+                max = Math.max(count, max);
+            }
+        }
+        return max;
+
+        // 暴力枚举每2个点的斜率，对比斜率是否相等(需要把斜率保存起来)
+    }
 }
 
