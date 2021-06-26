@@ -8,9 +8,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
@@ -4333,6 +4334,199 @@ public class Topics {
         return max;
 
         // 暴力枚举每2个点的斜率，对比斜率是否相等(需要把斜率保存起来)
+    }
+
+    /**
+     * 752、打开转盘锁 ? bfs
+     */
+    public int openLock(String[] deadends, String target) {
+        /**
+         * 你有一个带有四个圆形拨轮的转盘锁。每个拨轮都有10个数字： '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' 。每个拨轮可以自由旋转：
+         * 例如把 '9' 变为 '0'，'0' 变为 '9' 。每次旋转都只能旋转一个拨轮的一位数字。
+         * 锁的初始数字为 '0000' ，一个代表四个拨轮的数字的字符串。
+         * 列表 deadends 包含了一组死亡数字，一旦拨轮的数字和列表里的任何一个元素相同，这个锁将会被永久锁定，无法再被旋转。
+         * 字符串 target 代表可以解锁的数字，你需要给出解锁需要的最小旋转次数，如果无论如何不能解锁，返回 -1 。
+         *
+         * 示例 1:
+         * 输入：deadends = ["0201","0101","0102","1212","2002"], target = "0202"
+         * 输出：6
+         * 解释：
+         * 可能的移动序列为 "0000" -> "1000" -> "1100" -> "1200" -> "1201" -> "1202" -> "0202"。
+         * 注意 "0000" -> "0001" -> "0002" -> "0102" -> "0202" 这样的序列是不能解锁的，
+         * 因为当拨动到 "0102" 时这个锁就会被锁定。
+         *
+         * 示例 2:
+         * 输入: deadends = ["8888"], target = "0009"
+         * 输出：1
+         * 解释：
+         * 把最后一位反向旋转一次即可 "0000" -> "0009"
+         *
+         * 示例 3:
+         * 输入: deadends = ["8887","8889","8878","8898","8788","8988","7888","9888"], target = "8888"
+         * 输出：-1
+         * 解释：
+         * 无法旋转到目标数字且不被锁定。
+         *
+         * 示例 4:
+         * 输入: deadends = ["0000"], target = "8888"
+         * 输出：-1
+         *
+         * 提示：
+         * 1 <= deadends.length <= 500
+         * deadends[i].length == 4
+         * target.length == 4
+         * target 不在 deadends 之中
+         * target 和 deadends[i] 仅由若干位数字组成
+         */
+
+        if ("0000".equals(target)) return 0;
+
+        Set<String> dead = new HashSet<String>();
+        for (String deadend : deadends) {
+            dead.add(deadend);
+        }
+        if (dead.contains("0000")) return -1;
+
+        int step = 0;
+        Queue<String> queue = new LinkedList<String>();
+        queue.offer("0000");
+        Set<String> seen = new HashSet<String>();
+        seen.add("0000");
+
+        while (!queue.isEmpty()) {
+            ++step;
+            int size = queue.size();
+            for (int i = 0; i < size; ++i) {
+                String status = queue.poll();
+                for (String nextStatus : get752(status)) {
+                    if (!seen.contains(nextStatus) && !dead.contains(nextStatus)) {
+                        if (nextStatus.equals(target)) {
+                            return step;
+                        }
+                        queue.offer(nextStatus);
+                        seen.add(nextStatus);
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+    public char numPrev752(char x) {
+        return x == '0' ? '9' : (char) (x - 1);
+    }
+
+    public char numSucc752(char x) {
+        return x == '9' ? '0' : (char) (x + 1);
+    }
+
+    // 枚举 status 通过一次旋转得到的数字
+    public List<String> get752(String status) {
+        List<String> ret = new ArrayList<String>();
+        char[] array = status.toCharArray();
+        for (int i = 0; i < 4; ++i) {
+            char num = array[i];
+            array[i] = numPrev752(num);
+            ret.add(new String(array));
+            array[i] = numSucc752(num);
+            ret.add(new String(array));
+            array[i] = num;
+        }
+        return ret;
+    }
+
+    /**
+     * 773、滑动谜题 ? bfs
+     */
+    public int slidingPuzzle(int[][] board) {
+        /**
+         *  在一个 2 x 3 的板上（board）有 5 块砖瓦，用数字 1~5 来表示, 以及一块空缺用 0 来表示.
+         * 一次移动定义为选择 0 与一个相邻的数字（上下左右）进行交换.
+         * 最终当板 board 的结果是 [[1,2,3],[4,5,0]] 谜板被解开。
+         * 给出一个谜板的初始状态，返回最少可以通过多少次移动解开谜板，如果不能解开谜板，则返回 -1 。
+         * 示例：
+         * 输入：board = [[1,2,3],[4,0,5]]
+         * 输出：1
+         * 解释：交换 0 和 5 ，1 步完成
+         *
+         * 输入：board = [[1,2,3],[5,4,0]]
+         * 输出：-1
+         * 解释：没有办法完成谜板
+         *
+         * 输入：board = [[4,1,2],[5,0,3]]
+         * 输出：5
+         * 解释：
+         * 最少完成谜板的最少移动次数是 5 ，
+         * 一种移动路径:
+         * 尚未移动: [[4,1,2],[5,0,3]]
+         * 移动 1 次: [[4,1,2],[0,5,3]]
+         * 移动 2 次: [[0,1,2],[4,5,3]]
+         * 移动 3 次: [[1,0,2],[4,5,3]]
+         * 移动 4 次: [[1,2,0],[4,5,3]]
+         * 移动 5 次: [[1,2,3],[4,5,0]]
+         *
+         * 输入：board = [[3,2,4],[1,5,0]]
+         * 输出：14
+         *
+         * 提示：
+         * board 是一个如上所述的 2 x 3 的数组.
+         * board[i][j] 是一个 [0, 1, 2, 3, 4, 5] 的排列.
+         */
+
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < 2; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                sb.append(board[i][j]);
+            }
+        }
+        String initial = sb.toString();
+        if ("123450".equals(initial)) {
+            return 0;
+        }
+        int step = 0;
+        Queue<String> queue = new LinkedList<String>();
+        queue.offer(initial);
+        Set<String> seen = new HashSet<String>();
+        seen.add(initial);
+
+        while (!queue.isEmpty()) {
+            ++step;
+            int size = queue.size();
+            for (int i = 0; i < size; ++i) {
+                String status = queue.poll();
+                for (String nextStatus : get773(status)) {
+                    if (!seen.contains(nextStatus)) {
+                        if ("123450".equals(nextStatus)) {
+                            return step;
+                        }
+                        queue.offer(nextStatus);
+                        seen.add(nextStatus);
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+    int[][] neighbors = {{1, 3}, {0, 2, 4}, {1, 5}, {0, 4}, {1, 3, 5}, {2, 4}};
+
+    // 枚举 status 通过一次交换操作得到的状态
+    private List<String> get773(String status) {
+        List<String> ret = new ArrayList<String>();
+        char[] array = status.toCharArray();
+        int x = status.indexOf('0');
+        for (int y : neighbors[x]) {
+            swap773(array, x, y);
+            ret.add(new String(array));
+            swap773(array, x, y);
+        }
+        return ret;
+    }
+
+    private void swap773(char[] array, int x, int y) {
+        char temp = array[x];
+        array[x] = array[y];
+        array[y] = temp;
     }
 }
 
