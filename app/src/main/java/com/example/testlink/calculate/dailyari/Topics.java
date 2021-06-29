@@ -4337,7 +4337,7 @@ public class Topics {
     }
 
     /**
-     * 752、打开转盘锁 ? bfs
+     * 752、打开转盘锁
      */
     public int openLock(String[] deadends, String target) {
         /**
@@ -4494,12 +4494,33 @@ public class Topics {
          * board[i][j] 是一个 [0, 1, 2, 3, 4, 5] 的排列.
          */
 
+        /**
+         * 思路：bfs
+         * 说什么来着，看到bfs就要想到队列，想到去重set，想到图，想到它的步骤模板
+         * 步骤：
+         * 1、构建队列，加入初始状态
+         * 2、构建去重set，加入初始状态
+         * 3、定义计时器
+         * 4、遍历队列元素
+         *    1、找到目标
+         *    2、将新产生的状态放入队列
+         * 5、更新计时器
+         *
+         *
+         * 老规矩，分析第4步骤：滑板一次操作能产生的新状态跟0板块的位置是相关的，而0板块所在的位置决定了它交换能产生的
+         * 新状态。交换位置其实是固定的，比如0在左上角的话，那么它只能跟右边、下边的板块交换。所以可以给板子编号从[012345]的顺序开始枚举，
+         * 枚举的结果用二维数组保存：第一维度表示0所在的位置，大小固定是6；第二维度表示能做交换操作的板块的下标。这样就可以确定0板块在不同
+         * 位置能产生的新状态了。
+         */
+
+        // 将数组转换成一维目标
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < 2; ++i) {
             for (int j = 0; j < 3; ++j) {
                 sb.append(board[i][j]);
             }
         }
+
         String initial = sb.toString();
         if ("123450".equals(initial)) {
             return 0;
@@ -4539,6 +4560,7 @@ public class Topics {
         for (int y : neighbors[x]) {
             swap773(array, x, y);
             ret.add(new String(array));
+            // 恢复状态
             swap773(array, x, y);
         }
         return ret;
