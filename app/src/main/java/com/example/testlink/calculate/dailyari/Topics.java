@@ -4379,6 +4379,22 @@ public class Topics {
          * target 和 deadends[i] 仅由若干位数字组成
          */
 
+        /**
+         * 思路：bfs
+         * 看到是bfs，就要想到队列，想到去重set，想到图。
+         * bfs通用模板：
+         * 1、构建队列，加入初始状态
+         * 2、构建去重集合，加入初始状态
+         * 3、定义计数器
+         * 4、访问队列所有元素
+         *   4.1、找到目标
+         *   4.2、将当前元素产生的其他状态加入到队列
+         * 5、更新计数器
+         *
+         * 重点分析第4步骤：对于转盘来说，它有4个孔，但是转的方向可以往上也可以往下，那么转动一次能产生8种结
+         * 果，在不考虑去重的情况下，需要把这8次的结果都放到队列里去。
+         */
+
         if ("0000".equals(target)) return 0;
 
         Set<String> dead = new HashSet<String>();
@@ -4398,7 +4414,7 @@ public class Topics {
             int size = queue.size();
             for (int i = 0; i < size; ++i) {
                 String status = queue.poll();
-                for (String nextStatus : get752(status)) {
+                for (String nextStatus : get752(status)) { // 根据当前状态枚举能产生的新状态
                     if (!seen.contains(nextStatus) && !dead.contains(nextStatus)) {
                         if (nextStatus.equals(target)) {
                             return step;
@@ -4412,10 +4428,12 @@ public class Topics {
         return -1;
     }
 
+    //往下转-1，注意0与9特殊位置
     public char numPrev752(char x) {
         return x == '0' ? '9' : (char) (x - 1);
     }
 
+    //往上转+1，注意0与9特殊位置
     public char numSucc752(char x) {
         return x == '9' ? '0' : (char) (x + 1);
     }
@@ -4426,10 +4444,13 @@ public class Topics {
         char[] array = status.toCharArray();
         for (int i = 0; i < 4; ++i) {
             char num = array[i];
+            // 往下
             array[i] = numPrev752(num);
             ret.add(new String(array));
+            //往上
             array[i] = numSucc752(num);
             ret.add(new String(array));
+            //准备转下一个孔，要恢复到初始状态
             array[i] = num;
         }
         return ret;
