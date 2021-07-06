@@ -4571,7 +4571,7 @@ public class Topics {
     }
 
     /**
-     * 909、蛇梯棋
+     * 909、蛇梯棋 bfs
      */
     public static int snakesAndLadders(int[][] board) {
 
@@ -4692,15 +4692,52 @@ public class Topics {
     private static int[] getStep(int index, int size) {
         //正常模式下求x、y坐标
         int y = (index - 1) / size;
+        y = size - 1 - y; // 取反方向
+
         int x = (index - 1) % size;
 
+//        if (y % 2 == 1) { // ？？？没懂为什么可以直接用y%2 == 1,如果是这样做，y不能提前取反。
+//            x = size - 1 - x;
+//        }
 
-        //校验后的x、y坐标  因为从下往上，偶数行都是从左到右的，所以从上往下时都是相反的，也就是 ？？？？？
-        if (y % 2 == 1) { // 这里的y值不能使用取反过后的y值。？？？
-            x = size - 1 - x; // 取反
+        // 最后一行必定从左到右，判断当前行奇偶性是否跟最后一行相同,不同则取反
+        if ((y % 2) != ((size - 1) % 2)) {
+            x = size - 1 - x;
         }
-        y = size - 1 - y; // 取反方向
         return new int[]{y, x};
+    }
+
+    /**
+     * 815、公交路线 bfs ?
+     */
+    public int numBusesToDestination(int[][] routes, int source, int target) {
+
+
+        /**
+         * 给你一个数组 routes ，表示一系列公交线路，其中每个 routes[i] 表示一条公交线路，第 i 辆公交车将会在上面循环行驶。
+         * 例如，路线 routes[0] = [1, 5, 7] 表示第 0 辆公交车会一直按序列 1 -> 5 -> 7 -> 1 -> 5 -> 7 -> 1 -> ... 这样的车站路线行驶。
+         * 现在从 source 车站出发（初始时不在公交车上），要前往 target 车站。 期间仅可乘坐公交车。
+         * 求出 最少乘坐的公交车数量 。如果不可能到达终点车站，返回 -1 。
+         *
+         * 示例 1：
+         * 输入：routes = [[1,2,7],[3,6,7]], source = 1, target = 6
+         * 输出：2
+         * 解释：最优策略是先乘坐第一辆公交车到达车站 7 , 然后换乘第二辆公交车到车站 6 。
+         *
+         * 示例 2：
+         * 输入：routes = [[7,12],[4,5,15],[6],[15,19],[9,12,13]], source = 15, target = 12
+         * 输出：-1
+         *
+         * 提示：
+         * 1 <= routes.length <= 500.
+         * 1 <= routes[i].length <= 105
+         * routes[i] 中的所有值 互不相同
+         * sum(routes[i].length) <= 105
+         * 0 <= routes[i][j] < 106
+         * 0 <= source, target < 106
+         *
+         */
+        return 0;
     }
 
     /**
@@ -4747,8 +4784,8 @@ public class Topics {
         /**
          * 思路：26进制。
          * 说道26进制，思考下十进制是怎么做的?是不是先取模，得出个位数字，然后除以10，再取模，得到十位数字，依此类推。
-         * 那么这个26进制也可以这么搞。不断取模除以26，每做一次除法，意味着位数+1，使用一个sb保存起来。但是由于计算是从低位
-         * 到高位的，最终结果显示应该是从高位到低位，所以最后需要对sb反转。
+         * 那么这个26进制也可以这么搞。不断取模除以26，每做一次除法，意味着位数+1，使用一个sb保存起来。但是由于这样计算是从低位
+         * 到高位的，最终结果读时显示应该是从高位到低位，所以最后需要对sb反转。
          *
          * 困扰：10进制是从0-9,共有10个数字，此题是从1-26，而不是从0开始的。但是可以通过手段变成有0的情况：对于10进制有
          * 取值0-9,10个数字，除以10,那么在取模运算前先-1，如何?会变成取值0-25,26个数字，除以26。跟10进制的情况一模一样。
@@ -4801,7 +4838,9 @@ public class Topics {
          */
 
         /**
-         * dp(01背包)会超时，使用贪心算法；要买最多的雪糕，就应该从最便宜的开始买起。知道硬币不够了。
+         * 思路：
+         * 看着跟01背包一样的，但是直接使用dp(01背包)会超时，而且数据量相对比较小，所以使用贪心，其实贪心也是dp的一种特殊情况。
+         * 使用贪心算法；要买最多的雪糕，就应该从最便宜的开始买起。直到硬币不够了。
          */
         Arrays.sort(costs);
         int count = 0;
@@ -4809,10 +4848,185 @@ public class Topics {
             if (costs[i] <= coins) { // 钱够直接买
                 count++;
                 coins -= costs[i];
-            }else
+            } else
                 break;
         }
         return count;
+    }
+
+    /**
+     * 726. 原子的数量
+     */
+    public String countOfAtoms(String formula) {
+
+        /**
+         * 给定一个化学式formula（作为字符串），返回每种原子的数量。原子总是以一个大写字母开始，接着跟随0个或任意个小写字母，表示原子的名字。
+         * 如果数量大于 1，原子后会跟着数字表示原子的数量。如果数量等于 1 则不会跟数字。例如，H2O 和 H2O2 是可行的，但 H1O2 这个表达是不可行的。
+         * 两个化学式连在一起是新的化学式。例如 H2O2He3Mg4 也是化学式。
+         * 一个括号中的化学式和数字（可选择性添加）也是化学式。例如 (H2O2) 和 (H2O2)3 是化学式。
+         * 给定一个化学式，输出所有原子的数量。格式为：第一个（按字典序）原子的名子，跟着它的数量（如果数量大于 1），然后是第二个原子的名字（按字典序），
+         * 跟着它的数量（如果数量大于 1），以此类推。
+         * 示例 1:
+         * 输入:
+         * formula = "H2O"
+         * 输出: "H2O"
+         * 解释:
+         * 原子的数量是 {'H': 2, 'O': 1}。
+         *
+         * 示例 2:
+         * 输入:
+         * formula = "Mg(OH)2"
+         * 输出: "H2MgO2"
+         * 解释:
+         * 原子的数量是 {'H': 2, 'Mg': 1, 'O': 2}。
+         *
+         * 示例 3:
+         * 输入:
+         * formula = "K4(ON(SO3)2)2"
+         * 输出: "K4N2O14S4"
+         * 解释:
+         * 原子的数量是 {'K': 4, 'N': 2, 'O': 14, 'S': 4}。
+         * 注意:
+         *
+         * 所有原子的第一个字母为大写，剩余字母都是小写。
+         * formula的长度在[1, 1000]之间。
+         * formula只包含字母、数字和圆括号，并且题目中给定的是合法的化学式。
+         */
+
+        HashMap<String, Integer> map = new HashMap<>();
+        Stack<Character> stack = new Stack<>();
+
+        // A-Z 65-90
+        // 97 -122
+        for (int i = 0; i < formula.length(); i++) {
+
+            // 找到一个原子
+            String key = get726(formula);
+            //找到这个原子的数量
+            getNum726(formula);
+
+
+        }
+
+        return "";
+    }
+
+    int index;
+
+    private String get726(String formula) {
+        StringBuilder sb = new StringBuilder();
+
+        // 取出第一个大写字符
+        sb.append(formula.charAt(index));
+        index++;
+        if (index < formula.length() && Character.isLowerCase(formula.charAt(index))) {
+            sb.append(formula.charAt(index));
+            index++;
+        }
+        return sb.toString();
+    }
+
+    private int getNum726(String formula) {
+        //不是数字，认为是1
+        if (index < formula.length() && !Character.isDigit(formula.charAt(index))) {
+            return 1;
+        }
+
+
+        StringBuilder sb = new StringBuilder();
+
+        // 取出第一个大写字符
+        sb.append(formula.charAt(index));
+        index++;
+        if (index < formula.length() && Character.isDigit(formula.charAt(index))) {
+            sb.append(formula.charAt(index));
+            index++;
+        }
+        return 0;
+    }
+
+
+    /**
+     * 1418. 点菜展示表
+     */
+    public List<List<String>> displayTable(List<List<String>> orders) {
+
+        /** 给你一个数组 orders，表示客户在餐厅中完成的订单，确切地说， orders[i]=[customerNamei,tableNumberi,foodItemi] ，
+         * 其中 customerNamei 是客户的姓名，tableNumberi 是客户所在餐桌的桌号，而 foodItemi 是客户点的餐品名称。
+         * 请你返回该餐厅的 点菜展示表 。在这张表中，表中第一行为标题，其第一列为餐桌桌号 “Table” ，后面每一列都是按字母顺序排列的餐品名称。
+         * 接下来每一行中的项则表示每张餐桌订购的相应餐品数量，第一列应当填对应的桌号，后面依次填写下单的餐品数量。
+         * 注意：客户姓名不是点菜展示表的一部分。此外，表中的数据行应该按餐桌桌号升序排列。
+         *
+         * 示例 1：
+         * 输入：orders = [["David","3","Ceviche"],["Corina","10","Beef Burrito"],["David","3","Fried Chicken"],["Carla","5","Water"]
+         * ,["Carla","5","Ceviche"],["Rous","3","Ceviche"]]
+         * 输出：[["Table","Beef Burrito","Ceviche","Fried Chicken","Water"],["3","0","2","1","0"],["5","0","1","0","1"],
+         * ["10","1","0","0","0"]]
+         * 解释：
+         * 点菜展示表如下所示：
+         * Table,Beef Burrito,Ceviche,Fried Chicken,Water
+         * 3    ,0           ,2      ,1            ,0
+         * 5    ,0           ,1      ,0            ,1
+         * 10   ,1           ,0      ,0            ,0
+         * 对于餐桌 3：David 点了 "Ceviche" 和 "Fried Chicken"，而 Rous 点了 "Ceviche"
+         * 而餐桌 5：Carla 点了 "Water" 和 "Ceviche"
+         * 餐桌 10：Corina 点了 "Beef Burrito"
+         *
+         * 提示：
+         * 1 <= orders.length <= 5 * 10^4
+         * orders[i].length == 3
+         * 1 <= customerNamei.length, foodItemi.length <= 20
+         * customerNamei 和 foodItemi 由大小写英文字母及空格字符 ' ' 组成。
+         * tableNumberi 是 1 到 500 范围内的整数。
+         */
+
+
+        // 获取餐品名称和桌号，统计每桌点餐数量
+        Set<String> nameSet = new HashSet<>();
+        Map<Integer, Map<String, Integer>> foodsCnt = new HashMap<>();
+        for (List<String> order : orders) {
+            nameSet.add(order.get(2));
+            int id = Integer.parseInt(order.get(1));
+            Map<String, Integer> map = foodsCnt.getOrDefault(id, new HashMap<>());
+            map.put(order.get(2), map.getOrDefault(order.get(2), 0) + 1);
+            foodsCnt.put(id, map);
+        }
+
+        // 提取餐品名称，并按字母顺序排列
+        int n = nameSet.size();
+        List<String> names = new ArrayList<String>();
+        for (String name : nameSet) {
+            names.add(name);
+        }
+        Collections.sort(names);
+
+        // 提取桌号，并按餐桌桌号升序排列
+        int m = foodsCnt.size();
+        List<Integer> ids = new ArrayList<Integer>();
+        for (int id : foodsCnt.keySet()) {
+            ids.add(id);
+        }
+        Collections.sort(ids);
+
+        // 填写点菜展示表
+        List<List<String>> table = new ArrayList<List<String>>();
+        List<String> header = new ArrayList<String>();
+        header.add("Table");
+        for (String name : names) {
+            header.add(name);
+        }
+        table.add(header);
+        for (int i = 0; i < m; ++i) {
+            int id = ids.get(i);
+            Map<String, Integer> cnt = foodsCnt.get(id);
+            List<String> row = new ArrayList<String>();
+            row.add(Integer.toString(id));
+            for (int j = 0; j < n; ++j) {
+                row.add(Integer.toString(cnt.getOrDefault(names.get(j), 0)));
+            }
+            table.add(row);
+        }
+        return table;
     }
 }
 
