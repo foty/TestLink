@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeMap;
 
 /**
  * Create by lxx
@@ -4893,33 +4894,61 @@ public class Topics {
          * formula只包含字母、数字和圆括号，并且题目中给定的是合法的化学式。
          */
 
-        HashMap<String, Integer> map = new HashMap<>();
-        Stack<Character> stack = new Stack<>();
+        //  "K4(ON(SO3)2)2"
+        Stack<HashMap<String, Integer>> stack = new Stack<>();
+        //先放入最外一层。
+        stack.push(new HashMap<>());
 
-        // A-Z 65-90
-        // 97 -122
-        for (int i = 0; i < formula.length(); i++) {
+        for (int i = 0; i < formula.length(); i = index) {
+            if (formula.charAt(i) == '(') {
+                index++;
+                stack.push(new HashMap<>());
+            } else if (formula.charAt(i) == ')') {
+                index++;
+                //获取数字
+                int num = getNum726(formula);
+                // 将当前()内的原子整合到外部，其实就是去()
 
-            // 找到一个原子
-            String key = get726(formula);
-            //找到这个原子的数量
-            getNum726(formula);
-
-
+                //当前()内的原子
+                HashMap<String, Integer> in = stack.pop();
+                //()外层的原子
+                HashMap<String, Integer> out = stack.peek();
+                for (String s : in.keySet()) {
+                    out.put(s, num * in.get(s) + out.getOrDefault(s, 0));
+                }
+            } else {
+                // 找到一个原子
+                String key = get726(formula);
+                //找到这个原子的数量
+                int num = getNum726(formula);
+                //放入栈
+                HashMap<String, Integer> hashMap = stack.get(stack.size() - 1);
+                hashMap.put(key, num + hashMap.getOrDefault(key, 0));
+            }
         }
 
-        return "";
+        // 排序map，使用TreeMap实现
+        TreeMap<String, Integer> sortMap = new TreeMap<>(stack.pop());
+        StringBuffer sb = new StringBuffer();
+        for (Map.Entry<String, Integer> entry : sortMap.entrySet()) {
+            String key = entry.getKey();
+            int value = entry.getValue();
+            sb.append(key);
+            if (value > 1) {
+                sb.append(value);
+            }
+        }
+        return sb.toString();
     }
 
     int index;
 
     private String get726(String formula) {
         StringBuilder sb = new StringBuilder();
-
         // 取出第一个大写字符
         sb.append(formula.charAt(index));
         index++;
-        if (index < formula.length() && Character.isLowerCase(formula.charAt(index))) {
+        while (index < formula.length() && Character.isLowerCase(formula.charAt(index))) {
             sb.append(formula.charAt(index));
             index++;
         }
@@ -4927,22 +4956,16 @@ public class Topics {
     }
 
     private int getNum726(String formula) {
-        //不是数字，认为是1
-        if (index < formula.length() && !Character.isDigit(formula.charAt(index))) {
+        //不是数字，或者越界,认为是1
+        if (index >= formula.length() || !Character.isDigit(formula.charAt(index))) {
             return 1;
         }
-
-
         StringBuilder sb = new StringBuilder();
-
-        // 取出第一个大写字符
-        sb.append(formula.charAt(index));
-        index++;
-        if (index < formula.length() && Character.isDigit(formula.charAt(index))) {
+        while (index < formula.length() && Character.isDigit(formula.charAt(index))) {
             sb.append(formula.charAt(index));
             index++;
         }
-        return 0;
+        return Integer.valueOf(sb.toString());
     }
 
 
