@@ -5061,7 +5061,7 @@ public class Topics {
     }
 
     /**
-     * 1711. 大餐计数
+     * 1711. 大餐计数 ?
      */
     public int countPairs(int[] deliciousness) {
 
@@ -5100,6 +5100,81 @@ public class Topics {
             }
         }
         return result;
+    }
+
+    /**
+     * 930. 和相同的二元子数组
+     */
+    public int numSubarraysWithSum(int[] nums, int goal) {
+
+        /** 给你一个二元数组 nums ，和一个整数 goal ，请你统计并返回有多少个和为 goal 的 非空 子数组。
+         * 子数组 是数组的一段连续部分。
+         *
+         * 示例 1：
+         * 输入：nums = [1,0,1,0,1], goal = 2
+         * 输出：4
+         * 解释：
+         * 有 4 个满足题目要求的子数组：[1,0,1]、[1,0,1,0]、[0,1,0,1]、[1,0,1]
+         *
+         * 示例 2：
+         * 输入：nums = [0,0,0,0,0], goal = 0
+         * 输出：15
+         *
+         * 提示：
+         * 1 <= nums.length <= 3 * 104
+         * nums[i] 不是 0 就是 1
+         * 0 <= goal <= nums.length
+         */
+        return 0;
+    }
+
+    /**
+     * 面试题 17.10. 主要元素
+     */
+    public int majorityElement(int[] nums) {
+        /**
+         * 数组中占比超过一半的元素称之为主要元素。给你一个 整数 数组，找出其中的主要元素。若没有，返回 -1 。请设计时间复杂度为 O(N) 、
+         * 空间复杂度为 O(1) 的解决方案。
+         *
+         * 示例 1：
+         *
+         * 输入：[1,2,5,9,5,9,5,5,5]
+         * 输出：5
+         *
+         * 示例 2：
+         * 输入：[3,2]
+         * 输出：-1
+         *
+         * 示例 3：
+         * 输入：[2,2,1,1,1,2,2]
+         * 输出：2
+         */
+
+        /**
+         * 思路
+         * 参考求众数的方法：摩尔投票。
+         * 求得众数后，判断该数量是否超过总元素数量一半。
+         */
+
+        int more = 0; // 保存众数
+        int count = 0; // 当前众数计数器
+        for (int i : nums) {
+            if (count == 0) {
+                more = i;
+            }
+            if (i == more) {
+                count++;
+            } else {
+                count--;
+            }
+        }
+        count = 0; // 众数数量
+        for (int i : nums) {
+            if (i == more) {
+                count++;
+            }
+        }
+        return count > nums.length / 2 ? more : 0;
     }
 }
 
