@@ -1,5 +1,7 @@
 package com.example.testlink.calculate.dailyari;
 
+import android.os.IInterface;
+
 import com.example.testlink.calculate.sword_for_offer.ListNode;
 import com.example.testlink.calculate.sword_for_offer.TreeNode;
 
@@ -29,9 +31,8 @@ public class Topics {
 //        System.out.println(Math.sqrt(16) % 2 == 0);
 //        System.out.println(1 & 0);
 
-        int board[][] = new int[][]{{-1, -1, -1, -1, -1, -1}, {-1, -1, -1, -1, -1, -1}, {-1, -1, -1, -1, -1, -1},
-                {-1, 35, -1, -1, 13, -1}, {-1, -1, -1, -1, -1, -1}, {-1, 15, -1, -1, -1, -1}};
-        int s = snakesAndLadders(board);
+        int board[] = new int[]{3, 0, 6, 1, 5};
+        int s = hIndex(board);
         System.out.println(s);
     }
 
@@ -5103,7 +5104,7 @@ public class Topics {
     }
 
     /**
-     * 930. 和相同的二元子数组
+     * 930. 和相同的二元子数组 ? 滑动窗口
      */
     public int numSubarraysWithSum(int[] nums, int goal) {
 
@@ -5175,6 +5176,56 @@ public class Topics {
             }
         }
         return count > nums.length / 2 ? more : 0;
+    }
+
+    /**
+     * 274. H 指数
+     */
+    public static int hIndex(int[] citations) {
+
+        /**
+         *  给定一位研究者论文被引用次数的数组（被引用次数是非负整数）。编写一个方法，计算出研究者的 h 指数。
+         * h 指数的定义：h 代表“高引用次数”（high citations），一名科研人员的 h 指数是指他（她）的 （N 篇论文中）总共有 h 篇论文分别被引用了
+         * 至少 h 次。且其余的 N - h 篇论文每篇被引用次数 不超过 h 次。
+         *
+         * 例如：某人的 h 指数是 20，这表示他已发表的论文中，每篇被引用了至少 20 次的论文总共有 20 篇。
+         *
+         * 示例：
+         * 输入：citations = [3,0,6,1,5]
+         * 输出：3
+         * 解释：给定数组表示研究者总共有 5 篇论文，每篇论文相应的被引用了 3, 0, 6, 1, 5 次。
+         *      由于研究者有 3 篇论文每篇 至少 被引用了 3 次，其余两篇论文每篇被引用 不多于 3 次，所以她的 h 指数是 3。
+         *
+         * 提示：如果 h 有多种可能的值，h 指数是其中最大的那个。
+         */
+
+        /**
+         * 思路：
+         * 关键点在在N篇中，有n篇论文大于n次，剩下(N-n)篇论文小于n次。
+         * 可以假定当前数组[i]就是h，然后在数组中找到值大于等于h的数量是不是等于h。然后在满足条件的所有h中选一个最大的值返回。
+         *
+         */
+
+        int maxH = 0, c1;
+        for (int i = 1; i <= citations.length; i++) {
+            c1 = 0;
+            for (int j = 0; j < citations.length; j++) {
+                if (citations[j] >= i) c1++;
+            }
+
+            if (i <= c1) maxH = Math.max(maxH, i);
+        }
+        return maxH;
+
+        // 效率高解法：
+//        Arrays.sort(citations);
+//        for (int i = 0; i < citations.length; i++) {
+//            int h = citations.length - i;
+//            if (h <= citations[i]) {
+//                return h;
+//            }
+//        }
+//        return 0;
     }
 }
 
