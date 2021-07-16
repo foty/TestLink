@@ -5314,7 +5314,7 @@ public class Topics {
          */
 
         /**
-         * 思路：朴素解法。
+         * 思路：朴素解法 [排序+贪心]
          * 根据题意，保证前后位置的差值绝对值为1.那么最理想的情况下就是最大值等于数组长度。而实际上不一定能取到数组长度的最大值。
          * 所以排序数组，数组第一个数为1。后面的元素只要比前一个元素大，就重新赋值，同时保存当前的最大值。
          */
@@ -5331,6 +5331,54 @@ public class Topics {
             }
         }
         return arr[arr.length - 1];
+    }
+
+    /**
+     * 剑指 Offer 53 - I. 在排序数组中查找数字 I
+     */
+    public int search34(int[] nums, int target) {
+        /**
+         * 统计一个数字在排序数组中出现的次数。
+         * 示例 1:
+         * 输入: nums = [5,7,7,8,8,10], target = 8
+         * 输出: 2
+         *
+         * 示例 2:
+         * 输入: nums = [5,7,7,8,8,10], target = 6
+         * 输出: 0
+         *
+         * 限制：
+         * 0 <= 数组长度 <= 50000
+         */
+
+        /**
+         * 思路：写二分法
+         */
+
+        // 只找一边写法。缺陷是如果left = 0，时间复杂度等于O(n)
+        int count = 0;
+        int left = get53Left(nums, target);
+        for (int i = left; i < nums.length; i++) {
+            if (nums[i] == target) count++;
+            else break;
+        }
+        return count;
+    }
+
+    private int get53Left(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length;
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] == target) {
+                right = mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            }
+        }
+        return left;
     }
 }
 
