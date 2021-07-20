@@ -3311,7 +3311,7 @@ public class Topics {
     }
 
     /**
-     * 1744. 你能在你最喜欢的那天吃到你最喜欢的糖果吗？
+     * 1744. 你能在你最喜欢的那天吃到你最喜欢的糖果吗 ？
      */
     public boolean[] canEat(int[] candiesCount, int[][] queries) {
 
@@ -4085,7 +4085,7 @@ public class Topics {
     }
 
     /**
-     * 483、最小好进制
+     * 483、最小好进制 ？
      */
     public String smallestGoodBase(String n) {
 
@@ -4713,8 +4713,6 @@ public class Topics {
      * 815、公交路线 bfs ?
      */
     public int numBusesToDestination(int[][] routes, int source, int target) {
-
-
         /**
          * 给你一个数组 routes ，表示一系列公交线路，其中每个 routes[i] 表示一条公交线路，第 i 辆公交车将会在上面循环行驶。
          * 例如，路线 routes[0] = [1, 5, 7] 表示第 0 辆公交车会一直按序列 1 -> 5 -> 7 -> 1 -> 5 -> 7 -> 1 -> ... 这样的车站路线行驶。
@@ -4743,7 +4741,7 @@ public class Topics {
     }
 
     /**
-     * 168、Excel表列名称
+     * 168、Excel表列名称(26进制)
      */
     public String convertToTitle(int columnNumber) {
         /**
@@ -4979,7 +4977,7 @@ public class Topics {
 
 
     /**
-     * 1418. 点菜展示表
+     * 1418、点菜展示表
      */
     public List<List<String>> displayTable(List<List<String>> orders) {
 
@@ -5062,7 +5060,7 @@ public class Topics {
     }
 
     /**
-     * 1711. 大餐计数 ?
+     * 1711、 大餐计数 ?
      */
     public int countPairs(int[] deliciousness) {
 
@@ -5104,7 +5102,7 @@ public class Topics {
     }
 
     /**
-     * 930. 和相同的二元子数组 ? 滑动窗口
+     * 930、 和相同的二元子数组 ? 滑动窗口
      */
     public int numSubarraysWithSum(int[] nums, int goal) {
 
@@ -5229,7 +5227,7 @@ public class Topics {
     }
 
     /**
-     * 1818. 绝对差值和
+     * 1818. 绝对差值和 ?
      */
     public int minAbsoluteSumDiff(int[] nums1, int[] nums2) {
         /**
@@ -5380,5 +5378,63 @@ public class Topics {
         }
         return left;
     }
+
+    /**
+     * 剑指 Offer 42、连续子数组的最大和 (53)
+     */
+    public int maxSubArray(int[] nums) {
+        /**
+         * 输入一个整型数组，数组中的一个或连续多个整数组成一个子数组。求所有子数组的和的最大值。
+         * 要求时间复杂度为O(n)。
+         *
+         * 示例1:
+         * 输入: nums = [-2,1,-3,4,-1,2,1,-5,4]
+         * 输出: 6
+         * 解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
+         *
+         * 提示：
+         * 1 <= arr.length <= 10^5
+         * -100 <= arr[i] <= 100
+         */
+
+        /**
+         * 思路：dp
+         * 步骤：
+         * 1、定义dp数组
+         *      dp[i]表示连续子数组到i时的最大和。(ps：这点很重要，否则会直接影响到后续转移方程的计算。题目要求的连续子数组，所以对于这个数组与当前i
+         *      位置的元素来说只有2种情况，将i归类到原连续数组中，第二是不归类到原连续数组，而是另起连续数组，以i位置元素开始)所以最终结果不是返回
+         *      dp[i]。需要通过比较保存最大的。
+         * 2、确定base case
+         *      当只有一个元素时，和最大就是元素本身。dp[0] = nums[0]
+         * 3、转移方程
+         *      对于当前位置i的元素在连续数组中，有2种情况考虑。1、连续数组加上nums[i]，即 dp[i] = dp[i-1] + nums[i];2、连续数组不加nums[i],反而
+         *      放弃原连续数组，以nums[i]开始另立一个连续子数组。即 dp[i] = nums[i];二者取最大值。
+         * 4、边界条件
+         *
+         * 5、状态压缩
+         *      发现无论何时转移方程只与dp[i-1]、dp[i]相关，可以考虑使用两个变量替换，将空间从O(n)->O(1)
+         */
+
+        // 未优化空间版dp
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0]; // 题目声明 nums.length >= 1
+        int max = dp[0];
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
+            max = Math.max(max, dp[i]);
+        }
+
+        // 优化空间后
+        // int pre, aft,max = nums[0];
+        // pre = nums[0];
+        // for (int i = 1; i < nums.length; i++) {
+        //     aft = Math.max(pre + nums[i], nums[i]);
+        //     pre = aft;
+        //     max = Math.max(max, aft);
+        // }
+
+        return max;
+    }
+
 }
 
