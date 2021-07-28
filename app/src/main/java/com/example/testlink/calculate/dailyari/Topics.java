@@ -5,6 +5,7 @@ import android.os.IInterface;
 import com.example.testlink.calculate.sword_for_offer.ListNode;
 import com.example.testlink.calculate.sword_for_offer.TreeNode;
 
+import java.lang.ref.Reference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -3496,7 +3497,7 @@ public class Topics {
 
         /**
          * 思路
-         * 链A的长度为n，链B的长度为m。让2个指针走(n+m)次。最后相等时要么是相交点，要么都是等于null(走完了m+n)。
+         * 链A的长度为n，链B的长度为m。让2个指针各走(n+m)次。最后相等时要么是相交点，要么都是等于null(走完了m+n)。
          */
 
         if (headA == null || headB == null) return null;
@@ -5509,7 +5510,7 @@ public class Topics {
          */
 
         /**
-         * 思路：
+         * 思路：(带点贪心味道)
          * 要让最大的数对和最小，最好的办法就是让这些数对尽可能的平均下来。既然说到平均了，那肯定是排序啊。这样保证了最小。
          * 然后在通过首尾组成数对求数对和，保存最大值。
          */
@@ -5517,9 +5518,80 @@ public class Topics {
         Arrays.sort(nums);
         int max = 0;
         for (int i = 0; i < nums.length / 2; i++) {
-           max = Math.max(max,nums[i] + nums[nums.length - 1 - i]);
+            max = Math.max(max, nums[i] + nums[nums.length - 1 - i]);
         }
         return max;
+    }
+
+    /**
+     * 863、二叉树中所有距离为 K 的结点
+     */
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+
+        /**
+         *  给定一个二叉树（具有根结点 root）， 一个目标结点 target ，和一个整数值 K 。
+         * 返回到目标结点 target 距离为 K 的所有结点的值的列表。 答案可以以任何顺序返回。
+         *
+         * 示例 1：
+         * 输入：root = [3,5,1,6,2,0,8,null,null,7,4], target = 5, K = 2
+         * 输出：[7,4,1]
+         * 解释：
+         * 所求结点为与目标结点（值为 5）距离为 2 的结点，
+         * 值分别为 7，4，以及 1
+         *
+         * 注意，输入的 "root" 和 "target" 实际上是树上的结点。
+         * 上面的输入仅仅是对这些对象进行了序列化描述。
+         *
+         * 提示：
+         * 给定的树是非空的。
+         * 树上的每个结点都具有唯一的值 0 <= node.val <= 500 。
+         * 目标结点 target 是树上的结点。
+         * 0 <= K <= 1000.
+         */
+
+        /**
+         * 思路：
+         * 使用map创建连接表,节点值都是唯一的，可以作为key，因为可能存在向上寻找，需要保存当前节点的父节点。
+         */
+
+        HashMap<Integer, TreeNode> map = new HashMap();
+        dfs863(root, map);
+        List<Integer> list = new ArrayList<>();
+        dfs863Count(target, 0, null, list, map, k);
+        return list;
+    }
+
+    private void dfs863(TreeNode root, HashMap<Integer, TreeNode> map) {
+        if (root == null) return;
+
+        if (root.left != null) {
+            map.put(root.left.val, root);
+            dfs863(root.left, map);
+        }
+
+        if (root.right != null) {
+            map.put(root.right.val, root);
+            dfs863(root.right, map);
+        }
+
+    }
+
+    private void dfs863Count(TreeNode target, int cur, TreeNode last, List<Integer> list, HashMap<Integer, TreeNode> map, int k) {
+        if (target == null) return;
+
+        if (cur == k) {
+            list.add(target.val);
+        }
+
+        //左边
+        if (target.left != last) // 防止重新访问到自己
+            dfs863Count(target.left, cur + 1, target, list, map, k);
+        //右边
+        if (target.right != last)
+            dfs863Count(target.right, cur + 1, target, list, map, k);
+        //往上
+        if (map.get(target.val) != last)//?
+        dfs863Count(map.get(target.val), cur + 1, target, list, map, k);
     }
 }
 
