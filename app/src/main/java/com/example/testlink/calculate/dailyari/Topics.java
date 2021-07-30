@@ -5591,7 +5591,58 @@ public class Topics {
             dfs863Count(target.right, cur + 1, target, list, map, k);
         //往上
         if (map.get(target.val) != last)//?
-        dfs863Count(map.get(target.val), cur + 1, target, list, map, k);
+            dfs863Count(map.get(target.val), cur + 1, target, list, map, k);
+    }
+
+    /**
+     * 171、 Excel表列序号
+     */
+    public int titleToNumber(String columnTitle) {
+        /**
+         *  给你一个字符串 columnTitle ，表示 Excel 表格中的列名称。返回该列名称对应的列序号。
+         * 例如，
+         *     A -> 1
+         *     B -> 2
+         *     C -> 3
+         *     ...
+         *     Z -> 26
+         *     AA -> 27
+         *     AB -> 28
+         *     ...
+         *
+         * 示例 1:
+         * 输入: columnTitle = "A"
+         * 输出: 1
+         * 示例 2:
+         * 输入: columnTitle = "AB"
+         * 输出: 28
+         * 示例 3:
+         * 输入: columnTitle = "ZY"
+         * 输出: 701
+         * 示例 4:
+         * 输入: columnTitle = "FXSHRXW"
+         * 输出: 2147483647
+         *
+         * 提示：
+         * 1 <= columnTitle.length <= 7
+         * columnTitle 仅由大写英文组成
+         * columnTitle 在范围 ["A", "FXSHRXW"] 内
+         */
+
+        /**
+         * 思路：题目还是比较简单的，之前做过一个反过来的题目(168、Excel表列名称),可以参考的就是10进制的思路。
+         * 从题目得到有用信息有：字符串长度代表位数，每一位大小26。满26进1。联系10进制的算法，可以从字符串的末端开始
+         * 计算，首先是“个位”，是多少就是多少。往后每增加一位，进制都要乘以26，再与位数上的数相乘，最后相加低位和。
+         */
+
+        int sub = 0;
+        int count = 1;
+        for (int i = columnTitle.length() - 1; i >= 0; i--) {
+            int k = columnTitle.charAt(i) - 'A' + 1;
+            sub += k * count;
+            count *= 26;
+        }
+        return sub;
     }
 }
 
