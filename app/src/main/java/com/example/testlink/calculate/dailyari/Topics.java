@@ -9,6 +9,7 @@ import java.lang.ref.Reference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -5731,6 +5732,75 @@ public class Topics {
             map.put(root.right, new int[]{col + 1, row + 1, root.right.val});
             dfs987(root.right);
         }
+    }
+
+    /**
+     * 1337、 矩阵中战斗力最弱的 K 行
+     */
+    public int[] kWeakestRows(int[][] mat, int k) {
+
+        /**
+         *  给你一个大小为 m * n 的矩阵 mat，矩阵由若干军人和平民组成，分别用 1 和 0 表示。
+         * 请你返回矩阵中战斗力最弱的 k 行的索引，按从最弱到最强排序。
+         * 如果第 i 行的军人数量少于第 j 行，或者两行军人数量相同但 i 小于 j，那么我们认为第 i 行的战斗力比第 j 行弱。
+         * 军人 总是 排在一行中的靠前位置，也就是说 1 总是出现在 0 之前。
+         *
+         * 示例 1：
+         * 输入：mat =
+         * [[1,1,0,0,0],
+         *  [1,1,1,1,0],
+         *  [1,0,0,0,0],
+         *  [1,1,0,0,0],
+         *  [1,1,1,1,1]],
+         * k = 3
+         * 输出：[2,0,3]
+         * 解释：
+         * 每行中的军人数目：
+         * 行 0 -> 2
+         * 行 1 -> 4
+         * 行 2 -> 1
+         * 行 3 -> 2
+         * 行 4 -> 5
+         * 从最弱到最强对这些行排序后得到 [2,0,3,1,4]
+         *
+         * 提示：
+         * m == mat.length
+         * n == mat[i].length
+         * 2 <= n, m <= 100
+         * 1 <= k <= m
+         * matrix[i][j] 不是 0 就是 1
+         */
+
+        /**
+         * 思路：题目很简单，将二维数组中每个数组内的1的数量相加起来比较，越小越弱；如果相同，则看第一维下标，越小越弱。
+         * 最后输出第一维下标组成的数组。这里涉及到2个比较指标，可以创建二维数组实现，一维表示1的数量，另一维表示对应的下标，然后
+         * 通过Arrays的比较方法完成排序。最后将这个二维数组中的下标值取出变成1维数组即可。
+         *
+         * tips:如果有比较3、4个指标，可以相对的增大二维数组中数组的长度
+         */
+
+        // 创建排序列表
+        int[][] all = new int[mat.length][2]; // 2是指2个指标，1的数量与对应下标。
+        for (int i = 0; i < mat.length; i++) {
+            int count = 0;
+            for (int j = 0; j < mat[0].length; j++) {
+                count += mat[i][j];
+            }
+            all[i] = new int[]{count, i};
+        }
+
+        // 排序
+        Arrays.sort(all, (o1, o2) -> {
+            if (o1[0] != o2[0]) return o1[0] - o2[0];
+            return o1[1] - o2[1];
+        });
+
+        // 整理
+        int[] result = new int[k];
+        for (int i = 0; i < k; i++) {
+            result[i] = all[i][1];
+        }
+        return result;
     }
 
 }
