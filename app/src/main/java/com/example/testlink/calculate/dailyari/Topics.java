@@ -5928,5 +5928,118 @@ public class Topics {
 
         return right - left + 1;
     }
+
+    /**
+     * 611、有效三角形的个数
+     */
+    public int triangleNumber(int[] nums) {
+
+        /**
+         * 给定一个包含非负整数的数组，你的任务是统计其中可以组成三角形三条边的三元组个数。
+         *
+         * 示例 1:
+         * 输入: [2,2,3,4]
+         * 输出: 3
+         * 解释:
+         * 有效的组合是:
+         * 2,3,4 (使用第一个 2)
+         * 2,3,4 (使用第二个 2)
+         * 2,2,3
+         * 注意:
+         *
+         * 数组长度不超过1000。
+         * 数组里整数的范围为 [0, 1000]。
+         */
+
+        int count = 0;
+//        for (int i = 0; i < nums.length - 2; i++) {
+//            for (int j = i + 1; j < nums.length - 1; j++) {
+//                for (int k = j + 1; k < nums.length; k++) {
+//                    if (nums[i] + nums[j] > nums[k]
+//                            && nums[i] + nums[k] > nums[j]
+//                            && nums[j] + nums[k] > nums[i]) {
+//                        count++;
+//                    }
+//                }
+//            }
+//        }
+
+        // 上面的方式直接超时，处理办法为排序后使用倒序，因为这样可以确定大小关系。
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i - 1; j >= 0; j++) {
+                for (int k = j - 1; k >= 0; k++) {
+                    if (nums[i] + nums[j] > nums[k]) count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    /**
+     * 802、找到最终的安全状态
+     */
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+
+        /**
+         * 在有向图中，以某个节点为起始节点，从该点出发，每一步沿着图中的一条有向边行走。如果到达的节点是终点（即它没有连出的有向边），则停止。
+         * 对于一个起始节点，如果从该节点出发，无论每一步选择沿哪条有向边行走，最后必然在有限步内到达终点，则将该起始节点称作是 安全 的。
+         * 返回一个由图中所有安全的起始节点组成的数组作为答案。答案数组中的元素应当按 升序 排列。
+         * 该有向图有 n 个节点，按 0 到 n - 1 编号，其中 n 是 graph 的节点数。图以下述形式给出：graph[i] 是编号 j 节点的一个列表，
+         * 满足 (i, j) 是图的一条有向边。
+         *
+         * 示例 1：
+         * Illustration of graph
+         * 输入：graph = [[1,2],[2,3],[5],[0],[5],[],[]]
+         * 输出：[2,4,5,6]
+         * 解释：示意图如上。
+         *
+         * 示例 2：
+         * 输入：graph = [[1,2,3,4],[1,2],[3,4],[0,4],[]]
+         * 输出：[4]
+         *
+         * 提示：
+         * n == graph.length
+         * 1 <= n <= 104
+         * 0 <= graph[i].length <= n
+         * graph[i] 按严格递增顺序排列。
+         * 图中可能包含自环。
+         * 图中边的数目在范围 [1, 4 * 104] 内。
+         */
+
+        /**
+         * 思路：递归+备忘录(标识)，具体看注释。
+         */
+
+        // 声明备忘录： 0-默认情况，也就是未被访问过；1-非安全节点或访问中的节点(环) ；2-安全节点
+        int[] visit = new int[graph.length];
+        List<Integer> list = new ArrayList<>();
+
+        for (int i = 0; i < graph.length; i++) {
+            if (dfs802(graph, visit, i)) {
+                list.add(i);
+            }
+        }
+        return list;
+    }
+
+    private boolean dfs802(int[][] graph, int[] visitNode, int i) {
+        // 递归终止条件：访问过并且这个节点是安全节点；非安全节点或处于遍历中(大概率是成环了)；
+        if (visitNode[i] == 1) return false;
+        if (visitNode[i] == 2) return true;
+
+        visitNode[i] = 1; //标记成访问中
+        // 递归该节点的有向边
+        for (int j = 0; j < graph[i].length; j++) {
+            if (!dfs802(graph, visitNode, graph[i][j])) { // 有一条不能走到终点，必然不是安全节点，直接返回false。
+                return false;
+            }
+        }
+        // 所有路径都能走到终点，表示这是一个安全节点，添加标识，返回true。
+        visitNode[i] = 2;
+        return true;
+    }
+
 }
 
