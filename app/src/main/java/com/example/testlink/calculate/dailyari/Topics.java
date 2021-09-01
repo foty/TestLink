@@ -6999,7 +6999,34 @@ public class Topics {
          * 1 <= firsti <= lasti <= n
          * 1 <= seatsi <= 104
          */
-        return null;
+
+        /**
+         * 思路：模拟，根据意思依次相加即可得出正确答案。但是时间复杂度高，并且设置为中等题，不太应该
+         * 使用常规办法。实际考点是差分+前缀和。
+         */
+        // 常规方法
+        int[] result = new int[n];
+//        for (int i = 0; i < bookings.length; i++) {
+//            for (int j = bookings[i][0]; j <= bookings[i][1]; j++) {
+//                result[j - 1] = result[j - 1] + bookings[i][2];
+//            }
+//        }
+
+        /**
+         * 差分思想：将对区间内修改转变成对区间头尾2个位置修改。
+         */
+        //1、计算差分数组
+        for (int i = 0; i < bookings.length; i++) {
+            result[bookings[i][0] - 1] += bookings[i][2]; //一加
+            if (bookings[i][1] < n)//防止数组越界
+                result[bookings[i][1]] -= bookings[i][2]; //一减
+        }
+        //2、前缀和
+        for (int i = 1; i < result.length; i++) {
+            result[i] += result[i-1];
+        }
+
+        return result;
     }
 
     /**
@@ -7073,10 +7100,6 @@ public class Topics {
         }
 
         return 0;
-    }
-
-    public static void main(String[] args) {
-        compareVersion("0.1","1.1");
     }
 
 
