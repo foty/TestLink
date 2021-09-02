@@ -6864,6 +6864,15 @@ public class Topics {
          * 1 <= nums.length <= 1000
          * -10^6 <= nums[i] <= 10^6
          */
+
+        /**
+         * 思路：
+         * 简单题，暴力就完事了。其实就是前缀和
+         */
+
+        for (int i = 1; i < nums.length; ++i) {
+            nums[i] += nums[i - 1];
+        }
         return nums;
     }
 
