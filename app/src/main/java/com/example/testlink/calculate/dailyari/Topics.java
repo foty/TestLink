@@ -6872,7 +6872,7 @@ public class Topics {
      */
     public int sumOddLengthSubarrays(int[] arr) {
         /**
-         *  给你一个正整数数组 arr ，请你计算所有可能的奇数长度子数组的和。
+         * 给你一个正整数数组 arr ，请你计算所有可能的奇数长度子数组的和。
          * 子数组 定义为原数组中的一个连续子序列。
          * 请你返回 arr 中 所有奇数长度子数组的和 。
          *
@@ -6904,8 +6904,28 @@ public class Topics {
          * 1 <= arr.length <= 100
          * 1 <= arr[i] <= 1000
          */
-        return 0;
+
+        /**
+         * 思路：递归+滑动窗口
+         * 根据题目，长度为奇数的连续数组的和。可以每次生成一个奇数，以这个数作为长度递归找到数组，然后将他们相加即可。
+         */
+
+        int sum = 0;
+        for (int i = 1; i <= arr.length; i += 2) {
+            sum += dfs1588(0, i, arr);
+        }
+        return sum;
     }
+
+    private int dfs1588(int index, int length, int[] arr) {
+        if (index + length > arr.length) return 0;
+        int sum = 0;
+        for (int i = index; i < (index + length); i++) {
+            sum += arr[i];
+        }
+        return sum + dfs1588(index + 1, length, arr);
+    }
+
 
     /**
      * 528、按权重随机选择
