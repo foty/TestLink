@@ -6817,26 +6817,23 @@ public class Topics {
     public void testMedianFinder() {
 
         /**
-         *  中位数是有序列表中间的数。如果列表长度是偶数，中位数则是中间两个数的平均值。
-         *
+         * 中位数是有序列表中间的数。如果列表长度是偶数，中位数则是中间两个数的平均值。
          * 例如，
-         *
          * [2,3,4] 的中位数是 3
-         *
          * [2,3] 的中位数是 (2 + 3) / 2 = 2.5
          *
          * 设计一个支持以下两种操作的数据结构：
-         *
          * void addNum(int num) - 从数据流中添加一个整数到数据结构中。
          * double findMedian() - 返回目前所有元素的中位数。
-         * 示例：
          *
+         * 示例：
          * addNum(1)
          * addNum(2)
          * findMedian() -> 1.5
          * addNum(3)
          * findMedian() -> 2
          */
+
     }
 
     /**
@@ -7112,6 +7109,37 @@ public class Topics {
                 k--;
         }
         return head;
+    }
+
+    /**
+     * 面试题 17.14、最小K个数
+     */
+    public int[] smallestK(int[] arr, int k) {
+        /**
+         * 设计一个算法，找出数组中最小的k个数。以任意顺序返回这k个数均可。
+         *
+         * 示例：
+         * 输入： arr = [1,3,5,7,2,4,6,8], k = 4
+         * 输出： [1,2,3,4]
+         * 提示：
+         * 0 <= len(arr) <= 100000
+         * 0 <= k <= min(100000, len(arr))
+         */
+
+        /**
+         * 此题没有难度。
+         */
+
+        Arrays.sort(arr);
+        int[] result = new int[k];
+
+        // 复制数组。效率高一点点
+        System.arraycopy(arr, 0, result, 0, k);
+
+//        for (int i = 0; i < k; i++) {
+//            result[i] = arr[i];
+//        }
+        return result;
     }
 
 
