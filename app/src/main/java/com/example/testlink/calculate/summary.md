@@ -129,7 +129,7 @@ int BFS(Object start, Object target) {
     public int 二分查找(int[] nums, int target) {
         int low = 0, high = nums.length - 1;
         while (low <= high) {
-            int mid = (high - low) / 2 + low;
+            int mid = (high - low) / 2 + low; //这里可能会出现下标越界的情况，所以使用这种写法，与 (low+high)/2 结果是一样。
             int num = nums[mid];
             if (num == target) {
                 return mid;
@@ -142,7 +142,7 @@ int BFS(Object start, Object target) {
         return -1;
     }
 ```
-此外可能还有二分的变种题型，区别就在于边界处理不同。例如可能不能取=，或者取>=,而不能是<=。或者反过来。具体问题具体分析，这点要注意。
+此外可能还有二分的变种题型，区别就在于边界处理不同。例如可能不能取=，或者取>=,而不能是<=。或者反过来。或者边界=mid 还是=mid+1。具体问题具体分析，这点要注意。
 
 ##### 斐波那契数列思想(递归 经典问题-青蛙爬台阶)。
 
@@ -269,7 +269,6 @@ int More(){
 * 743、网络延迟时间
 * 847、访问所有节点的最短路径 (图)
 * 457、环形数组是否存在循环
-* 1137、第 N 个泰波那契数
 * 313、超级丑数
 * 413、等差数列划分
 * 446、等差数列划分II(子序列)
