@@ -6057,50 +6057,105 @@ public class Topics {
     /**
      * 457、环形数组是否存在循环
      */
-    public boolean circularArrayLoop(int[] nums) {
-
+    public static boolean circularArrayLoop(int[] nums) {
         /**
-         *  存在一个不含 0 的 环形 数组 nums ，每个 nums[i] 都表示位于下标 i 的角色应该向前或向后移动的下标个数：
-         *
+         * 存在一个不含 0 的 环形 数组 nums ，每个 nums[i] 都表示位于下标 i 的角色应该向前或向后移动的下标个数：
          * 如果 nums[i] 是正数，向前（下标递增方向）移动 |nums[i]| 步
          * 如果 nums[i] 是负数，向后（下标递减方向）移动 |nums[i]| 步
          * 因为数组是 环形 的，所以可以假设从最后一个元素向前移动一步会到达第一个元素，而第一个元素向后移动一步会到达最后一个元素。
-         *
          * 数组中的 循环 由长度为 k 的下标序列 seq 标识：
-         *
          * 遵循上述移动规则将导致一组重复下标序列 seq[0] -> seq[1] -> ... -> seq[k - 1] -> seq[0] -> ...
          * 所有 nums[seq[j]] 应当不是 全正 就是 全负
          * k > 1
          * 如果 nums 中存在循环，返回 true ；否则，返回 false 。
          *
-         *
-         *
          * 示例 1：
-         *
-         * 输入：nums = [2,-1,1,2,2]
+         * 输入：nums = [2,-1,1,2,2]     4
          * 输出：true
          * 解释：存在循环，按下标 0 -> 2 -> 3 -> 0 。循环长度为 3 。
-         * 示例 2：
          *
+         * 示例 2：
          * 输入：nums = [-1,2]
          * 输出：false
          * 解释：按下标 1 -> 1 -> 1 ... 的运动无法构成循环，因为循环的长度为 1 。根据定义，循环的长度必须大于 1 。
-         * 示例 3:
          *
+         * 示例 3:
          * 输入：nums = [-2,1,-1,-2,-2]
          * 输出：false
          * 解释：按下标 1 -> 2 -> 1 -> ... 的运动无法构成循环，因为 nums[1] 是正数，而 nums[2] 是负数。
          * 所有 nums[seq[j]] 应当不是全正就是全负。
          *
-         *
          * 提示：
-         *
          * 1 <= nums.length <= 5000
          * -1000 <= nums[i] <= 1000
          * nums[i] != 0
-         *
          */
+
+        for (int i = 0; i < nums.length; i++) {
+            //1、 递归超时，应该没有大问题了。
+            if (dfs457(nums, i)) {
+                return true;
+            }
+            //2、快慢指针
+            if (s457(nums, i)) {
+                return true;
+            }
+        }
         return false;
+    }
+
+    private static boolean dfs457(int[] nums, int index) {
+        List<Integer> list = new ArrayList<>();
+        int size = nums.length;
+        list.add(index);
+        while (true) {
+            int i = nums[index];
+            if (i > 0)
+                index = (index + i) % size;
+            else {
+                i = (-i) % size;
+                index = (index - i) >= 0 ? index - i : index - i + size;
+            }
+
+            if (list.contains(index)) break;
+            else list.add(index);
+        }
+        if (list.size() <= 1) return false;
+
+        int start = list.indexOf(index);
+        int count = 0;
+        for (int i = start; i < list.size(); i++) {
+            if (nums[start] > 0 != nums[list.get(i)] > 0) {
+                return false;
+            }
+            count++;
+        }
+        return count > 1;
+    }
+
+    private static boolean s457(int[] nums, int index) {
+        int slow = index;
+        int fast = next457(index, nums); // 快指针要提前走一步，否则一开始slow就等于fast了。
+
+        //判断是否都是大于0或者小于0，注意快指针一次走2步，每一步都是要判断的
+        while (nums[slow] * nums[fast] > 0 && nums[slow] * nums[next457(fast, nums)] > 0) {
+            if (slow == fast) {
+                //表示有环，但是要排除k=1的情况。判断依据就是如果k==1的环，那么它的下一步还
+                // 是等于它自己，可以让慢指针再走一步判断。
+                if (slow == next457(slow, nums)) return false;
+                else return true;
+            }
+            slow = next457(slow, nums); // 慢指针一步一步走。
+            fast = next457(next457(fast, nums), nums); // 快指针走2步
+        }
+        return false;
+    }
+
+    private static int next457(int i, int[] nums) {
+        // 注意正数与负数情况的到下一步的下标的数不能是负数。也不能越界，所以需要取模处理。
+        // 正负数相加，因为i是负的，本质是做减法，但是可以当做正数来处理，最终结果取反即可。如:-3 % 4 =-3。取反就是补上一个数组长
+        // 度得到3对应的位置。但是加上数组长度可能越界，还要再取模。这样还包括了正数的情况，可以同一处理
+        return ((i + nums[i]) % nums.length + nums.length) % nums.length;
     }
 
     /**
@@ -6309,7 +6364,7 @@ public class Topics {
     }
 
     /**
-     * 233、数字 1 的个数
+     * 233、数字1的个数
      */
     public int countDigitOne(int n) {
         /**
