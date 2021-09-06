@@ -113,6 +113,36 @@ int BFS(Object start, Object target) {
 ##### 排序算法(8大排序算法)
 
 ##### 二分法 (操作有序数列)
+在升序数组 nums 中寻找目标值 target(注意，一定要是有序数组)，对于特定下标i，比较 [i]nums[i] 和 target 的大小：
+如果[i] = nums[i]=target，则下标i 即为要寻找的下标；
+如果[i] > nums[i]>target，则 target 只可能在下标i 的左侧；
+如果[i] < nums[i]<target，则 target 只可能在下标i 的右侧。
+基于上述事实，可以在有序数组中使用二分查找寻找目标值。   
+
+二分查找的做法是，定义查找的范围[left,right]，初始查找范围是整个数组。每次取查找范围的中点mid，比较nums[mid] 和target 的大小，如果相等则mid 即为要
+寻找的下标，如果不相等则根据nums[mid] 和 target 的大小关系将查找范围缩小一半。由于每次查找都会将查找范围缩小一半，因此二分查找的时间复杂度是 O(logn)，
+其中 n 是数组的长度。二分查找的条件是查找范围不为空，即left ≤ right。如果 target 在数组中，二分查找可以保证找到 target，返回 target 在数组中的下标。
+如果 target 不在数组中，则当left > right时结束查找，返回 −1。
+
+代码模板:
+```
+    public int 二分查找(int[] nums, int target) {
+        int low = 0, high = nums.length - 1;
+        while (low <= high) {
+            int mid = (high - low) / 2 + low;
+            int num = nums[mid];
+            if (num == target) {
+                return mid;
+            } else if (num > target) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return -1;
+    }
+```
+此外可能还有二分的变种题型，区别就在于边界处理不同。例如可能不能取=，或者取>=,而不能是<=。或者反过来。具体问题具体分析，这点要注意。
 
 ##### 斐波那契数列思想(递归 经典问题-青蛙爬台阶)。
 
