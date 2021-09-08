@@ -6,6 +6,7 @@ import com.example.testlink.calculate.sword_for_offer.TreeNode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -7243,6 +7244,73 @@ public class Topics {
         return 0;
     }
 
+    /**
+     * 502、IPO
+     */
+    public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+        /**
+         * 假设 力扣（LeetCode）即将开始IPO 。为了以更高的价格将股票卖给风险投资公司，力扣希望在IPO 之前开展一些项目以增加其资本。由于资源有限，它只能在
+         * IPO 之前完成最多 k个不同的项目。帮助 力扣 设计完成最多 k 个不同项目后得到最大总资本的方式。
+         * 给你 n 个项目。对于每个项目 i ，它都有一个纯利润 profits[i] ，和启动该项目需要的最小资本 capital[i] 。
+         * 最初，你的资本为 w 。当你完成一个项目时，你将获得纯利润，且利润将被添加到你的总资本中。
+         * 总而言之，从给定项目中选择 最多 k 个不同项目的列表，以 最大化最终资本 ，并输出最终可获得的最多资本。
+         * 答案保证在 32 位有符号整数范围内。
+         *
+         * 示例 1：
+         * 输入：k = 2, w = 0, profits = [1,2,3], capital = [0,1,1]
+         * 输出：4
+         * 解释：
+         * 由于你的初始资本为 0，你仅可以从 0 号项目开始。
+         * 在完成后，你将获得 1 的利润，你的总资本将变为 1。
+         * 此时你可以选择开始 1 号或 2 号项目。
+         * 由于你最多可以选择两个项目，所以你需要完成 2 号项目以获得最大的资本。
+         * 因此，输出最后最大化的资本，为 0 + 1 + 3 = 4。
+         *
+         * 示例 2：
+         * 输入：k = 3, w = 0, profits = [1,2,3], capital = [0,1,2]
+         * 输出：6
+         *
+         * 提示：
+         * 1 <= k <= 105
+         * 0 <= w <= 109
+         * n == profits.length
+         * n == capital.length
+         * 1 <= n <= 105
+         * 0 <= profits[i] <= 104
+         * 0 <= capital[i] <= 109
+         */
 
+        /**
+         * 思路：贪心+排序(优先队列)
+         * 根据题意可以知道就是在k次内取到profits内最大的元素即可。除此在外还有其他考虑条件：资本与capital数组的关系。
+         * 因为profits 与capital 存在对应关系，既不能只排序profits，更不能去排序profits数组(充当条件而已)。那么可以
+         * 构建一个二维数组int[capital][profits]。针对二维数组排序，然后再每次取profits中最大的元素(排序)即可。
+         */
+
+        //构建二维数组、排序
+        int[][] arr = new int[capital.length][2];
+        for (int i = 0; i < capital.length; i++) {
+            arr[i][0] = capital[i];
+            arr[i][1] = profits[i];
+        }
+        //排序
+        Arrays.sort(arr, (a, b) -> a[0] - b[0]);
+        int index = 0;
+        //使用优先队列来取最大值
+        PriorityQueue<Integer> queue = new PriorityQueue<>((o1, o2) -> o2 - o1); //默认是小根堆，要变成大根堆。
+
+        for (int i = 0; i < k; i++) {
+            // 将可以选择的项目添加到堆中。
+            while (index < capital.length && arr[index][0] <= w) { //因为对arr排序过，所以每次只会选择一部分符合的capital。知道所有被访问过
+                queue.add(arr[index][1]);
+                index++;
+            }
+
+            if (!queue.isEmpty()) {
+                w += queue.poll();
+            } else break;
+        }
+        return w;
+    }
 }
 
