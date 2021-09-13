@@ -7571,6 +7571,61 @@ public class Topics {
         return index;
     }
 
+    /**
+     * 447、回旋镖的数量
+     */
+    public int numberOfBoomerangs(int[][] points) {
+        /**
+         * 给定平面上 n对互不相同的点points ，其中points[i] = [xi, yi] 。回旋镖是由点 (i, j, k) 表示的元组 ，其中 i 和 j 之间的距离和
+         * i 和 k 之间的距离相等（需要考虑元组的顺序）。
+         * 返回平面上所有回旋镖的数量。
+         *
+         * 示例 1：
+         * 输入：points = [[0,0],[1,0],[2,0]]
+         * 输出：2
+         * 解释：两个回旋镖为 [[1,0],[0,0],[2,0]] 和 [[1,0],[2,0],[0,0]]
+         *
+         * 示例 2：
+         * 输入：points = [[1,1],[2,2],[3,3]]
+         * 输出：2
+         *
+         * 示例 3：
+         * 输入：points = [[1,1]]
+         * 输出：0
+         *
+         * 提示：
+         * n == points.length
+         * 1 <= n <= 500
+         * points[i].length == 2
+         * -104 <= xi, yi <= 104
+         * 所有点都 互不相同
+         */
+
+        /**
+         * 思路: 求出距离相等的3个点的所有组合方法的数量。借鉴数据中排列组合公式。先计算出每2个点之间的距离，使用一个map保存，然后再
+         * 在距离相同的数组套用公式求出不同的组合数量，最后相加得到最终结果。
+         */
+
+        int sum = 0;
+        for (int i = 0; i < points.length; i++) {
+            Map<Integer, Integer> map = new HashMap<>();
+            for (int j = 0; j < points.length; j++) {
+                //计算2点间的距离
+                int x = points[i][0] - points[j][0];
+                int y = points[i][1] - points[j][1];
+                int d = x * x + y * y; // 这里d是x到y的距离的平方，但其实开不开方不会影响的后续的组合，所以可以不开方。
+                map.put(d, map.getOrDefault(d, 0) + 1);
+            }
+            // 求出以当前点i为中间点，找出距离相同的2个点。
+            for (Map.Entry<Integer, Integer> e : map.entrySet()) {
+                int v = e.getValue();
+                sum += v * (v - 1);
+            }
+        }
+
+        return sum;
+    }
+
 
 }
 
