@@ -240,7 +240,6 @@ class TrieNode {
     TrieNode[] tns = new TrieNode[26];
 }
 ```
-
 具体字典树例子看类[Trie.class]。
 
 
@@ -290,7 +289,6 @@ class TrieNode {
 * 190、颠倒二进制位
 * 90、子集II
 * 783、二叉搜索树节点最小距离
-* 208、实现Trie(前缀树)
 * 213、打家劫舍II
 * 87、扰乱字符串
 * 220、存在重复元素III

@@ -3,7 +3,7 @@ package com.example.testlink.data_structure;
 /**
  * 前缀树/字典树
  */
-class Trie {
+public class Trie {
 
     /**
      * 根节点
@@ -22,6 +22,7 @@ class Trie {
     public void insert(String s) {
         TrieNode n = root;
         for (int i = 0; i < s.length(); i++) {
+            // 遍历每一个字符
             int c = s.charAt(i) - 'a';
             //如果不存在则在对应位置创建节点
             if (n.tns[c] == null) n.tns[c] = new TrieNode();
@@ -45,11 +46,12 @@ class Trie {
             if (n.tns[c] == null) return false;
             n = n.tns[c];
         }
+        // 如果n.end为真，表示存在这个字符串，否则只是存在以此为前缀的字符串
         return n.end;
     }
 
     /**
-     * 以某字符开头
+     * 以某字符为前缀
      *
      * @param s
      * @return
@@ -61,6 +63,7 @@ class Trie {
             if (n.tns[c] == null) return false;
             n = n.tns[c];
         }
+        // 这里是求是否有这个前缀，前面没有直接return，这里可以直接为true。
         return true;
     }
 }
