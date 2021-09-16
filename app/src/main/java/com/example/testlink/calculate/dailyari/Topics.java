@@ -2534,7 +2534,6 @@ public class Topics {
         return sum;
     }
 
-
     /**
      * 421、数组中两个数的最大异或值
      */
@@ -6998,7 +6997,6 @@ public class Topics {
         return sum + dfs1588(index + 1, length, arr);
     }
 
-
     /**
      * 528、按权重随机选择
      */
@@ -7669,6 +7667,86 @@ public class Topics {
             }
         }
         return right;
+    }
+
+    /**
+     * 212、单词搜索 II
+     */
+    public List<String> findWords(char[][] board, String[] words) {
+
+        /**
+         * 给定一个 m x n 二维字符网格 board 和一个单词（字符串）列表 words，找出所有同时在二维网格和字典中出现的单词。
+         * 单词必须按照字母顺序，通过 相邻的单元格 内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母在一个单词中不允
+         * 许被重复使用。
+         *
+         * 示例 1：
+         * 输入：board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]],
+         * words = ["oath","pea","eat","rain"]
+         * 输出：["eat","oath"]
+         *
+         * 示例 2：
+         * 输入：board = [["a","b"],["c","d"]], words = ["abcb"]
+         * 输出：[]
+         *
+         * 提示：
+         * m == board.length
+         * n == board[i].length
+         * 1 <= m, n <= 12
+         * board[i][j] 是一个小写英文字母
+         * 1 <= words.length <= 3 * 104
+         * 1 <= words[i].length <= 10
+         * words[i] 由小写英文字母组成
+         * words 中的所有字符串互不相同
+         */
+
+        /**
+         * 思路： 回溯+递归，前面有个类似题目{@link com.example.testlink.calculate.sword_for_offer.T63}，同样的原理
+         */
+
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < words.length; i++) {
+            if (find212(board, words[i])) {
+                list.add(words[i]);
+            }
+        }
+        return list;
+    }
+
+    private boolean find212(char[][] board, String word) {
+        boolean[][] visit = new boolean[board.length][board[0].length];
+        int length = 0;
+
+        for (int j = 0; j < board.length; j++) {
+            for (int k = 0; k < board[0].length; k++) {
+                if (dfs212(board, word, j, k, visit, length)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean dfs212(char[][] board, String target, int x, int y, boolean[][] visit, int length) {
+        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || visit[x][y])
+            return false;
+        if (target.charAt(length) != board[x][y]) return false;
+
+        if (length == target.length() - 1) return true;
+
+        length++;
+        visit[x][y] = true;
+
+        //上下左右四个方向各自找
+        boolean b = dfs212(board, target, x - 1, y, visit, length) ||
+                dfs212(board, target, x + 1, y, visit, length) ||
+                dfs212(board, target, x, y + 1, visit, length) ||
+                dfs212(board, target, x, y - 1, visit, length);
+
+        // 回溯的奥妙，将状态回归。
+        length--;
+        visit[x][y] = false;
+
+        return b;
     }
 
 
