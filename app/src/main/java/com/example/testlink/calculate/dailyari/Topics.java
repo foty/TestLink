@@ -7850,13 +7850,13 @@ public class Topics {
             // 不能保证后面的子序列一定比前面某部分的最长长度长，所以最终结果使用一个变量保存最长的
             max = Math.max(max, dp[i]);
         }
-        return dp[nums.length-1];
+        return dp[nums.length - 1];
     }
 
     /**
      * 673、最长递增子序列的个数
      */
-    public int findNumberOfLIS(int[] nums) {
+    public static int findNumberOfLIS(int[] nums) {
 
         /**
          * 给定一个未排序的整数数组，找到最长递增子序列的个数。
@@ -7872,8 +7872,45 @@ public class Topics {
          * 注意: 给定的数组长度不超过 2000 并且结果一定是32位有符号整数。
          */
 
+        /**
+         * 思路：参考题目:300。dp[i]表示当前i个数中最大递增子序列长度，使用一个新的dp数组cu表示当前i个数中最大
+         * 递增子序列数量个数。统计数量时注意分清楚情况，具体看注释
+         *
+         */
+        int[] dp = new int[nums.length];
+        int[] cu = new int[nums.length];
+        Arrays.fill(dp, 1);
+        Arrays.fill(cu, 1);
+        int max = 1;
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    if (dp[i] == dp[j] + 1) { //原来的i个数量就有这么多个最长序列数量dp[i]，现在又来了一种dp[j]+1，
+                        // 所以总的cn[i]应该是这两种情况之和。对于dp[j]+1下的序列数量其实就是cu[j]。
+                        cu[i] += cu[j];
+                    } else if (dp[i] < dp[j] + 1) { //说明对于dp数组来说，dp[i]的值发生了修改，产生了一个新的序列长
+                        // 度，新的序列长度自然要使用新的cu数据。因为增加的这个长度是固定的，cu[i] = cu[j]。后面修改dp[i]
+                        // 的值也是属于这个范畴的。(注意在判断之前不能先修改dp[i]的值)。
+                        cu[i] = cu[j];
 
-        return 0;
+                    } else { //不用更新cu[i]数量,因为dp[i]也不用更新。这里只是列举出来方便理解
+
+                    }
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            max = Math.max(max, dp[i]);
+        }
+
+        int count = 0;
+        for (int i = 0; i < cu.length; i++) {
+            if (dp[i] == max) count += cu[i];
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        findNumberOfLIS(new int[]{1, 3, 5, 4, 7});
     }
 
     /**
