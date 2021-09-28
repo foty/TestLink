@@ -7909,10 +7909,6 @@ public class Topics {
         return count;
     }
 
-    public static void main(String[] args) {
-        findNumberOfLIS(new int[]{1, 3, 5, 4, 7});
-    }
-
     /**
      * 326、3的幂
      */
@@ -7954,7 +7950,7 @@ public class Topics {
     }
 
     /**
-     * 639、解码方法 II
+     * 639、解码方法 II ?
      */
     public int numDecodings2(String s) {
         /**
@@ -7999,7 +7995,50 @@ public class Topics {
          * 1 <= s.length <= 105
          * s[i] 是 0 - 9 中的一位数字或字符 '*'
          */
-    return 0;
+        return 0;
+    }
+
+    /**
+     * 437、路径总和 III
+     */
+    public int pathSum(TreeNode root, int targetSum) {
+        /**
+         * 给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。
+         * 路径 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
+         *
+         * 示例 1：
+         * 输入：root = [10,5,-3,3,2,null,11,3,-2,null,1], targetSum = 8
+         * 输出：3
+         * 解释：和等于 8 的路径有 3 条，如图所示。
+         *
+         * 示例 2：
+         * 输入：root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22
+         * 输出：3
+         *
+         * 提示:
+         * 二叉树的节点个数的范围是 [0,1000]
+         * -109 <= Node.val <= 109
+         * -1000 <= targetSum <= 1000
+         */
+        /**
+         * 思路：双层递归处理，要完全理解题目意思。
+         */
+
+        if (root == null) return 0;
+        dfs437(root, 0, targetSum);
+        pathSum(root.left, targetSum);
+        pathSum(root.right, targetSum);
+        return count437;
+    }
+
+    private int count437 = 0;
+
+    private void dfs437(TreeNode root, int num, int target) {
+        if (root == null) return;
+        if (num + root.val == target) count437++;
+
+        dfs437(root.left, num + root.val, target);
+        dfs437(root.right, num + root.val, target);
     }
 }
 

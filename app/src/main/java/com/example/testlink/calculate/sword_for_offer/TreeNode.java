@@ -22,4 +22,11 @@ public class TreeNode {
         this.right = right;
     }
 
+    public static TreeNode create(String[] vals) {
+        TreeNode node = new TreeNode();
+
+
+        return node;
+    }
+
 }
