@@ -8023,7 +8023,6 @@ public class Topics {
         /**
          * 思路：双层递归处理，要完全理解题目意思。
          */
-
         if (root == null) return 0;
         dfs437(root, 0, targetSum);
         pathSum(root.left, targetSum);
@@ -8040,5 +8039,41 @@ public class Topics {
         dfs437(root.left, num + root.val, target);
         dfs437(root.right, num + root.val, target);
     }
+
+    /**
+     * 187、重复的DNA序列
+     */
+    public List<String> findRepeatedDnaSequences(String s) {
+        /**
+         * 所有 DNA 都由一系列缩写为 'A'，'C'，'G' 和 'T' 的核苷酸组成，例如："ACGAATTCCG"。在研究 DNA 时，识别 DNA
+         * 中的重复序列有时会对研究非常有帮助。
+         * 编写一个函数来找出所有目标子串，目标子串的长度为 10，且在 DNA 字符串 s 中出现次数超过一次。
+         * 示例 1：
+         * 输入：s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
+         * 输出：["AAAAACCCCC","CCCCCAAAAA"]
+         *
+         * 示例 2：
+         * 输入：s = "AAAAAAAAAAAAA"
+         * 输出：["AAAAAAAAAA"]
+         * 提示：
+         * 0 <= s.length <= 105
+         * s[i] 为 'A'、'C'、'G' 或 'T'
+         */
+        /**
+         * 遍历所有可能出现的长度为10的子串，利用hash保存，当数量等于2时添加到结果集合即可。不能大于1，会导致保存多个重复子串。
+         */
+        List<String> list = new ArrayList<>();
+        HashMap<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < s.length() - 9; i++) {
+            String str = s.substring(i, 10 + i);
+            map.put(str, map.getOrDefault(str, 0) + 1);
+            if (map.get(str) == 2) {
+                list.add(str);
+            }
+        }
+        return list;
+    }
+
+
 }
 
