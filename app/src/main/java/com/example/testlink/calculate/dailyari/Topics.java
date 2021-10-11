@@ -8111,7 +8111,6 @@ public class Topics {
          * 最多调用 addNum 和 getIntervals 方法 3 * 104 次
          * 进阶：如果存在大量合并，并且与数据流的大小相比，不相交区间的数量很小，该怎么办?
          */
-
         SummaryRanges s = new SummaryRanges();
     }
 
@@ -8132,6 +8131,74 @@ public class Topics {
             i++;
             if (n == i) return i;
             if (n < i) return i - 1;
+        }
+    }
+
+    String[] singles = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
+    String[] teens = {"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
+            "Eighteen", "Nineteen"};
+    String[] tens = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+    String[] thousands = {"", "Thousand", "Million", "Billion"}; // 千，百万，10亿
+
+    /**
+     * 273、整数转换英文表示
+     */
+    public String numberToWords(int num) {
+        /**
+         * 将非负整数 num 转换为其对应的英文表示。
+         * 示例 1：
+         * 输入：num = 123
+         * 输出："One Hundred Twenty Three"
+         * 示例 2：
+         * 输入：num = 12345
+         * 输出："Twelve Thousand Three Hundred Forty Five"
+         * 示例 3：
+         * 输入：num = 1234567
+         * 输出："One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+         * 示例 4：
+         * 输入：num = 1234567891
+         * 输出："One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
+         * 提示：
+         * 0 <= num <= 231 - 1
+         */
+
+        /**
+         * 单纯模拟，属于那种思路清晰步骤麻烦题。首先要注意的是英文的叫法是3位一组。如：
+         * 123 -> 一百二十三
+         * 12,123 -> 中式读法是一万二千一百二十三，而英语的读法是十二千一百二十三。看出什么是3位一组了吧。
+         * 100,000,000 -> 一百百万。(就是一亿)
+         * 明白了这样分组，直接模拟即可。
+         */
+        if (num == 0) {
+            return "Zero";
+        }
+        StringBuffer sb = new StringBuffer();
+        for (int i = 3, unit = 1000000000; i >= 0; i--, unit /= 1000) {
+            int curNum = num / unit;
+            if (curNum != 0) {
+                num -= curNum * unit;
+                StringBuffer curr = new StringBuffer();
+                recursion(curr, curNum);
+                curr.append(thousands[i]).append(" ");
+                sb.append(curr);
+            }
+        }
+        return sb.toString().trim();
+    }
+
+    private void recursion(StringBuffer curr, int num) {
+        if (num == 0) {
+            return;
+        } else if (num < 10) {
+            curr.append(singles[num]).append(" ");
+        } else if (num < 20) {
+            curr.append(teens[num - 10]).append(" ");
+        } else if (num < 100) {
+            curr.append(tens[num / 10]).append(" ");
+            recursion(curr, num % 10);
+        } else {
+            curr.append(singles[num / 100]).append(" Hundred ");
+            recursion(curr, num % 100);
         }
     }
 
