@@ -9036,6 +9036,198 @@ public class Topics {
         return false;
     }
 
+    /**
+     * 318、最大单词长度乘积
+     */
+    public int maxProduct(String[] words) {
+        /**
+         * 给定一个字符串数组 words，找到 length(word[i]) * length(word[j]) 的最大值，并且这两个单词不含有公共字母。你可以认为每个单词只包含
+         * 小写字母。如果不存在这样的两个单词，返回 0。
+         *
+         * 示例 1:
+         * 输入: ["abcw","baz","foo","bar","xtfn","abcdef"]
+         * 输出: 16
+         * 解释: 这两个单词为 "abcw", "xtfn"。
+         *
+         * 示例 2:
+         * 输入: ["a","ab","abc","d","cd","bcd","abcd"]
+         * 输出: 4
+         * 解释: 这两个单词为 "ab", "cd"。
+         *
+         * 示例 3:
+         * 输入: ["a","aa","aaa","aaaa"]
+         * 输出: 0
+         * 解释: 不存在这样的两个单词。
+         *
+         * 提示：
+         * 2 <= words.length <= 1000
+         * 1 <= words[i].length <= 1000
+         * words[i] 仅包含小写字母
+         */
+
+        /**
+         * 思路：暴力法,枚举每个单词是否包含相同的字母，没有相同字母归为一组。优化在比较是否包含相同字母上。
+         */
+        // 使用二进制的形式判断2个单词是否包含相同字母，与一一比较速度上有提升
+        // 预处理
+        int length = words.length;
+        int[] masks = new int[length];
+        for (int i = 0; i < length; i++) {
+            String word = words[i];
+            int wordLength = word.length();
+            for (int j = 0; j < wordLength; j++) {
+                masks[i] |= 1 << (word.charAt(j) - 'a');
+            }
+        }
+        // 进制位比较
+        int maxProd = 0;
+        for (int i = 0; i < length; i++) {
+            for (int j = i + 1; j < length; j++) {
+                if ((masks[i] & masks[j]) == 0) {
+                    maxProd = Math.max(maxProd, words[i].length() * words[j].length());
+                }
+            }
+        }
+        return maxProd;
+    }
+
+    /**
+     * 563、二叉树的坡度
+     */
+    int ans563 = 0;
+
+    public int findTilt(TreeNode root) {
+        /**
+         * 给定一个二叉树，计算 整个树 的坡度 。
+         * 一个树的 节点的坡度 定义即为，该节点左子树的节点之和和右子树节点之和的 差的绝对值 。如果没有左子树的话，左子树的节点之和为 0 ；
+         * 没有右子树的话也是一样。空结点的坡度是 0 。
+         * 整个树 的坡度就是其所有节点的坡度之和。
+         *
+         * 示例 1：
+         * 输入：root = [1,2,3]
+         * 输出：1
+         * 解释：
+         * 节点 2 的坡度：|0-0| = 0（没有子节点）
+         * 节点 3 的坡度：|0-0| = 0（没有子节点）
+         * 节点 1 的坡度：|2-3| = 1（左子树就是左子节点，所以和是 2 ；右子树就是右子节点，所以和是 3 ）
+         * 坡度总和：0 + 0 + 1 = 1
+         *
+         * 示例 2：
+         * 输入：root = [4,2,9,3,5,null,7]
+         * 输出：15
+         * 解释：
+         * 节点 3 的坡度：|0-0| = 0（没有子节点）
+         * 节点 5 的坡度：|0-0| = 0（没有子节点）
+         * 节点 7 的坡度：|0-0| = 0（没有子节点）
+         * 节点 2 的坡度：|3-5| = 2（左子树就是左子节点，所以和是 3 ；右子树就是右子节点，所以和是 5 ）
+         * 节点 9 的坡度：|0-7| = 7（没有左子树，所以和是 0 ；右子树正好是右子节点，所以和是 7 ）
+         * 节点 4 的坡度：|(3+5+2)-(9+7)| = |10-16| = 6（左子树值为 3、5 和 2 ，和是 10 ；右子树值为 9 和 7 ，和是 16 ）
+         * 坡度总和：0 + 0 + 0 + 2 + 7 + 6 = 15
+         *
+         * 示例 3：
+         * 输入：root = [21,7,14,1,1,2,2,3,3]
+         * 输出：9
+         *
+         * 提示：
+         * 树中节点数目的范围在 [0, 104] 内
+         * -1000 <= Node.val <= 1000
+         */
+        dfs(root);
+        return ans563;
+    }
+
+    private int dfs(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        int sumLeft = dfs(node.left); //左子节点之和
+        int sumRight = dfs(node.right); //右子节点之和
+        ans563 += Math.abs(sumLeft - sumRight); // 累加坡度
+        return sumLeft + sumRight + node.val; //子节点之和
+    }
+
+    /**
+     * 397、整数替换
+     */
+    public int integerReplacement(int n) {
+        /**
+         * 给定一个正整数 n ，你可以做如下操作：
+         * 如果 n 是偶数，则用 n / 2替换 n 。
+         * 如果 n 是奇数，则可以用 n + 1或n - 1替换 n 。
+         * n 变为 1 所需的最小替换次数是多少？
+         *
+         * 示例 1：
+         * 输入：n = 8
+         * 输出：3
+         * 解释：8 -> 4 -> 2 -> 1
+         *
+         * 示例 2：
+         * 输入：n = 7
+         * 输出：4
+         * 解释：7 -> 8 -> 4 -> 2 -> 1
+         * 或 7 -> 6 -> 3 -> 2 -> 1
+         *
+         * 示例 3：
+         * 输入：n = 4
+         * 输出：2
+         *
+         * 提示：
+         * 1 <= n <= 231 - 1
+         */
+
+        // 简单递归实现
+        if (n == 1) return 0;
+        // 偶数直接除2
+        if (n % 2 == 0) return 1 + integerReplacement(n / 2);
+        // 奇数从+1或-1再除2这2种情况中选择最小的。注意+1可能会越界，所以使用先/2再+1等价。小细节
+        return 2 + Math.min(integerReplacement(n / 2), integerReplacement(n / 2 + 1));
+    }
+
+    /**
+     * 594、最长和谐子序列
+     */
+    public int findLHS(int[] nums) {
+        /**
+         * 和谐数组是指一个数组里元素的最大值和最小值之间的差别 正好是 1 。
+         * 现在，给你一个整数数组 nums ，请你在所有可能的子序列中找到最长的和谐子序列的长度。
+         * 数组的子序列是一个由数组派生出来的序列，它可以通过删除一些元素或不删除元素、且不改变其余元素的顺序而得到。
+         *
+         * 示例 1：
+         * 输入：nums = [1,3,2,2,5,2,3,7]
+         * 输出：5
+         * 解释：最长的和谐子序列是 [3,2,2,2,3]
+         *
+         * 示例 2：
+         * 输入：nums = [1,2,3,4]
+         * 输出：2
+         *
+         * 示例 3：
+         * 输入：nums = [1,1,1,1]
+         * 输出：0
+         *
+         * 提示：
+         * 1 <= nums.length <= 2 * 104
+         * -109 <= nums[i] <= 109
+         */
+
+        Arrays.sort(nums);
+        int begin = 0, res = 0;
+        for (int end = 0; end < nums.length; end++) {
+            while (nums[end] - nums[begin] > 1)
+                begin++;
+            if (nums[end] - nums[begin] == 1)
+                res = Math.max(res, end - begin + 1);
+        }
+        return res;
+    }
+
+    /**
+     * 384、打乱数组
+     */
+    public void test384() {
+        Subject384 su = new Subject384(new int[]{3, 5, 8, 4, 2, 1, 7});
+    }
+
 
 }
 
