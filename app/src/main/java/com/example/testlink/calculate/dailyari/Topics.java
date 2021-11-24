@@ -9266,7 +9266,7 @@ public class Topics {
          * 或者没有不相等的字符但是有2个以上相等重复字符为true)
          */
 
-        if(s.length() != goal.length()) return false;
+        if (s.length() != goal.length()) return false;
         // 判断所有组成字符是否相等。
 
         // 判断是否只有2个字符位置不一样
@@ -9274,6 +9274,93 @@ public class Topics {
         // 或者统计相同字符串是否大于等于2个
 
         return false;
+    }
+
+    /**
+     * 423、从英文中重建数字
+     */
+    public String originalDigits(String s) {
+        /**
+         * 给你一个字符串 s ，其中包含字母顺序打乱的用英文单词表示的若干数字（0-9）。按 升序 返回原始的数字。
+         * 示例 1：
+         * 输入：s = "owoztneoer"
+         * 输出："012"
+         *
+         * 示例 2：
+         * 输入：s = "fviefuro"
+         * 输出："45"
+         *
+         * 提示：
+         * 1 <= s.length <= 105
+         * s[i] 为 ["e","g","f","i","h","o","n","s","r","u","t","w","v","x","z"] 这些字符之一
+         * s 保证是一个符合题目要求的字符串
+         */
+        /**
+         * "zero","one","two","three","four","five","six","seven","eight","nine"
+         *
+         * 思路：找到每个单词中比较特殊的字符(特别是唯一出现的字符，别的单词都没有的，那么这个特殊字符的数量就是出现的次数)，把含有唯一字母的单词放前
+         * 组合或者统计,剩下的通过共有字符加减统计，这样才不会把属于别的单词的字母给组合掉或者统计上，然后就可以通过特殊字符来统计出每个数字的对应英文字母的数量。
+         *
+         * 比如：0->z;6->x;8->g;2->w;4->u;(唯一字符)
+         * 7->s(减去6的数量);
+         * 5->v(要减去7的数量);
+         * 3->h(要减去8的数量)
+         * 1->o(减去1,2,4的数量);
+         * 9->i(减去6,8,5的数量)
+         *
+         * 特殊字符找顺序:
+         * "zero","two","four","six","eight","seven","five","three","one","nine"
+         */
+        char[] chars = s.toCharArray();
+        int[] num = new int[10];
+        // 找出对应的特殊字符
+        for (char c : chars) {
+            switch (c) {
+                case 'z':
+                    num[0]++;
+                    break;
+                case 'o':
+                    num[1]++;
+                    break;
+                case 'w':
+                    num[2]++;
+                    break;
+                case 'h':
+                    num[3]++;
+                    break;
+                case 'u':
+                    num[4]++;
+                    break;
+                case 'v':
+                    num[5]++;
+                    break;
+                case 'x':
+                    num[6]++;
+                    break;
+                case 's':
+                    num[7]++;
+                    break;
+                case 'g':
+                    num[8]++;
+                    break;
+                case 'i':
+                    num[9]++;
+                    break;
+            }
+        }
+        num[7] -= num[6];
+        num[5] -= num[7];
+        num[3] -= num[8];
+        num[1] -= num[0] + num[2] + num[4];
+        num[9] -= num[5] + num[6] + num[8];
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < num.length; i++) {
+            for (int j = 0; j < num[i]; j++) {
+                sb.append(String.valueOf(i));
+            }
+        }
+        return sb.toString();
     }
 
 }
