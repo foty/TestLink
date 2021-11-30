@@ -9527,5 +9527,71 @@ public class Topics {
 
         return null;
     }
+
+    /**
+     * 400、第 N 位数字
+     */
+    public int findNthDigit(int n) {
+
+        /**
+         * 给你一个整数 n ，请你在无限的整数序列 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...] 中找出并返回第 n 位数字。
+         *
+         * 示例 1：
+         * 输入：n = 3
+         * 输出：3
+         *
+         * 示例 2：
+         * 输入：n = 11
+         * 输出：0
+         * 解释：第 11 位数字在序列 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ... 里是 0 ，它是 10 的一部分。
+         *
+         * 提示：
+         * 1 <= n <= 2^31 - 1
+         */
+
+        /**
+         * 思路：分2步：找到这个数，确定这个数的第几位(包括)前的所有数相加等于n。
+         * 1、求这个数：
+         *    1.确定这个是一个几位数的数。依次统计个位数总数字，十位数总个数,百位数总个数...。根据总位数与n对比可以确立这是一个几位数
+         *    2.确定这个数。根据n与总个数的差可以知道这个数与x位数的第一个数共有多少个数字，除以x得出是第几个数。
+         * 2、这个数的第几位
+         */
+        System.out.println(n);
+        if (n <= 9) return n;
+        // 这里有个规律：个位有9个(1*9),十位(2(每个数有2个数字)*90(99-9。一共90个数))，百位(3*(999-99,一共900个数))
+        int i = 1, su = 9;
+        int count = 0;
+        while (count < n) {
+            count += i * su;
+            if (count > n) {
+                count -= i * su;
+                break;
+            }
+            System.out.println("这次基数加多少啊  " + su + "  ,第几次了啊  " + i);
+            su *= 10;
+            i++;
+            // 超出Int范围
+            if (Integer.MAX_VALUE / su < i) break;
+        }
+        // 因为count是能累加的最高位，是低于原数一位的，所以i不需要减1。
+        System.out.println("应该是几位数啊  " + i + " ，共有多少位数字啊= " + count);
+        // 在它的区间内一共多少位数
+        int dif = n - count;
+        System.out.println("余下了多少位数啊  " + dif);
+        //看剩下这些数能组成几个i位数。因为i位数的第一个开始是从0开始，相对剩下数字应该减1。
+        int base = (dif - 1) / i;
+        System.out.println("第几个数啊  " + base);
+        //属于第几个数，基本数+第几个数
+        int index = (int) Math.pow(10, i - 1);// 几个10相乘。n位数有n-1个0
+        System.out.println("基数是多少啊  " + index);
+        index += base;
+        //属于这个数的哪一位(取模操作，基本数是从0开始的，总位数需要-1)
+        int l = (dif - 1) % i;
+        System.out.println("具体哪个数字啊  " + index + "，  第几位啊   " + l);
+
+        //取出这个数中的第几位数字。
+        char c = String.valueOf(index).charAt(l);
+        return Integer.parseInt(String.valueOf(c));
+    }
 }
 
