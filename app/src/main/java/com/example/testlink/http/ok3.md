@@ -792,8 +792,9 @@ private RealConnection findConnection(int connectTimeout, int readTimeout, int w
 最后保存，返回。newStream()方法结束。返回到拦截器ConnectInterceptor的intercept方法里，将初始化的httpCodec、connection作为参数，进入到
 下一个拦截器。
 
-<b> CallServerInterceptor</b>   
-```
+<b> CallServerInterceptor</b>  
+
+```text
   @Override public Response intercept(Chain chain) throws IOException {
     RealInterceptorChain realChain = (RealInterceptorChain) chain;
     HttpCodec httpCodec = realChain.httpStream();
@@ -871,6 +872,7 @@ private RealConnection findConnection(int connectTimeout, int readTimeout, int w
   }
 }
 ```
+
 概述：   
 首先准备http的请求报头，并发送给服务器，如果此次请求是有请求body的并且在请求报头包含“Expect:100-continue”的信息，则需要等待服务器的
 响应(通过``httpCodec.readResponseHeaders()``解析，返回null表示允许)，确认服务器是否接受该请求。如果允许，则将请求body写入到
@@ -881,6 +883,6 @@ private RealConnection findConnection(int connectTimeout, int readTimeout, int w
 
 response也已经获取到，最后返回到RealCall类的``execute()``方法里，也就最开始跟踪拦截器那里，通过Callback回调onResponse()/onFailure()
 到我们的应用当中，请求结束。    
-![](imgs/end.png)  
+![](imgs/end.png)
 
 
