@@ -9874,6 +9874,38 @@ public class Topics {
         return min;
     }
 
+    /**
+     * 652. 寻找重复的子树
+     */
+    public static List<TreeNode> findDuplicateSubtrees(TreeNode root) {
+        /**
+         * 思路：dfs+序列化+哈希表保存。
+         * 深度优先搜索，将每一颗子树转换成字符串的形式添加到map集合，如果出现相同key时，表示出现了相同
+         * 子树。添加到结果集合即可。
+         */
+        dfs652(root);
+        return result652;
+    }
+
+    static List<TreeNode> result652 = new ArrayList<>();
+    static HashMap<String, Integer> map652 = new HashMap<>();
+
+    public static String dfs652(TreeNode node) {
+        if (node == null) return " ";
+        // 构建子树保存在map中的key
+        StringBuilder sb = new StringBuilder();
+        sb.append(node.val).append("(");
+        sb.append(dfs652(node.left))
+                .append(dfs652(node.right))
+                .append(")");
+
+        // 添加到map，并且判断是否有重复的key(相同的子树)，把根节点添加到结果集合中。
+        String key = sb.toString();
+        map652.put(key, map652.getOrDefault(key, 0) + 1);
+        // 当且仅当数量等于2时添加到list中，避免了重复添加。
+        if (map652.get(key) == 2 ) result652.add(node);
+        return key;
+    }
 
 }
 
