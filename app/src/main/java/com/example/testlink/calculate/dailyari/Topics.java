@@ -9890,7 +9890,7 @@ public class Topics {
     static List<TreeNode> result652 = new ArrayList<>();
     static HashMap<String, Integer> map652 = new HashMap<>();
 
-    public static String dfs652(TreeNode node) {
+    private static String dfs652(TreeNode node) {
         if (node == null) return " ";
         // 构建子树保存在map中的key
         StringBuilder sb = new StringBuilder();
@@ -9907,5 +9907,38 @@ public class Topics {
         return key;
     }
 
+    /**
+     * 2129、将标题首字母大写
+     */
+    public String arrays2129(String title) {
+        /**
+         * 给你一个字符串 title ，它由单个空格连接一个或多个单词组成，每个单词都只包含英文字母。
+         * 请你按以下规则将每个单词的首字母大写 ：
+         * 如果单词的长度为 1 或者 2 ，所有字母变成小写。
+         * 否则，将单词首字母大写，剩余字母变成小写。
+         * 请你返回 大写后 的 title 。
+         * 例如：
+         * 输入：title = "capiTalIze tHe titLe"
+         * 输出："Capitalize The Title"
+         */
+
+        /**
+         * 思路：
+         * 根据每个单词是否符合条件来将首单词是否大写，比较简单。
+         */
+
+        //1、根据空格拆分，方便处理
+        String[] s = title.split(" ");
+        for (int i = 0; i < s.length; i++) {
+            // 2、先将整个单词转变成小写
+            s[i] = s[i].toLowerCase();
+            // 3、长度大于2的把首字母转换成大写，可以使用char字符对应的int相加减得到对应的大写或小写字符。
+            if (s[i].length() > 2) {
+                s[i] = (char)(s[i].charAt(0) - 32) + s[i].substring(1);
+            }
+        }
+        // 4、开始是准备用一个循环拼接起来，后来发现有这样API调用，更加省事了
+        return String.join(" ", s);
+    }
 }
 
