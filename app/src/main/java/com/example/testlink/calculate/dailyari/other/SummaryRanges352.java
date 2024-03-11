@@ -1,4 +1,4 @@
-package com.example.testlink.calculate.dailyari;
+package com.example.testlink.calculate.dailyari.other;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -8,11 +8,11 @@ import java.util.TreeMap;
  * Date : 2021/10/9 14:33
  * Use by
  */
-class SummaryRanges {
+public class SummaryRanges352 {
 
     private TreeMap<Integer, Integer> treeMap;
 
-    public SummaryRanges() {
+    public SummaryRanges352() {
         treeMap = new TreeMap<>();
     }
 

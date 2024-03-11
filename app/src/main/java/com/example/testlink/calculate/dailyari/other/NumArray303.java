@@ -1,6 +1,6 @@
-package com.example.testlink.calculate.dailyari;
+package com.example.testlink.calculate.dailyari.other;
 
-class NumArray {
+public class NumArray303 {
 
     /**
      * 给定一个整数数组nums，求出数组从索引 i 到 j（i ≤ j）范围内元素的总和，包含 i、j 两点。
@@ -33,7 +33,7 @@ class NumArray {
     private int[] nums;
     private int[] numsSum; //保存和
 
-    public NumArray(int[] nums) {
+    public NumArray303(int[] nums) {
         //1
         this.nums = nums;
 

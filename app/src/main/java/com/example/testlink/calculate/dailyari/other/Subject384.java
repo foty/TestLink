@@ -1,4 +1,4 @@
-package com.example.testlink.calculate.dailyari;
+package com.example.testlink.calculate.dailyari.other;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.Random;
  * Date : 2021/11/22 11:22
  * Use by
  */
-class Subject384 {
+public class Subject384 {
 
     /**
      * 给你一个整数数组 nums ，设计算法来打乱一个没有重复元素的数组。

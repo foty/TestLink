@@ -1,6 +1,6 @@
-package com.example.testlink.calculate.dailyari;
+package com.example.testlink.calculate.dailyari.other;
 
-class Trie208 {
+public class Trie208 {
 
     /**
      * 前缀树 是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。这一数据结构有相当多的应用情景，例如自动

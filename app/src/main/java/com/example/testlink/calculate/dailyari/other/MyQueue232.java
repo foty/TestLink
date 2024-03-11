@@ -1,8 +1,8 @@
-package com.example.testlink.calculate.dailyari;
+package com.example.testlink.calculate.dailyari.other;
 
 import java.util.Stack;
 
-class MyQueue {
+public class MyQueue232 {
 
     private Stack<Integer> saveStack;
     private Stack<Integer> stack;
@@ -10,7 +10,7 @@ class MyQueue {
     /**
      * Initialize your data structure here.
      */
-    public MyQueue() {
+    public MyQueue232() {
         stack = new Stack<>();
         saveStack = new Stack<>();
     }

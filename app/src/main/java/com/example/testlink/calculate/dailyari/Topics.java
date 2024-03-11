@@ -1,5 +1,17 @@
 package com.example.testlink.calculate.dailyari;
 
+import com.example.testlink.calculate.dailyari.other.MyHashMap706;
+import com.example.testlink.calculate.dailyari.other.MyHashSet705;
+import com.example.testlink.calculate.dailyari.other.MyQueue232;
+import com.example.testlink.calculate.dailyari.other.NestedInteger;
+import com.example.testlink.calculate.dailyari.other.NestedIterator341;
+import com.example.testlink.calculate.dailyari.other.NumArray303;
+import com.example.testlink.calculate.dailyari.other.NumMatrix304;
+import com.example.testlink.calculate.dailyari.other.ParkingSystem1063;
+import com.example.testlink.calculate.dailyari.other.Subject384;
+import com.example.testlink.calculate.dailyari.other.SummaryRanges352;
+import com.example.testlink.calculate.dailyari.other.Trie208;
+import com.example.testlink.calculate.dailyari.other.WeightSolution528;
 import com.example.testlink.calculate.sword_for_offer.ListNode;
 import com.example.testlink.calculate.sword_for_offer.TreeNode;
 
@@ -20,7 +32,13 @@ import java.util.TreeMap;
 /**
  * Create by lxx
  * Date : 2021/3/1 10:50
- * Use by
+ * Use by 每日一题训练。
+ * <p>
+ * 后续规范(早期的没遵循就算了)：
+ * 一个 public 方法为一题，private 方法为题目的额外方法(例如递归算法需要独立写多个方法)；
+ * public 题目命名规则：前缀+题号，private方法命名：前缀+题号；
+ * 设计类解题统一存放other包下，类名命名：前缀+题号；
+ * 成员变量命名：前缀+题号
  */
 public class Topics {
 
@@ -29,7 +47,7 @@ public class Topics {
      */
     public static void test303() {
         int[] ints = new int[]{-2, 0, 3, -5, 2, -1};
-        NumArray numArray = new NumArray(ints);
+        NumArray303 numArray = new NumArray303(ints);
 
         int s = numArray.sumRange2(0, 2);
         System.out.println(s);
@@ -44,7 +62,7 @@ public class Topics {
      */
     public static void test304() {
         int[][] ints = new int[][]{{-4, -5}};
-        NumMatrix numMatrix = new NumMatrix(ints);
+        NumMatrix304 numMatrix = new NumMatrix304(ints);
 //        numMatrix.sumRegion(0, 0, 0, 0);
 //        numMatrix.sumRegion(0, 0, 0, 1);
         numMatrix.sumRegion(0, 1, 0, 1);
@@ -55,7 +73,7 @@ public class Topics {
     /**
      * 338.比特位计数
      */
-    public int[] countBits(int num) {
+    public int[] countBits338(int num) {
         /**
          * 给定一个非负整数 num。对于 0 ≤ i ≤ num 范围中的每个数字 i ，计算其二进制数中的 1 的数目并将它们作为数组返回。
          */
@@ -92,7 +110,7 @@ public class Topics {
     /**
      * 354、俄罗斯信封套娃
      */
-    public int maxEnvelopes(int[][] envelopes) {
+    public int maxEnvelopes354(int[][] envelopes) {
         /**
          * 给定一些标记了宽度和高度的信封，宽度和高度以整数对形式(w, h)出现。当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进
          * 另一个信封里，如同俄罗斯套娃一样。
@@ -140,13 +158,13 @@ public class Topics {
      * 232、用栈实现队列
      */
     public void test232() {
-        MyQueue queue = new MyQueue();
+        MyQueue232 queue = new MyQueue232();
     }
 
     /**
      * 503 下一个更大的数。
      */
-    public static int[] nextGreaterElements(int[] nums) {
+    public static int[] nextGreaterElements503(int[] nums) {
         // 暴力循环
         int[] result = new int[nums.length];
         Arrays.fill(result, -1);
@@ -198,7 +216,7 @@ public class Topics {
     /**
      * 131、分割回文串I ?
      */
-    public List<List<String>> partition(String s) {
+    public List<List<String>> partition131(String s) {
         List<List<String>> ret = new ArrayList<List<String>>();
         /**
          *
@@ -209,7 +227,7 @@ public class Topics {
     /**
      * 132、分割回文串II ?
      */
-    public int minCut(String s) {
+    public int minCut132(String s) {
 
         return 0;
     }
@@ -217,7 +235,7 @@ public class Topics {
     /**
      * 1047、删除字符串所有相邻重复项 ?
      */
-    public static String removeDuplicates(String S) {
+    public static String removeDuplicates1047(String S) {
         int[] strIndex = new int[S.length()];
         for (int i = 0, j = i + 1; i < S.length() && j < S.length(); ) {
             if (S.charAt(i) == S.charAt(j)) {
@@ -236,7 +254,7 @@ public class Topics {
     /**
      * 224、基本计算器 ?
      */
-    public int calculate(String s) {
+    public int calculate224(String s) {
         /**
          * 给你一个字符串表达式 s ，请你实现一个基本计算器来计算并返回它的值。
          * 示例 1：
@@ -263,7 +281,7 @@ public class Topics {
     /**
      * 227、基本计算器II ?
      */
-    public int calculate2(String s) {
+    public int calculate227(String s) {
         /**
          * 提示：
          *
@@ -279,7 +297,7 @@ public class Topics {
     /**
      * 331、验证二叉树的前序序列化 ?
      */
-    public boolean isValidSerialization(String preorder) {
+    public boolean isValidSerialization331(String preorder) {
         return false;
     }
 
@@ -287,14 +305,14 @@ public class Topics {
      * 705、设计hash集合
      */
     public void test705() {
-        MyHashSet set = new MyHashSet();
+        MyHashSet705 set = new MyHashSet705();
     }
 
     /**
      * 706、设计哈希映射
      */
     public void test706() {
-        MyHashMap map = new MyHashMap();
+        MyHashMap706 map = new MyHashMap706();
     }
 
     /**
@@ -372,7 +390,7 @@ public class Topics {
     /**
      * 59、螺旋矩阵II
      */
-    public static int[][] generateMatrix(int n) {
+    public static int[][] generateMatrix59(int n) {
 
         /**
          * 给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。
@@ -444,8 +462,7 @@ public class Topics {
     /**
      * 115、不同的子序列 ?
      */
-    public static void numDistinct(String s, String t) {
-
+    public static void numDistinct115(String s, String t) {
         /**
          * 给定一个字符串 s 和一个字符串 t ，计算在 s 的子序列中 t 出现的个数。字符串的一个 子序列 是指，通过删除一些（也可以不删除）字符
          * 且不干扰剩余字符相对位置所组成的新字符串。（例如，"ACE"是"ABCDE"的一个子序列，而"AEC"不是）
@@ -470,7 +487,7 @@ public class Topics {
          */
 
         // 1、递归耗时，但是没有AC，感觉代码是对的。0.0
-        p115Find(s, 0, t, 0);
+        find115(s, 0, t, 0);
 
 
         // 2、动态规划
@@ -515,9 +532,9 @@ public class Topics {
 
     }
 
-    private static int sum = 0;
+    private static int sum115 = 0;
 
-    private static boolean p115Find(String s, int p, String t, int q) {
+    private static boolean find115(String s, int p, String t, int q) {
 
         // 越界条件
         if (p >= s.length()) return false;
@@ -531,7 +548,7 @@ public class Topics {
         if (s.charAt(p) == t.charAt(q)) {
             //完全匹配
             if (q == t.length() - 1) {
-                sum++;
+                sum115++;
                 all = true;
             }
             last = true;
@@ -540,14 +557,14 @@ public class Topics {
 
         //完全匹配了,继续找还有没有这个。
         if (all) {
-            p115Find(s, p + 1, t, q - 1);
+            find115(s, p + 1, t, q - 1);
             return true;
 
         } else {// 匹配下一个字符
-            boolean b = p115Find(s, p + 1, t, q);
+            boolean b = find115(s, p + 1, t, q);
 
             if (b && last) {
-                p115Find(s, p + 1, t, q - 1);
+                find115(s, p + 1, t, q - 1);
             }
             return b;
         }
@@ -557,7 +574,7 @@ public class Topics {
     /**
      * 92、反转链表II
      */
-    public ListNode reverseBetween(ListNode head, int left, int right) {
+    public ListNode reverseBetween92(ListNode head, int left, int right) {
         if (left == right) return head;
 
         // 构造一个虚拟头结点,这么做是为了防止头结点被改变了。
@@ -609,13 +626,13 @@ public class Topics {
      * 1603、设计一个停车系统
      */
     public void test1063() {
-        ParkingSystem system = new ParkingSystem(1, 1, 1);
+        ParkingSystem1063 system = new ParkingSystem1063(1, 1, 1);
     }
 
     /**
      * 150、逆波兰表达式求值
      */
-    public static int evalRPN(String[] tokens) {
+    public static int evalRPN150(String[] tokens) {
 
         /**
          * 逆波兰表达式的特点是：没有括号，运算符总是放在和它相关的操作数之后。因此，逆波兰表达式也称后缀表达式。
@@ -680,14 +697,14 @@ public class Topics {
     /**
      * 73、矩阵置0 ?
      */
-    public void setZeroes(int[][] matrix) {
+    public void setZeroes73(int[][] matrix) {
 
     }
 
     /**
      * 191、位1的个数
      */
-    public static int hammingWeight(int n) {
+    public static int hammingWeight191(int n) {
         /**
          * 编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 '1' 的个数
          */
@@ -766,7 +783,7 @@ public class Topics {
         nestedList.add(n2);
         nestedList.add(n3);
 
-        NestedIterator i = new NestedIterator(nestedList);
+        NestedIterator341 i = new NestedIterator341(nestedList);
         while (i.hasNext()) {
             int s = i.next();
             System.out.print(s + "  ");
@@ -796,7 +813,7 @@ public class Topics {
     /**
      * 82、删除排序链表中的重复元素II
      */
-    public ListNode deleteDuplicatesII(ListNode head) {
+    public ListNode deleteDuplicatesII82(ListNode head) {
 
         /**
          * 存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除链表中所有存在数字重复情况的节点，只保留原始链表中没有重复出现的数字。
@@ -846,7 +863,7 @@ public class Topics {
     /**
      * 83. 删除排序链表中的重复元素
      */
-    public ListNode deleteDuplicatesI(ListNode head) {
+    public ListNode deleteDuplicatesI83(ListNode head) {
 
         /**
          * 存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除所有重复的元素，使每个元素 只出现一次 。
@@ -907,7 +924,7 @@ public class Topics {
     /**
      * 61、旋转链表 ?
      */
-    public ListNode rotateRight(ListNode head, int k) {
+    public ListNode rotateRight61(ListNode head, int k) {
         return new ListNode(-1);
     }
 
@@ -937,7 +954,7 @@ public class Topics {
     /**
      * 74、搜索二维矩阵
      */
-    public static boolean searchMatrix(int[][] matrix, int target) {
+    public static boolean searchMatrix74(int[][] matrix, int target) {
         /**
          * 编写一个高效的算法来判断m x n矩阵中，是否存在一个目标值。该矩阵具有如下特性：
          * 每行中的整数从左到右按升序排列。
@@ -990,9 +1007,9 @@ public class Topics {
     }
 
     /**
-     * 78、子集(扩展题)
+     * 78、子集
      */
-    public List<List<Integer>> test90(int[] nums) {
+    public List<List<Integer>> test78(int[] nums) {
         /**
          * 给你一个整数数组 nums ，数组中的元素 互不相同 。返回该数组所有可能的子集（幂集）。
          * 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
@@ -1010,15 +1027,15 @@ public class Topics {
         List<Integer> list = new ArrayList<>();
         addChild90(nums, 0, list);
 
-        return lists;
+        return lists90;
     }
 
-    List<List<Integer>> lists = new ArrayList<>();
+    List<List<Integer>> lists90 = new ArrayList<>();
 
     private void addChild90(int[] nums, int position, List<Integer> list) {
         if (position >= nums.length) {
             List<Integer> r = new ArrayList<>(list);
-            lists.add(r);
+            lists90.add(r);
             return;
         }
 
@@ -1029,23 +1046,21 @@ public class Topics {
     }
 
     /**
-     * 90、子集II(3.31) ?
+     * 90、子集II
+     * 参考 78题。
      */
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
-
+    public List<List<Integer>> subsetsWithDup90(int[] nums) {
         /**
          *  给你一个整数数组 nums ，其中可能包含重复元素，请你返回该数组所有可能的子集（幂集）。
          *  解集 不能 包含重复的子集。返回的解集中，子集可以按 任意顺序 排列。
          */
-
-
-        return lists;
+        return lists90;
     }
 
     /**
      * 1006、笨阶乘
      */
-    public int clumsy(int N) {
+    public int clumsy1006(int N) {
         /**
          * 通常，正整数 n 的阶乘是所有小于或等于 n 的正整数的乘积。例如，factorial(10) = 10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1。
          * 相反，我们设计了一个笨阶乘 clumsy：在整数的递减序列中，我们以一个固定顺序的操作符序列来依次替换原有的乘法操作符：乘法(*)，除法(/)，
@@ -1101,7 +1116,7 @@ public class Topics {
     /**
      * 80、删除有序数组中的重复项II
      */
-    public int removeDuplicates2(int[] nums) {
+    public int removeDuplicates80(int[] nums) {
 
         /**
          * 给你一个有序数组 nums ，请你原地删除重复出现的元素，使每个元素 最多出现两次 ，返回删除后数组的新长度。
@@ -1137,7 +1152,7 @@ public class Topics {
     /**
      * 81. 搜索旋转排序数组 II
      */
-    public boolean search(int[] nums, int target) {
+    public boolean search81(int[] nums, int target) {
         /**
          * 已知存在一个按非降序排列的整数数组 nums ，数组中的值不必互不相同。
          * 在传递给函数之前，nums 在预先未知的某个下标 k（0 <= k < nums.length）上进行了 旋转 ，使数组变为 [nums[k], nums[k+1], ...,
@@ -1201,7 +1216,7 @@ public class Topics {
     /**
      * 263、丑数
      */
-    public boolean isUgly(int n) {
+    public boolean isUgly263(int n) {
         /**
          * 给你一个整数 n ，请你判断 n 是否为 丑数 。如果是，返回 true ；否则，返回 false 。
          * 丑数 就是只包含质因数2、3 和/或5的正整数。
@@ -1232,7 +1247,7 @@ public class Topics {
     /**
      * 264、丑数II
      */
-    public static int nthUglyNumber(int n) {
+    public static int nthUglyNumber264(int n) {
         /**
          * 给你一个整数 n ，请你找出并返回第 n 个 丑数 。
          * 丑数 就是只包含质因数 2、3 和/或 5 的正整数。
@@ -1273,7 +1288,7 @@ public class Topics {
     /**
      * 179、最大数
      */
-    public String largestNumber(int[] nums) {
+    public String largestNumber179(int[] nums) {
         /**
          * 给定一组非负整数 nums，重新排列每个数的顺序（每个数不可拆分）使之组成一个最大的整数。
          * 注意：输出结果可能非常大，所以你需要返回一个字符串而不是整数。
@@ -1313,7 +1328,7 @@ public class Topics {
     /**
      * 783、二叉搜索树节点最小距离(4-13) ?
      */
-    public int minDiffInBST(TreeNode root) {
+    public int minDiffInBST783(TreeNode root) {
         /**
          * 给你一个二叉搜索树的根节点 root ，返回 树中任意两不同节点值之间的最小差值 。
          * 输入：root = [4,2,6,1,3]
@@ -1334,7 +1349,7 @@ public class Topics {
     /**
      * 213、打家劫舍II(4-15) ?
      */
-    public int rob(int[] nums) {
+    public int rob213(int[] nums) {
         /**
          * 你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都 围成一圈 ，这意味着第一个
          * 房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，
@@ -1352,7 +1367,7 @@ public class Topics {
     /**
      * 87、扰乱字符串 (4-16) ?
      */
-    public boolean isScramble(String s1, String s2) {
+    public boolean isScramble87(String s1, String s2) {
         /**
          * 使用下面描述的算法可以扰乱字符串 s 得到字符串 t ：
          * 如果字符串的长度为 1 ，算法停止
@@ -1377,9 +1392,10 @@ public class Topics {
     /**
      * 220、存在重复元素III (4-17) ?
      */
-    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+    public boolean containsNearbyAlmostDuplicate220(int[] nums, int k, int t) {
         /**
-         * 给你一个整数数组 nums 和两个整数k 和 t 。请你判断是否存在 两个不同下标 i 和 j，使得abs(nums[i] - nums[j]) <= t ，同时又满足
+         * 给你一个整数数组 nums 和两个整数k 和 t 。请你判断是否存在 两个不同下标 i 和 j，使得abs(nums[i] - nums[j]) <= t ，
+         * 同时又满足
          * abs(i - j) <= k 。如果存在则返回 true，不存在返回 false。
          * 示例1：
          * 输入：nums = [1,2,3,1], k = 3, t = 0
@@ -1397,7 +1413,7 @@ public class Topics {
     /**
      * 26、删除有序数组中的重复项 (4-18) ?
      */
-    public int removeDuplicates(int[] nums) {
+    public int removeDuplicates26(int[] nums) {
         /**
          * 给你一个有序数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。
          * 不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
@@ -1414,7 +1430,7 @@ public class Topics {
 
         /**
          * 思路
-         * 参考： removeDuplicates2()
+         * 参考： removeDuplicates80()
          */
         return 0;
     }
@@ -1422,7 +1438,7 @@ public class Topics {
     /**
      * 27、移除元素
      */
-    public int removeElement(int[] nums, int val) {
+    public int removeElement27(int[] nums, int val) {
         /**
          * 给你一个数组 nums和一个值 val，你需要 原地 移除所有数值等于val的元素，并返回移除后数组的新长度。
          * 不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。
@@ -1460,7 +1476,7 @@ public class Topics {
     /**
      * 28、实现strStr()
      */
-    public int strStr(String haystack, String needle) {
+    public int strStr28(String haystack, String needle) {
 
         /**
          * 实现strStr()函数。
@@ -1484,7 +1500,7 @@ public class Topics {
     /**
      * 91、解码方法
      */
-    public int numDecodings(String s) {
+    public int numDecodings91(String s) {
         /**
          * 一条包含字母A-Z 的消息通过以下映射进行了 编码 ：
          * 'A' -> 1
@@ -1572,7 +1588,7 @@ public class Topics {
     /**
      * 363、矩形区域不超过K的最大数值和
      */
-    public int maxSumSubmatrix(int[][] mat, int k) {
+    public int maxSumSubmatrix263(int[][] mat, int k) {
         /**
          * 给你一个 m x n 的矩阵 matrix 和一个整数 k ，找出并返回矩阵内部矩形区域的不超过 k 的最大数值和。
          * 题目数据保证总会存在一个数值和不超过 k 的矩形区域。
@@ -1625,9 +1641,10 @@ public class Topics {
     /**
      * 368、 最大整除子集
      */
-    public static List<Integer> largestDivisibleSubset(int[] nums) {
+    public static List<Integer> largestDivisibleSubset368(int[] nums) {
         /**
-         * 给你一个由 无重复 正整数组成的集合 nums ，请你找出并返回其中最大的整除子集 answer ，子集中每一元素对 (answer[i], answer[j]) 都应当
+         * 给你一个由 无重复 正整数组成的集合 nums ，请你找出并返回其中最大的整除子集 answer ，子集中每一元素
+         * 对 (answer[i], answer[j]) 都应当
          * 满足：
          * answer[i] % answer[j] == 0 ，或
          * answer[j] % answer[i] == 0
@@ -1708,7 +1725,7 @@ public class Topics {
     /**
      * 377、组合总和Ⅳ
      */
-    public int combinationSum4(int[] nums, int target) {
+    public int combinationSum377(int[] nums, int target) {
         /**
          * 给你一个由 不同 整数组成的数组 nums ，和一个目标整数 target 。请你从 nums 中找出并返回总和为 target 的元素组合的个数。
          * 题目数据保证答案符合 32 位整数范围。
@@ -1765,10 +1782,10 @@ public class Topics {
     /**
      * 897、递增顺序搜索树
      */
-    public TreeNode increasingBST(TreeNode root) {
+    public TreeNode increasingBST897(TreeNode root) {
         /**
-         * 给你一棵二叉搜索树，请你 按中序遍历 将其重新排列为一棵递增顺序搜索树，使树中最左边的节点成为树的根节点，并且每个节点没有左子节点，只有一个
-         * 右子节点。
+         * 给你一棵二叉搜索树，请你 按中序遍历 将其重新排列为一棵递增顺序搜索树，使树中最左边的节点成为树的根节点，并且每个节点
+         * 没有左子节点，只有一个右子节点。
          * 如：
          * 输入：root = [5,1,7]
          * 输出：[1,null,5,null,7]
@@ -1809,10 +1826,11 @@ public class Topics {
     /**
      * 1011、 在D天内送达包裹的能力
      */
-    public static int shipWithinDays(int[] weights, int D) {
+    public static int shipWithinDays1011(int[] weights, int D) {
         /**
          * 传送带上的包裹必须在 D 天内从一个港口运送到另一个港口。
-         * 传送带上的第 i 个包裹的重量为 weights[i]。每一天，我们都会按给出重量的顺序往传送带上装载包裹。我们装载的重量不会超过船的最大运载重量。
+         * 传送带上的第 i 个包裹的重量为 weights[i]。每一天，我们都会按给出重量的顺序往传送带上装载包裹。我们装载的重量
+         * 不会超过船的最大运载重量。
          * 返回能在 D 天内将传送带上的所有包裹送达的船的最低运载能力。
          *
          * 示例 1
@@ -1880,7 +1898,7 @@ public class Topics {
     /**
      * 938. 二叉搜索树的范围和
      */
-    public int rangeSumBST(TreeNode root, int low, int high) {
+    public int rangeSumBST938(TreeNode root, int low, int high) {
         /**
          * 给定二叉搜索树的根结点 root，返回值位于范围 [low, high] 之间的所有结点的值的和。
          * 例子：
@@ -1919,7 +1937,7 @@ public class Topics {
     /**
      * 633、平方数之和
      */
-    public boolean judgeSquareSum(int c) {
+    public boolean judgeSquareSum633(int c) {
         /**
          * 给定一个非负整数c，你要判断是否存在两个整数 a 和 b，使得a2 + b2 = c 。
          *
@@ -1953,9 +1971,10 @@ public class Topics {
     /**
      * 403、青蛙过河 ?
      */
-    public boolean canCross(int[] stones) {
+    public boolean canCross403(int[] stones) {
         /**
-         * 一只青蛙想要过河。 假定河流被等分为若干个单元格，并且在每一个单元格内都有可能放有一块石子（也有可能没有）。 青蛙可以跳上石子，但是不可以跳入
+         * 一只青蛙想要过河。 假定河流被等分为若干个单元格，并且在每一个单元格内都有可能放有一块石子（也有可能没有）。
+         * 青蛙可以跳上石子，但是不可以跳入
          * 水中。给你石子的位置列表 stones（用单元格序号 升序 表示），请判定青蛙能否成功过河（即能否在最后一步跳至最后一块石子上）。
          * 开始时，青蛙默认已站在第一块石子上，并可以假定它第一步只能跳跃一个单位（即只能从单元格 1 跳至单元格 2 ）。
          * 如果青蛙上一步跳跃了k个单位，那么它接下来的跳跃距离只能选择为k - 1、k或k + 1 个单位。另请注意，青蛙只能向前方（终点的方向）跳跃。
@@ -1963,7 +1982,8 @@ public class Topics {
          * 示例 1：
          * 输入：stones = [0,1,3,5,6,8,12,17]
          * 输出：true
-         * 解释：青蛙可以成功过河，按照如下方案跳跃：跳 1 个单位到第 2 块石子, 然后跳 2 个单位到第 3 块石子, 接着 跳 2 个单位到第 4 块石子, 然后跳
+         * 解释：青蛙可以成功过河，按照如下方案跳跃：跳 1 个单位到第 2 块石子, 然后跳 2 个单位到第 3 块石子, 接着 跳 2 个
+         * 单位到第 4 块石子, 然后跳
          * 3 个单位到第 6 块石子, 跳 4 个单位到第 7 块石子, 最后，跳 5 个单位到第 8 个石子（即最后一块石子）。
          *
          * 示例 2：
@@ -1985,7 +2005,7 @@ public class Topics {
     /**
      * 137、只出现一次的数字 II
      */
-    public int singleNumber(int[] nums) {
+    public int singleNumber137(int[] nums) {
         /**
          * 给你一个整数数组 nums ，除某个元素仅出现 一次 外，其余每个元素都恰出现 三次 。请你找出并返回那个只出现了一次的元素。
          */
@@ -2009,11 +2029,13 @@ public class Topics {
     /**
      * 1720、解码异或后的数组
      */
-    public int[] decode(int[] encoded, int first) {
+    public int[] decode1720(int[] encoded, int first) {
         /**
          * 未知 整数数组 arr 由 n 个非负整数组成。
-         * 经编码后变为长度为 n - 1 的另一个整数数组 encoded ，其中 encoded[i] = arr[i] XOR arr[i + 1] 。例如，arr = [1,0,2,1] 经编码后得
-         * 到 encoded = [1,2,3] 。给你编码后的数组 encoded 和原数组 arr 的第一个元素 first（arr[0]）。请解码返回原数组 arr 。可以证明答案
+         * 经编码后变为长度为 n - 1 的另一个整数数组 encoded ，其中 encoded[i] = arr[i] XOR arr[i + 1] 。
+         * 例如，arr = [1,0,2,1] 经编码后得
+         * 到 encoded = [1,2,3] 。给你编码后的数组 encoded 和原数组 arr 的第一个元素 first（arr[0]）。
+         * 请解码返回原数组 arr 。可以证明答案
          * 存在并且是唯一的。
          *
          * 示例 1：
@@ -2048,7 +2070,7 @@ public class Topics {
     /**
      * 1486、数组异或操作
      */
-    public int xorOperation(int n, int start) {
+    public int xorOperation1486(int n, int start) {
         /**
          * 给你两个整数，n 和 start 。
          * 数组 nums 定义为：nums[i] = start + 2*i（下标从 0 开始）且 n == nums.length 。
@@ -2081,11 +2103,12 @@ public class Topics {
     /**
      * 1723、完成所有工作的最短时间 [hard]
      */
-    public static int minimumTimeRequired(int[] jobs, int k) {
+    public static int minimumTimeRequired1723(int[] jobs, int k) {
 
         /**
          * 给你一个整数数组 jobs ，其中 jobs[i] 是完成第 i 项工作要花费的时间。
-         * 请你将这些工作分配给 k 位工人。所有工作都应该分配给工人，且每项工作只能分配给一位工人。工人的 工作时间 是完成分配给他们的所有工作
+         * 请你将这些工作分配给 k 位工人。所有工作都应该分配给工人，且每项工作只能分配给一位工人。工人的 工作时间
+         * 是完成分配给他们的所有工作
          * 花费时间的总和。请你设计一套最佳的工作分配方案，使工人的 最大工作时间 得以 最小化 。
          * 返回分配方案中尽可能 最小 的 最大工作时间 。
          *
@@ -2103,8 +2126,8 @@ public class Topics {
 
         /**
          * 思路：
-         * 整体思路与‘在D天内送达包裹的能力 1011’基本一样。基本代码都是一样的。区别是1011是严格按照顺序执行的，而此题可以使用组合，随意搭配。难也
-         * 就是难在这里。具体看代码，还是很好理解的。
+         * 整体思路与‘在D天内送达包裹的能力 1011’基本一样。基本代码都是一样的。区别是1011是严格按照顺序执行的，而此题可以使用组合，
+         * 随意搭配。难也就是难在这里。具体看代码，还是很好理解的。
          * 此题有一个关键点就是剪枝。如果没有剪枝操作的话，是无法提交的，会超时。关于剪枝的理解也看代码内。不一样的是官方答案中做了降序处理，
          * 对于`(workloads[j] == 0 || workloads[j] + cur == maxTime)`中的workloads[j] + cur == maxTime 可能会更好理解。
          * 测试过没有处理降序，也不增加workloads[j] + cur == maxTime判断提交，也是一样可以AC的。
@@ -2164,7 +2187,7 @@ public class Topics {
     /**
      * 872、叶子相似的树
      */
-    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+    public boolean leafSimilar872(TreeNode root1, TreeNode root2) {
         /**
          * 请考虑一棵二叉树上所有的叶子，这些叶子的值按从左到右的顺序排列形成一个 叶值序列 。
          * 举个例子，如上图所示，给定一棵叶值序列为(6, 7, 4, 9, 8)的树。
@@ -2205,7 +2228,7 @@ public class Topics {
     /**
      * 1734、解码异或后的排列
      */
-    public int[] decode(int[] encoded) {
+    public int[] decode1734(int[] encoded) {
         /**
          * 给你一个整数数组perm，它是前n个正整数的排列，且n是个 奇数。它被加密成另一个长度为 n - 1的整数数组encoded，满足
          * encoded[i] = perm[i] XOR perm[i + 1]。比方说，如果perm = [1,3,2]，那么encoded = [2,1]。
@@ -2259,7 +2282,7 @@ public class Topics {
     /**
      * 1310、子数组异或查询
      */
-    public int[] xorQueries(int[] arr, int[][] queries) {
+    public int[] xorQueries1310(int[] arr, int[][] queries) {
 
         /**
          * 有一个正整数数组arr，现给你一个对应的查询数组queries，其中queries[i] = [Li,Ri]。
@@ -2325,7 +2348,7 @@ public class Topics {
     /**
      * 1269、停在原地的方案数
      */
-    public static int numWays(int steps, int arrLen) {
+    public static int numWays1269(int steps, int arrLen) {
         /**
          * 有一个长度为arrLen的数组，开始有一个指针在索引0 处。
          * 每一步操作中，你可以将指针向左或向右移动 1 步，或者停在原地（指针不能被移动到数组范围外）。
@@ -2390,7 +2413,7 @@ public class Topics {
     /**
      * 12、整数转罗马数字
      */
-    public String intToRoman(int num) {
+    public String intToRoman12(int num) {
         /**
          * 罗马数字包含以下七种字符：I，V，X，L，C，D和M。
          * 字符          数值
@@ -2494,7 +2517,7 @@ public class Topics {
     /**
      * 13、罗马数字转整数
      */
-    public int romanToInt(String s) {
+    public int romanToInt13(String s) {
         /**
          * 题目参考12题，就是条件与结果对调，给出罗马数字求整数。
          *
@@ -2540,7 +2563,7 @@ public class Topics {
     /**
      * 421、数组中两个数的最大异或值
      */
-    public int findMaximumXOR(int[] nums) {
+    public int findMaximumXOR421(int[] nums) {
 
         /**
          * 给你一个整数数组 nums ，返回 nums[i] XOR nums[j] 的最大运算结果，其中 0 ≤ i ≤ j < n 。
@@ -2571,7 +2594,7 @@ public class Topics {
      * 993、二叉树的堂兄弟节点
      */
 
-    public boolean isCousins(TreeNode root, int x, int y) {
+    public boolean isCousins993(TreeNode root, int x, int y) {
 
         /**
          * 在二叉树中，根节点位于深度 0 处，每个深度为 k 的节点的子节点位于深度 k+1 处。
@@ -2602,37 +2625,37 @@ public class Topics {
 
         if (root == null) return false;
         dfs993(root, x, y, 0);
-        if (tx == null || ty == null) return false;
-        return tx.val != ty.val && dx == dy;
+        if (tx993 == null || ty993 == null) return false;
+        return tx993.val != ty993.val && dx993 == dy993;
 
 //        执行用时：0 ms, 在所有 Java 提交中击败了 100.00% 的用户
 //        内存消耗：36.1 MB, 在所有 Java 提交中击败了 75.46% 的用户
     }
 
-    TreeNode tx = null, ty = null;
-    int dx = 0, dy = 0;
+    TreeNode tx993 = null, ty993 = null;
+    int dx993 = 0, dy993 = 0;
 
     private boolean dfs993(TreeNode node, int x, int y, int deep) {
         if (node == null) return false;
         boolean b = node.val == x || node.val == y;
         if (dfs993(node.left, x, y, deep + 1)) {
             if (node.left.val == x) {
-                tx = node;
-                dx = deep + 1;
+                tx993 = node;
+                dx993 = deep + 1;
             }
             if (node.left.val == y) {
-                ty = node;
-                dy = deep + 1;
+                ty993 = node;
+                dy993 = deep + 1;
             }
         }
         if (dfs993(node.right, x, y, deep + 1)) {
             if (node.right.val == x) {
-                tx = node;
-                dx = deep + 1;
+                tx993 = node;
+                dx993 = deep + 1;
             }
             if (node.right.val == y) {
-                ty = node;
-                dy = deep + 1;
+                ty993 = node;
+                dy993 = deep + 1;
             }
         }
         return b;
@@ -2641,7 +2664,7 @@ public class Topics {
     /**
      * 1442、形成两个异或相等数组的三元组数目
      */
-    public int countTriplets(int[] arr) {
+    public int countTriplets1442(int[] arr) {
         /**
          * 给你一个整数数组 arr 。
          * 现需要从数组中取三个下标 i、j 和 k ，其中 (0 <= i < j <= k < arr.length) 。
@@ -2710,7 +2733,7 @@ public class Topics {
     /**
      * 1738、找出第 K 大的异或坐标值
      */
-    public int kthLargestValue(int[][] matrix, int k) {
+    public int kthLargestValue1738(int[][] matrix, int k) {
 
         /**
          * 给你一个二维矩阵 matrix 和一个整数 k ，矩阵大小为m x n 由非负整数组成。
@@ -2789,7 +2812,7 @@ public class Topics {
     /**
      * 692、前K个高频单词
      */
-    public List<String> topKFrequent(String[] words, int k) {
+    public List<String> topKFrequent692(String[] words, int k) {
         /**
          * 给一非空的单词列表，返回前k个出现次数最多的单词。
          * 返回的答案应该按单词出现频率由高到低排序。如果不同的单词有相同出现频率，按字母顺序排序。
@@ -2838,7 +2861,7 @@ public class Topics {
     /**
      * 1035、不相交的线 ?
      */
-    public int maxUncrossedLines(int[] nums1, int[] nums2) {
+    public int maxUncrossedLines1035(int[] nums1, int[] nums2) {
         /**
          * 在两条独立的水平线上按给定的顺序写下 nums1 和 nums2 中的整数。
          * 现在，可以绘制一些连接两个数字 nums1[i]和 nums2[j]的直线，这些直线需要同时满足满足：
@@ -2865,11 +2888,13 @@ public class Topics {
     /**
      * 810、黑板异或游戏
      */
-    public boolean xorGame(int[] nums) {
+    public boolean xorGame810(int[] nums) {
 
         /**
-         * 黑板上写着一个非负整数数组 nums[i] 。Alice 和 Bob 轮流从黑板上擦掉一个数字，Alice 先手。如果擦除一个数字后，剩余的所有数字按位异或运
-         * 算得出的结果等于 0 的话，当前玩家游戏失败。(另外，如果只剩一个数字，按位异或运算得到它本身；如果无数字剩余，按位异或运算结果为0。）
+         * 黑板上写着一个非负整数数组 nums[i] 。Alice 和 Bob 轮流从黑板上擦掉一个数字，Alice 先手。如果擦除一个数字后，
+         * 剩余的所有数字按位异或运
+         * 算得出的结果等于 0 的话，当前玩家游戏失败。(另外，如果只剩一个数字，按位异或运算得到它本身；如果无数字剩余，
+         * 按位异或运算结果为0。）
          * 换种说法就是，轮到某个玩家时，如果当前黑板上所有数字按位异或运算结果等于 0，这个玩家获胜。
          * 假设两个玩家每步都使用最优解，当且仅当 Alice 获胜时返回 true。
          *
@@ -2878,7 +2903,8 @@ public class Topics {
          * 输出: false
          * 解释:
          * Alice 有两个选择: 擦掉数字 1 或 2。
-         * 如果擦掉 1, 数组变成 [1, 2]。剩余数字按位异或得到 1 XOR 2 = 3。那么 Bob 可以擦掉任意数字，因为 Alice 会成为擦掉最后一个数字的人，她
+         * 如果擦掉 1, 数组变成 [1, 2]。剩余数字按位异或得到 1 XOR 2 = 3。那么 Bob 可以擦掉任意数字，因为 Alice
+         * 会成为擦掉最后一个数字的人，她
          * 总是会输。如果 Alice 擦掉 2，那么数组变成[1, 1]。剩余数字按位异或得到 1 XOR 1 = 0。Alice 仍然会输掉游戏。
          *
          * 提示：
@@ -2903,7 +2929,7 @@ public class Topics {
     /**
      * 1707、与数组中元素的最大异或值 ?
      */
-    public int[] maximizeXor(int[] nums, int[][] queries) {
+    public int[] maximizeXor1707(int[] nums, int[][] queries) {
 
         /**
          * 给你一个由非负整数组成的数组 nums 。另有一个查询数组 queries ，其中 queries[i] = [xi, mi] 。
@@ -2959,7 +2985,7 @@ public class Topics {
     /**
      * 664、奇怪的打印机 ?
      */
-    public int strangePrinter(String s) {
+    public int strangePrinter664(String s) {
 
         /**
          * 有台奇怪的打印机有以下两个特殊要求：
@@ -2987,7 +3013,7 @@ public class Topics {
     /**
      * 1787、使所有区间的异或结果为零 ?
      */
-    public int minChanges(int[] nums, int k) {
+    public int minChanges1787(int[] nums, int k) {
         /**
          * 给你一个整数数组 nums 和一个整数k 。区间 [left, right]（left <= right）的 异或结果 是对下标位于left 和 right（包括
          * left 和 right ）之间所有元素进行 XOR 运算的结果：nums[left] XOR nums[left+1] XOR ... XOR nums[right] 。
@@ -3017,7 +3043,7 @@ public class Topics {
     /**
      * 1190、反转每对括号间的子串
      */
-    public String reverseParentheses(String s) {
+    public String reverseParentheses1190(String s) {
         /**
          * 给出一个字符串 s（仅含有小写英文字母和括号）。
          * 请你按照从括号内到外的顺序，逐层反转每对匹配括号中的字符串，并返回最终的结果。
@@ -3085,7 +3111,7 @@ public class Topics {
     /**
      * 461、汉明距离
      */
-    public int hammingDistance(int x, int y) {
+    public int hammingDistance461(int x, int y) {
 
         /** 两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。
          * 给出两个整数 x 和 y，计算它们之间的汉明距离。
@@ -3117,8 +3143,7 @@ public class Topics {
     /**
      * 477、汉明距离总和
      */
-
-    public int totalHammingDistance(int[] nums) {
+    public int totalHammingDistance477(int[] nums) {
         /**
          * 两个整数的 汉明距离 指的是这两个数字的二进制数对应位不同的数量。
          * 计算一个数组中，任意两个数之间汉明距离的总和。
@@ -3164,7 +3189,7 @@ public class Topics {
     /**
      * 1074. 元素和为目标值的子矩阵数量
      */
-    public int numSubmatrixSumTarget(int[][] matrix, int target) {
+    public int numSubmatrixSumTarget1074(int[][] matrix, int target) {
 
         /**
          * 给出矩阵 matrix 和目标值 target，返回元素总和等于目标值的非空子矩阵的数量。
@@ -3222,7 +3247,7 @@ public class Topics {
     /**
      * 231、2 的幂
      */
-    public boolean isPowerOfTwo(int n) {
+    public boolean isPowerOfTwo231(int n) {
 
         /** 给你一个整数 n，请你判断该整数是否是 2 的幂次方。如果是，返回 true ；否则，返回 false 。
          * 如果存在一个整数 x 使得 n == 2x ，则认为 n 是 2 的幂次方。
@@ -3257,7 +3282,7 @@ public class Topics {
     /**
      * 342. 4的幂
      */
-    public boolean isPowerOfFour(int n) {
+    public boolean isPowerOfFour342(int n) {
 
         /**
          * 给定一个整数，写一个函数来判断它是否是 4 的幂次方。如果是，返回 true ；否则，返回 false 。
@@ -3301,7 +3326,7 @@ public class Topics {
     /**
      * 1744. 你能在你最喜欢的那天吃到你最喜欢的糖果吗 ？
      */
-    public boolean[] canEat(int[] candiesCount, int[][] queries) {
+    public boolean[] canEat1744(int[] candiesCount, int[][] queries) {
 
         /** 给你一个下标从 0 开始的正整数数组 candiesCount ，其中 candiesCount[i] 表示你拥有的第 i 类糖果的数目。同时给你一个二维
          * 数组 queries ，其中 queries[i] = [favoriteTypei, favoriteDayi, dailyCapi] 。你按照如下规则进行一场游戏：
@@ -3319,7 +3344,8 @@ public class Topics {
          * 输出：[true,false,true]
          * 提示：
          * 1- 在第 0 天吃 2 颗糖果(类型 0），第 1 天吃 2 颗糖果（类型 0），第 2 天你可以吃到类型 0 的糖果。
-         * 2- 每天你最多吃 4 颗糖果。即使第 0 天吃 4 颗糖果（类型 0），第 1 天吃 4 颗糖果（类型 0 和类型 1），你也没办法在第 2 天吃到类型4的糖果。
+         * 2- 每天你最多吃 4 颗糖果。即使第 0 天吃 4 颗糖果（类型 0），第 1 天吃 4 颗糖果（类型 0 和类型 1），你也没办法在第 2
+         * 天吃到类型4的糖果。
          * 换言之，你没法在每天吃 4 颗糖果的限制下在第 2 天吃到第 4 类糖果。
          * 3- 如果你每天吃 1 颗糖果，你可以在第 13 天吃到类型 2 的糖果。
          *
@@ -3393,7 +3419,7 @@ public class Topics {
     /**
      * 525、连续数组
      */
-    public int findMaxLength(int[] nums) {
+    public int findMaxLength525(int[] nums) {
         /** 给定一个二进制数组 nums , 找到含有相同数量的 0 和 1 的最长连续子数组，并返回该子数组的长度。
          *
          * 示例 1:
@@ -3442,7 +3468,7 @@ public class Topics {
     /**
      * 160、相交链表
      */
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    public ListNode getIntersectionNode160(ListNode headA, ListNode headB) {
 
         /** 给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表没有交点，返回 null 。
          * 题目数据 保证 整个链式结构中不存在环。
@@ -3500,7 +3526,7 @@ public class Topics {
     /**
      * 203、移除链表元素
      */
-    public ListNode removeElements(ListNode head, int val) {
+    public ListNode removeElements203(ListNode head, int val) {
 
         /** 给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
          *
@@ -3542,7 +3568,7 @@ public class Topics {
     /**
      * 494、目标和
      */
-    public int findTargetSumWays(int[] nums, int target) {
+    public int findTargetSumWays494(int[] nums, int target) {
         /**
          * 给你一个整数数组 nums 和一个整数 target 。
          * 向数组中的每个整数前添加 '+' 或 '-' ，然后串联起所有整数，可以构造一个 表达式 ：
@@ -3599,7 +3625,7 @@ public class Topics {
     /**
      * 1049. 最后一块石头的重量 II
      */
-    public int lastStoneWeightII(int[] stones) {
+    public int lastStoneWeightII1049(int[] stones) {
 
         /** 有一堆石头，用整数数组 stones 表示。其中 stones[i] 表示第 i 块石头的重量。
          * 每一回合，从中选出任意两块石头，然后将它们一起粉碎。假设石头的重量分别为 x 和 y，且 x <= y。那么粉碎的可能结果如下：
@@ -3668,7 +3694,7 @@ public class Topics {
     /**
      * 879、盈利计划
      */
-    public static int profitableSchemes(int n, int minProfit, int[] group, int[] profit) {
+    public static int profitableSchemes879(int n, int minProfit, int[] group, int[] profit) {
 
         /**
          * 集团里有 n 名员工，他们可以完成各种各样的工作创造利润。
@@ -3734,7 +3760,7 @@ public class Topics {
     /**
      * 518、零钱兑换 II
      */
-    public int change(int amount, int[] coins) {
+    public int change518(int amount, int[] coins) {
 
         /** 给定不同面额的硬币和一个总金额。写出函数来计算可以凑成总金额的硬币组合数。假设每一种面额的硬币有无限个。
          *
@@ -3825,11 +3851,12 @@ public class Topics {
     /**
      * 279、完全平方数
      */
-    public int numSquares(int n) {
+    public int numSquares279(int n) {
 
         /** 给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
          * 给你一个整数 n ，返回和为 n 的完全平方数的 最少数量 。
-         * 完全平方数 是一个整数，其值等于另一个整数的平方；换句话说，其值等于一个整数自乘的积。例如，1、4、9 和 16 都是完全平方数，而 3和 11不是。
+         * 完全平方数 是一个整数，其值等于另一个整数的平方；换句话说，其值等于一个整数自乘的积。例如，1、4、9 和 16 都是完全平方数，
+         * 而 3和 11不是。
          *
          * 示例 1：
          * 输入：n = 12
@@ -3880,11 +3907,13 @@ public class Topics {
     /**
      * 278、第一个错误的版本
      */
-    public int firstBadVersion(int n) {
-        /** 你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之前的版本开发的，
+    public int firstBadVersion278(int n) {
+        /** 你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之
+         * 前的版本开发的，
          * 所以错误的版本之后的所有版本都是错的。
          * 假设你有 n 个版本 [1, 2, ..., n]，你想找出导致之后所有版本出错的第一个错误的版本。
-         * 你可以通过调用 bool isBadVersion(version) 接口来判断版本号 version 是否在单元测试中出错。实现一个函数来查找第一个错误的版本。
+         * 你可以通过调用 bool isBadVersion(version) 接口来判断版本号 version 是否在单元测试中出错。实现一个函数来
+         * 查找第一个错误的版本。
          * 你应该尽量减少对调用 API 的次数。
          * 示例:
          * 给定 n = 5，并且 version = 4 是第一个错误的版本。
@@ -3915,7 +3944,7 @@ public class Topics {
     /**
      * 374、猜数字大小
      */
-    public int guessNumber(int n) {
+    public int guessNumber374(int n) {
 
         /** 猜数字游戏的规则如下：
          *
@@ -3968,14 +3997,15 @@ public class Topics {
     /**
      * 852. 山脉数组的峰顶索引
      */
-    public int peakIndexInMountainArray(int[] arr) {
+    public int peakIndexInMountainArray852(int[] arr) {
 
         /** 符合下列属性的数组 arr 称为 山脉数组 ：
          * arr.length >= 3
          * 存在 i（0 < i < arr.length - 1）使得：
          * arr[0] < arr[1] < ... arr[i-1] < arr[i]
          * arr[i] > arr[i+1] > ... > arr[arr.length - 1]
-         * 给你由整数组成的山脉数组 arr ，返回任何满足 arr[0]<arr[1]< ... arr[i - 1] < arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
+         * 给你由整数组成的山脉数组 arr ，返回任何满足 arr[0]<arr[1]< ... arr[i - 1] < arr[i] > arr[i + 1]
+         * > ... > arr[arr.length - 1]
          * 的下标 i 。
          *
          * 示例 1：
@@ -4025,7 +4055,7 @@ public class Topics {
      * <p>
      * {@link com.example.testlink.calculate.sword_for_offer.T53}
      */
-    public boolean isNumber(String s) {
+    public boolean isNumber65(String s) {
         /** 有效数字（按顺序）可以分成以下几个部分：
          * 一个 小数 或者 整数
          * （可选）一个 'e' 或 'E' ，后面跟着一个 整数
@@ -4075,7 +4105,7 @@ public class Topics {
     /**
      * 483、最小好进制 ？
      */
-    public String smallestGoodBase(String n) {
+    public String smallestGoodBase483(String n) {
 
         /**
          *  对于给定的整数 n, 如果n的k（k>=2）进制数的所有数位全为1，则称 k（k>=2）是 n 的一个好进制。
@@ -4124,10 +4154,11 @@ public class Topics {
     /**
      * 1239、串联字符串的最大长度
      */
-    public static int maxLength(List<String> arr) {
+    public static int maxLength1239(List<String> arr) {
 
         /**
-         * 给定一个字符串数组 arr，字符串 s 是将 arr 某一子序列字符串连接所得的字符串，如果 s 中的每一个字符都只出现过一次，那么它就是一个可行解。
+         * 给定一个字符串数组 arr，字符串 s 是将 arr 某一子序列字符串连接所得的字符串，如果 s 中的每一个字符都只出现过一次，
+         * 那么它就是一个可行解。
          * 请返回所有可行解 s 中最长长度。
          *
          * 示例 1：
@@ -4194,7 +4225,7 @@ public class Topics {
     /**
      * 401、二进制手表
      */
-    public List<String> readBinaryWatch(int turnedOn) {
+    public List<String> readBinaryWatch401(int turnedOn) {
 
         /**
          *  二进制手表顶部有 4 个 LED 代表 小时（0-11），底部的 6 个 LED 代表 分钟（0-59）。每个 LED 代表一个 0 或 1，最低位在右侧。
@@ -4230,7 +4261,7 @@ public class Topics {
      * 剑指Offer 38. 字符串的排列
      * {@link com.example.testlink.calculate.sword_for_offer.T28}
      */
-    public String[] permutation(String s) {
+    public String[] permutation38(String s) {
         /**
          * 输入一个字符串，打印出该字符串中字符的所有排列。
          * 你可以以任意顺序返回这个字符串数组，但里面不能有重复元素。
@@ -4252,7 +4283,7 @@ public class Topics {
     /**
      * 剑指 Offer 15.二进制中1的个数
      * {@link com.example.testlink.calculate.sword_for_offer.T10}
-     * {@link #hammingWeight(int)}
+     * {@link #hammingWeight191(int)}
      */
     public int t191(int i) {
         /**
@@ -4280,7 +4311,7 @@ public class Topics {
     /**
      * 149、直线上最多的点数
      */
-    public int maxPoints(int[][] points) {
+    public int maxPoints149(int[][] points) {
 
         /**
          *  给你一个数组 points ，其中 points[i] = [xi, yi] 表示 X-Y 平面上的一个点。求最多有多少个点在同一条直线上。
@@ -4327,9 +4358,10 @@ public class Topics {
     /**
      * 752、打开转盘锁
      */
-    public int openLock(String[] deadends, String target) {
+    public int openLock752(String[] deadends, String target) {
         /**
-         * 你有一个带有四个圆形拨轮的转盘锁。每个拨轮都有10个数字： '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' 。每个拨轮可以自由旋转：
+         * 你有一个带有四个圆形拨轮的转盘锁。每个拨轮都有10个数字： '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' 。
+         * 每个拨轮可以自由旋转：
          * 例如把 '9' 变为 '0'，'0' 变为 '9' 。每次旋转都只能旋转一个拨轮的一位数字。
          * 锁的初始数字为 '0000' ，一个代表四个拨轮的数字的字符串。
          * 列表 deadends 包含了一组死亡数字，一旦拨轮的数字和列表里的任何一个元素相同，这个锁将会被永久锁定，无法再被旋转。
@@ -4417,17 +4449,17 @@ public class Topics {
     }
 
     //往下转-1，注意0与9特殊位置
-    public char numPrev752(char x) {
+    private char numPrev752(char x) {
         return x == '0' ? '9' : (char) (x - 1);
     }
 
     //往上转+1，注意0与9特殊位置
-    public char numSucc752(char x) {
+    private char numSucc752(char x) {
         return x == '9' ? '0' : (char) (x + 1);
     }
 
     // 枚举 status 通过一次旋转得到的数字
-    public List<String> get752(String status) {
+    private List<String> get752(String status) {
         List<String> ret = new ArrayList<String>();
         char[] array = status.toCharArray();
         for (int i = 0; i < 4; ++i) {
@@ -4447,7 +4479,7 @@ public class Topics {
     /**
      * 773、滑动谜题 bfs
      */
-    public int slidingPuzzle(int[][] board) {
+    public int slidingPuzzle773(int[][] board) {
         /**
          *  在一个 2 x 3 的板上（board）有 5 块砖瓦，用数字 1~5 来表示, 以及一块空缺用 0 来表示.
          * 一次移动定义为选择 0 与一个相邻的数字（上下左右）进行交换.
@@ -4538,14 +4570,14 @@ public class Topics {
         return -1;
     }
 
-    int[][] neighbors = {{1, 3}, {0, 2, 4}, {1, 5}, {0, 4}, {1, 3, 5}, {2, 4}};
+    int[][] neighbors773 = {{1, 3}, {0, 2, 4}, {1, 5}, {0, 4}, {1, 3, 5}, {2, 4}};
 
     // 枚举 status 通过一次交换操作得到的状态
     private List<String> get773(String status) {
         List<String> ret = new ArrayList<String>();
         char[] array = status.toCharArray();
         int x = status.indexOf('0');
-        for (int y : neighbors[x]) {
+        for (int y : neighbors773[x]) {
             swap773(array, x, y);
             ret.add(new String(array));
             // 恢复状态
@@ -4563,12 +4595,12 @@ public class Topics {
     /**
      * 909、蛇梯棋 bfs
      */
-    public static int snakesAndLadders(int[][] board) {
-
+    public static int snakesAndLadders909(int[][] board) {
         /**
          * N x N 的棋盘 board 上，按从 1 到 N*N 的数字给方格编号，编号 从左下角开始，每一行交替方向。
          * 例如，一块 6 x 6 大小的棋盘，编号如下：
-         * r 行 c 列的棋盘，按前述方法编号，棋盘格中可能存在 “蛇” 或 “梯子”；如果 board[r][c] != -1，那个蛇或梯子的目的地将会是 board[r][c]。
+         * r 行 c 列的棋盘，按前述方法编号，棋盘格中可能存在 “蛇” 或 “梯子”；如果 board[r][c] != -1，那个蛇或梯子的目的地将会是
+         * board[r][c]。
          * 玩家从棋盘上的方格 1 （总是在最后一行、第一列）开始出发。
          * 每一回合，玩家需要从当前方格 x 开始出发，按下述要求前进：
          * 选定目标方格：选择从编号 x+1，x+2，x+3，x+4，x+5，或者 x+6 的方格中选出一个目标方格 s ，目标方格的编号 <= N*N。
@@ -4650,7 +4682,7 @@ public class Topics {
             for (int[] x : get909(statue[0], statue[1], board.length)) {
 
                 // 格子位置转换成坐标
-                int[] stepInt = getStep(x[0], board.length);
+                int[] stepInt = getStep909(x[0], board.length);
                 // 判断是否有梯子
                 if (board[stepInt[0]][stepInt[1]] != -1) { // 有梯子，飞到梯子上
                     x[0] = board[stepInt[0]][stepInt[1]];
@@ -4679,7 +4711,7 @@ public class Topics {
         return list;
     }
 
-    private static int[] getStep(int index, int size) {
+    private static int[] getStep909(int index, int size) {
         //正常模式下求x、y坐标
         int y = (index - 1) / size;
         y = size - 1 - y; // 取反方向
@@ -4700,7 +4732,7 @@ public class Topics {
     /**
      * 815、公交路线 bfs ?
      */
-    public int numBusesToDestination(int[][] routes, int source, int target) {
+    public int numBusesToDestination815(int[][] routes, int source, int target) {
         /**
          * 给你一个数组 routes ，表示一系列公交线路，其中每个 routes[i] 表示一条公交线路，第 i 辆公交车将会在上面循环行驶。
          * 例如，路线 routes[0] = [1, 5, 7] 表示第 0 辆公交车会一直按序列 1 -> 5 -> 7 -> 1 -> 5 -> 7 -> 1 -> ... 这样的车站路线行驶。
@@ -4731,7 +4763,7 @@ public class Topics {
     /**
      * 168、Excel表列名称(26进制)
      */
-    public String convertToTitle(int columnNumber) {
+    public String convertToTitle168(int columnNumber) {
         /**
          * 给定一个正整数，返回它在 Excel 表中相对应的列名称。
          * 例如，
@@ -4795,7 +4827,7 @@ public class Topics {
     /**
      * 1833. 雪糕的最大数量
      */
-    public int maxIceCream(int[] costs, int coins) {
+    public int maxIceCream1833(int[] costs, int coins) {
 
         /** 夏日炎炎，小男孩 Tony 想买一些雪糕消消暑。
          * 商店中新到 n 支雪糕，用长度为 n 的数组 costs 表示雪糕的定价，其中 costs[i] 表示第 i 支雪糕的现金价格。Tony 一共有
@@ -4845,7 +4877,7 @@ public class Topics {
     /**
      * 726. 原子的数量
      */
-    public String countOfAtoms(String formula) {
+    public String countOfAtoms726(String formula) {
 
         /**
          * 给定一个化学式formula（作为字符串），返回每种原子的数量。原子总是以一个大写字母开始，接着跟随0个或任意个小写字母，表示原子的名字。
@@ -4894,12 +4926,12 @@ public class Topics {
         //先放入最外一层。
         stack.push(new HashMap<>());
 
-        for (int i = 0; i < formula.length(); i = index) {
+        for (int i = 0; i < formula.length(); i = index726) {
             if (formula.charAt(i) == '(') {
-                index++;
+                index726++;
                 stack.push(new HashMap<>());
             } else if (formula.charAt(i) == ')') {
-                index++;
+                index726++;
                 //获取数字
                 int num = getNum726(formula);
                 // 将当前()内的原子整合到外部，其实就是去()
@@ -4936,29 +4968,29 @@ public class Topics {
         return sb.toString();
     }
 
-    int index;
+    int index726;
 
     private String get726(String formula) {
         StringBuilder sb = new StringBuilder();
         // 取出第一个大写字符
-        sb.append(formula.charAt(index));
-        index++;
-        while (index < formula.length() && Character.isLowerCase(formula.charAt(index))) {
-            sb.append(formula.charAt(index));
-            index++;
+        sb.append(formula.charAt(index726));
+        index726++;
+        while (index726 < formula.length() && Character.isLowerCase(formula.charAt(index726))) {
+            sb.append(formula.charAt(index726));
+            index726++;
         }
         return sb.toString();
     }
 
     private int getNum726(String formula) {
         //不是数字，或者越界,认为是1
-        if (index >= formula.length() || !Character.isDigit(formula.charAt(index))) {
+        if (index726 >= formula.length() || !Character.isDigit(formula.charAt(index726))) {
             return 1;
         }
         StringBuilder sb = new StringBuilder();
-        while (index < formula.length() && Character.isDigit(formula.charAt(index))) {
-            sb.append(formula.charAt(index));
-            index++;
+        while (index726 < formula.length() && Character.isDigit(formula.charAt(index726))) {
+            sb.append(formula.charAt(index726));
+            index726++;
         }
         return Integer.valueOf(sb.toString());
     }
@@ -4967,18 +4999,19 @@ public class Topics {
     /**
      * 1418、点菜展示表
      */
-    public List<List<String>> displayTable(List<List<String>> orders) {
-
+    public List<List<String>> displayTable1418(List<List<String>> orders) {
         /** 给你一个数组 orders，表示客户在餐厅中完成的订单，确切地说， orders[i]=[customerNamei,tableNumberi,foodItemi] ，
          * 其中 customerNamei 是客户的姓名，tableNumberi 是客户所在餐桌的桌号，而 foodItemi 是客户点的餐品名称。
-         * 请你返回该餐厅的 点菜展示表 。在这张表中，表中第一行为标题，其第一列为餐桌桌号 “Table” ，后面每一列都是按字母顺序排列的餐品名称。
+         * 请你返回该餐厅的 点菜展示表 。在这张表中，表中第一行为标题，其第一列为餐桌桌号 “Table” ，后面每一列都是按字母顺序排列
+         * 的餐品名称。
          * 接下来每一行中的项则表示每张餐桌订购的相应餐品数量，第一列应当填对应的桌号，后面依次填写下单的餐品数量。
          * 注意：客户姓名不是点菜展示表的一部分。此外，表中的数据行应该按餐桌桌号升序排列。
          *
          * 示例 1：
          * 输入：orders = [["David","3","Ceviche"],["Corina","10","Beef Burrito"],["David","3","Fried Chicken"],
          * ["Carla","5","Water"],["Carla","5","Ceviche"],["Rous","3","Ceviche"]]
-         * 输出：[["Table","Beef Burrito","Ceviche","Fried Chicken","Water"],["3","0","2","1","0"],["5","0","1","0","1"],
+         * 输出：[["Table","Beef Burrito","Ceviche","Fried Chicken","Water"],["3","0","2","1","0"]
+         * ,["5","0","1","0","1"],
          * ["10","1","0","0","0"]]
          * 解释：
          * 点菜展示表如下所示：
@@ -5050,12 +5083,12 @@ public class Topics {
     /**
      * 1711、 大餐计数 ?
      */
-    public int countPairs(int[] deliciousness) {
-
+    public int countPairs1711(int[] deliciousness) {
         /**
          *  大餐 是指 恰好包含两道不同餐品 的一餐，其美味程度之和等于 2 的幂。
          * 你可以搭配 任意 两道餐品做一顿大餐。
-         * 给你一个整数数组 deliciousness ，其中 deliciousness[i] 是第i道餐品的美味程度，返回你可以用数组中的餐品做出的不同 大餐 的数量。
+         * 给你一个整数数组 deliciousness ，其中 deliciousness[i] 是第i道餐品的美味程度，返回你可以用数组中的餐品做出的不同
+         * 大餐 的数量。
          * 结果需要对 10^9 + 7 取余。注意，只要餐品下标不同，就可以认为是不同的餐品，即便它们的美味程度相同。
          *
          * 示例 1：
@@ -5092,7 +5125,7 @@ public class Topics {
     /**
      * 930、 和相同的二元子数组 ? 滑动窗口
      */
-    public int numSubarraysWithSum(int[] nums, int goal) {
+    public int numSubarraysWithSum930(int[] nums, int goal) {
 
         /** 给你一个二元数组 nums ，和一个整数 goal ，请你统计并返回有多少个和为 goal 的 非空 子数组。
          * 子数组 是数组的一段连续部分。
@@ -5167,11 +5200,12 @@ public class Topics {
     /**
      * 274. H 指数
      */
-    public static int hIndex(int[] citations) {
+    public static int hIndex274(int[] citations) {
 
         /**
          *  给定一位研究者论文被引用次数的数组（被引用次数是非负整数）。编写一个方法，计算出研究者的 h 指数。
-         * h 指数的定义：h 代表“高引用次数”（high citations），一名科研人员的 h 指数是指他（她）的 （N 篇论文中）总共有 h 篇论文分别被引用了
+         * h 指数的定义：h 代表“高引用次数”（high citations），一名科研人员的 h 指数是指他（她）的 （N 篇论文中）总
+         * 共有 h 篇论文分别被引用了
          * 至少 h 次。且其余的 N - h 篇论文每篇被引用次数 不超过 h 次。
          *
          * 例如：某人的 h 指数是 20，这表示他已发表的论文中，每篇被引用了至少 20 次的论文总共有 20 篇。
@@ -5217,7 +5251,7 @@ public class Topics {
     /**
      * 1818. 绝对差值和 ?
      */
-    public int minAbsoluteSumDiff(int[] nums1, int[] nums2) {
+    public int minAbsoluteSumDiff1818(int[] nums1, int[] nums2) {
         /**
          *  给你两个正整数数组 nums1 和 nums2 ，数组的长度都是 n 。
          * 数组 nums1 和 nums2 的 绝对差值和 定义为所有 |nums1[i] - nums2[i]|（0 <= i < n）的 总和（下标从 0 开始）。
@@ -5258,7 +5292,7 @@ public class Topics {
     /**
      * 1846. 减小和重新排列数组后的最大元素
      */
-    public int maximumElementAfterDecrementingAndRearranging(int[] arr) {
+    public int maximumElementAfterDecrementingAndRearranging1846(int[] arr) {
 
         /**
          *  给你一个正整数数组 arr 。请你对 arr 执行一些操作（也可以不进行任何操作），使得数组满足以下条件：
@@ -5370,7 +5404,7 @@ public class Topics {
     /**
      * 剑指 Offer 42、连续子数组的最大和 (53)
      */
-    public int maxSubArray(int[] nums) {
+    public int maxSubArray53(int[] nums) {
         /**
          * 输入一个整型数组，数组中的一个或连续多个整数组成一个子数组。求所有子数组的和的最大值。
          * 要求时间复杂度为O(n)。
@@ -5389,13 +5423,16 @@ public class Topics {
          * 思路：dp
          * 步骤：
          * 1、定义dp数组
-         *      dp[i]表示连续子数组到i时的最大和。(ps：这点很重要，否则会直接影响到后续转移方程的计算。题目要求的连续子数组，所以对于这个数组与当前i
-         *      位置的元素来说只有2种情况，将i归类到原连续数组中，第二是不归类到原连续数组，而是另起连续数组，以i位置元素开始)所以最终结果不是返回
+         *      dp[i]表示连续子数组到i时的最大和。(ps：这点很重要，否则会直接影响到后续转移方程的计算。题目要求的连续子数组，
+         *      所以对于这个数组与当前i
+         *      位置的元素来说只有2种情况，将i归类到原连续数组中，第二是不归类到原连续数组，而是另起连续数组，以i位置元素开始)
+         *      所以最终结果不是返回
          *      dp[i]。需要通过比较保存最大的。
          * 2、确定base case
          *      当只有一个元素时，和最大就是元素本身。dp[0] = nums[0]
          * 3、转移方程
-         *      对于当前位置i的元素在连续数组中，有2种情况考虑。1、连续数组加上nums[i]，即 dp[i] = dp[i-1] + nums[i];2、连续数组不加nums[i],
+         *      对于当前位置i的元素在连续数组中，有2种情况考虑。1、连续数组加上nums[i]，即 dp[i] = dp[i-1] + nums[i];
+         *      2、连续数组不加nums[i],
          *      反而放弃原连续数组，以nums[i]开始另立一个连续子数组。即 dp[i] = nums[i];二者取最大值。
          * 4、边界条件
          *
@@ -5467,9 +5504,7 @@ public class Topics {
     /**
      * 1877. 数组中最大数对和的最小值
      */
-    public int minPairSum(int[] nums) {
-
-
+    public int minPairSum1877(int[] nums) {
         /** 一个数对 (a,b) 的 数对和 等于 a + b 。最大数对和 是一个数对数组中最大的 数对和 。
          * 比方说，如果我们有数对 (1,5) ，(2,3) 和 (4,4)，最大数对和 为 max(1+5, 2+3, 4+4) = max(6, 5, 8) = 8 。
          * 给你一个长度为 偶数 n 的数组 nums ，请你将 nums 中的元素分成 n / 2 个数对，使得：
@@ -5513,7 +5548,7 @@ public class Topics {
     /**
      * 863、二叉树中所有距离为 K 的结点
      */
-    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+    public List<Integer> distanceK863(TreeNode root, TreeNode target, int k) {
 
         /**
          *  给定一个二叉树（具有根结点 root）， 一个目标结点 target ，和一个整数值 K 。
@@ -5563,7 +5598,8 @@ public class Topics {
 
     }
 
-    private void dfs863Count(TreeNode target, int cur, TreeNode last, List<Integer> list, HashMap<Integer, TreeNode> map,
+    private void dfs863Count(TreeNode target, int cur, TreeNode last, List<Integer> list,
+                             HashMap<Integer, TreeNode> map,
                              int k) {
         if (target == null) return;
 
@@ -5585,7 +5621,7 @@ public class Topics {
     /**
      * 171、 Excel表列序号
      */
-    public int titleToNumber(String columnTitle) {
+    public int titleToNumber171(String columnTitle) {
         /**
          *  给你一个字符串 columnTitle ，表示 Excel 表格中的列名称。返回该列名称对应的列序号。
          * 例如，
@@ -5636,13 +5672,14 @@ public class Topics {
     /**
      * 987、 二叉树的垂序遍历
      */
-    public List<List<Integer>> verticalTraversal(TreeNode root) {
-
+    public List<List<Integer>> verticalTraversal987(TreeNode root) {
         /**
          *  给你二叉树的根结点 root ，请你设计算法计算二叉树的 垂序遍历 序列。
          *
-         * 对位于 (row, col) 的每个结点而言，其左右子结点分别位于 (row + 1, col - 1) 和 (row + 1, col + 1) 。树的根结点位于 (0, 0) 。
-         * 二叉树的 垂序遍历 从最左边的列开始直到最右边的列结束，按列索引每一列上的所有结点，形成一个按出现位置从上到下排序的有序列表。如果同行同列
+         * 对位于 (row, col) 的每个结点而言，其左右子结点分别位于 (row + 1, col - 1) 和 (row + 1, col + 1) 。
+         * 树的根结点位于 (0, 0) 。
+         * 二叉树的 垂序遍历 从最左边的列开始直到最右边的列结束，按列索引每一列上的所有结点，形成一个按出现位置从上到下排序
+         * 的有序列表。如果同行同列
          * 上有多个结点，则按结点的值从小到大进行排序。
          * 返回二叉树的 垂序遍历 序列。
          *
@@ -5683,10 +5720,10 @@ public class Topics {
          * 思路：哈希表+排序。排序规则：先排列号，从小到大，相同则按行号从小到大；再排行号，相同则按value从小到大
          */
 
-        map.put(root, new int[]{0, 0, root.val});
+        map987.put(root, new int[]{0, 0, root.val});
         dfs987(root);
 
-        List<int[]> list = new ArrayList<>(map.values());
+        List<int[]> list = new ArrayList<>(map987.values());
         Collections.sort(list, (a, b) -> {
             if (a[0] != b[0]) return a[0] - b[0]; // 列号排序
             if (a[1] != b[1]) return a[1] - b[1]; // 行号排序
@@ -5705,18 +5742,18 @@ public class Topics {
         return ans;
     }
 
-    Map<TreeNode, int[]> map = new HashMap<>(); // col, row, val
+    Map<TreeNode, int[]> map987 = new HashMap<>(); // col, row, val
 
     private void dfs987(TreeNode root) {
         if (root == null) return;
-        int[] info = map.get(root);
+        int[] info = map987.get(root);
         int col = info[0], row = info[1], val = info[2];
         if (root.left != null) {
-            map.put(root.left, new int[]{col - 1, row + 1, root.left.val});
+            map987.put(root.left, new int[]{col - 1, row + 1, root.left.val});
             dfs987(root.left);
         }
         if (root.right != null) {
-            map.put(root.right, new int[]{col + 1, row + 1, root.right.val});
+            map987.put(root.right, new int[]{col + 1, row + 1, root.right.val});
             dfs987(root.right);
         }
     }
@@ -5724,8 +5761,7 @@ public class Topics {
     /**
      * 1337、 矩阵中战斗力最弱的 K 行
      */
-    public int[] kWeakestRows(int[][] mat, int k) {
-
+    public int[] kWeakestRows1337(int[][] mat, int k) {
         /**
          *  给你一个大小为 m * n 的矩阵 mat，矩阵由若干军人和平民组成，分别用 1 和 0 表示。
          * 请你返回矩阵中战斗力最弱的 k 行的索引，按从最弱到最强排序。
@@ -5793,7 +5829,7 @@ public class Topics {
     /**
      * 743、网络延迟时间 ???
      */
-    public int networkDelayTime(int[][] times, int n, int k) {
+    public int networkDelayTime743(int[][] times, int n, int k) {
         /**
          * 有n个网络节点，标记为 1 到 n。
          *
@@ -5860,7 +5896,7 @@ public class Topics {
     /**
      * 581、 最短无序连续子数组
      */
-    public int findUnsortedSubarray(int[] nums) {
+    public int findUnsortedSubarray581(int[] nums) {
         /**
          *  给你一个整数数组 nums ，你需要找出一个 连续子数组 ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。
          * 请你找出符合题意的 最短 子数组，并输出它的长度。
@@ -5918,7 +5954,7 @@ public class Topics {
     /**
      * 611、有效三角形的个数
      */
-    public int triangleNumber(int[] nums) {
+    public int triangleNumber611(int[] nums) {
 
         /**
          * 给定一个包含非负整数的数组，你的任务是统计其中可以组成三角形三条边的三元组个数。
@@ -6990,8 +7026,8 @@ public class Topics {
     /**
      * 528、按权重随机选择
      */
-    public void pickIndex() {
-        WeightSolution ws = new WeightSolution(new int[]{1, 3});
+    public void pickIndex528() {
+        WeightSolution528 ws = new WeightSolution528(new int[]{1, 3});
         ws.pickIndex();
     }
 
@@ -8103,7 +8139,7 @@ public class Topics {
          * 最多调用 addNum 和 getIntervals 方法 3 * 104 次
          * 进阶：如果存在大量合并，并且与数据流的大小相比，不相交区间的数量很小，该怎么办?
          */
-        SummaryRanges s = new SummaryRanges();
+        SummaryRanges352 s = new SummaryRanges352();
     }
 
     /**
@@ -9903,9 +9939,10 @@ public class Topics {
         String key = sb.toString();
         map652.put(key, map652.getOrDefault(key, 0) + 1);
         // 当且仅当数量等于2时添加到list中，避免了重复添加。
-        if (map652.get(key) == 2 ) result652.add(node);
+        if (map652.get(key) == 2) result652.add(node);
         return key;
     }
+
 
     /**
      * 2129、将标题首字母大写
@@ -9934,7 +9971,7 @@ public class Topics {
             s[i] = s[i].toLowerCase();
             // 3、长度大于2的把首字母转换成大写，可以使用char字符对应的int相加减得到对应的大写或小写字符。
             if (s[i].length() > 2) {
-                s[i] = (char)(s[i].charAt(0) - 32) + s[i].substring(1);
+                s[i] = (char) (s[i].charAt(0) - 32) + s[i].substring(1);
             }
         }
         // 4、开始是准备用一个循环拼接起来，后来发现有这样API调用，更加省事了

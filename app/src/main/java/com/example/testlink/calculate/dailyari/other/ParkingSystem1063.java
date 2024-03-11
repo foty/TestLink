@@ -1,6 +1,6 @@
-package com.example.testlink.calculate.dailyari;
+package com.example.testlink.calculate.dailyari.other;
 
-class ParkingSystem {
+public class ParkingSystem1063 {
     /**
      *
      * 请你给一个停车场设计一个停车系统。停车场总共有三种不同大小的车位：大，中和小，每种尺寸分别有固定数目的车位。
@@ -21,7 +21,7 @@ class ParkingSystem {
 
     int[] par;
 
-    public ParkingSystem(int big, int medium, int small) {
+    public ParkingSystem1063(int big, int medium, int small) {
         par= new int[3];
         par[0] = big;
         par[1] = medium;

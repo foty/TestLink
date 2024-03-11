@@ -1,11 +1,11 @@
-package com.example.testlink.calculate.dailyari;
+package com.example.testlink.calculate.dailyari.other;
 
 /**
  * Create by lxx
  * Date : 2021/3/13
  * Use by
  */
-public class MyHashSet {
+public class MyHashSet705 {
     /**
      * 题目说明：
      * 不使用任何内建的哈希表库设计一个哈希集合（HashSet）。
@@ -29,7 +29,7 @@ public class MyHashSet {
 
     boolean[] save;
 
-    MyHashSet() {
+    public MyHashSet705() {
         save = new boolean[1000001];
     }
 

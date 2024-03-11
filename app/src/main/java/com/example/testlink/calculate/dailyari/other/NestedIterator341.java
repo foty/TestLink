@@ -1,12 +1,11 @@
-package com.example.testlink.calculate.dailyari;
+package com.example.testlink.calculate.dailyari.other;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 
-public class NestedIterator implements Iterator<Integer> {
+public class NestedIterator341 implements Iterator<Integer> {
 
     /**
      * 给你一个嵌套的整型列表。请你设计一个迭代器，使其能够遍历这个整型列表中的所有整数。
@@ -29,7 +28,7 @@ public class NestedIterator implements Iterator<Integer> {
 
     LinkedList<Integer> linkedList;
 
-    public NestedIterator(List<NestedInteger> nestedList) {
+    public NestedIterator341(List<NestedInteger> nestedList) {
         linkedList = new LinkedList<>();
         dfs( nestedList);
     }

@@ -1,8 +1,8 @@
-package com.example.testlink.calculate.dailyari;
+package com.example.testlink.calculate.dailyari.other;
 
 import java.util.Arrays;
 
-class MyHashMap {
+public class MyHashMap706 {
 
     /**
      * 不使用任何内建的哈希表库设计一个哈希映射（HashMap）。
@@ -24,7 +24,7 @@ class MyHashMap {
 
     int[] save;
 
-    public MyHashMap() {
+    public MyHashMap706() {
         save = new int[1000001];
         Arrays.fill(save,-1);
     }

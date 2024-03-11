@@ -1,6 +1,6 @@
-package com.example.testlink.calculate.dailyari;
+package com.example.testlink.calculate.dailyari.other;
 
-class NumMatrix {
+public class NumMatrix304 {
 
     /**
      * 给定一个二维矩阵，计算其子矩形范围内元素的总和，该子矩阵的左上角为 (row1, col1) ，右下角为 (row2, col2) 。与
@@ -11,7 +11,7 @@ class NumMatrix {
 
     int[][] mixSum; // 二位数组和
 
-    public NumMatrix(int[][] matrix) {
+    public NumMatrix304(int[][] matrix) {
 
         if (matrix.length == 0) return;
         mixatr = matrix;

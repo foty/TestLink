@@ -1,4 +1,4 @@
-package com.example.testlink.calculate.dailyari;
+package com.example.testlink.calculate.dailyari.other;
 
 import java.util.List;
 
@@ -16,19 +16,19 @@ public interface NestedInteger {
     public List<NestedInteger> getList();
 
 
-
-    public class A implements NestedInteger{
+    public class A implements NestedInteger {
 
         int anInt;
         boolean isList;
         List<NestedInteger> list;
-        public A(int i,boolean isList,List<NestedInteger> list ){
+
+        public A(int i, boolean isList, List<NestedInteger> list) {
             anInt = i;
             this.isList = isList;
             this.list = list;
         }
 
-        public A(int i ){
+        public A(int i) {
             anInt = i;
             this.isList = true;
             this.list = null;

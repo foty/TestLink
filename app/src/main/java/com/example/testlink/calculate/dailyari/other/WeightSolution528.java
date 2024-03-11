@@ -1,6 +1,4 @@
-package com.example.testlink.calculate.dailyari;
-
-import com.example.testlink.R;
+package com.example.testlink.calculate.dailyari.other;
 
 import java.util.Random;
 
@@ -9,7 +7,7 @@ import java.util.Random;
  * Date : 2021/9/1 14:59
  * Use by
  */
-public class WeightSolution {
+public class WeightSolution528 {
     /**
      * 给定一个正整数数组 w ，其中 w[i] 代表下标 i 的权重（下标从 0 开始），请写一个函数 pickIndex ，它可以随机地获取下标
      * i，选取下标 i 的概率与 w[i] 成正比。
@@ -71,7 +69,7 @@ public class WeightSolution {
     int pre[];
     Random r;
 
-    public WeightSolution(int[] w) {
+    public WeightSolution528(int[] w) {
         pre = new int[w.length];
         pre[0] = w[0];
         for (int i = 1; i < w.length; i++) {
