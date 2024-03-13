@@ -9977,5 +9977,78 @@ public class Topics {
         // 4、开始是准备用一个循环拼接起来，后来发现有这样API调用，更加省事了
         return String.join(" ", s);
     }
+
+    /**
+     * 2864、最大二进制奇数
+     */
+    public String string2864(String s) {
+        /**
+         * 给你一个 二进制 字符串 s ，其中至少包含一个 '1' 。
+         * 你必须按某种方式 重新排列 字符串中的位，使得到的二进制数字是可以由该组合生成的 最大二进制奇数 。
+         * 以字符串形式，表示并返回可以由给定组合生成的最大二进制奇数。
+         * 注意 返回的结果字符串 可以 含前导零。
+         * 例如：
+         * 输入：s = "010"
+         * 输出："001"
+         * 解释：因为字符串 s 中仅有一个 '1' ，其必须出现在最后一位上。所以答案是 "001"
+         * 条件：
+         * 1 <= s.length <= 100
+         * s 仅由 '0' 和 '1' 组成
+         * s 中至少包含一个 '1'
+         */
+
+        /**
+         * 思路：
+         * 根据贪心原则，保证最少一个1排列在最后，把尽可能多的1排在前面。
+         */
+
+        // 解法2、统计法：分别统计0与1的数量，直接排列即可。
+        int cnt = 0;
+        // 统计1的数量
+        for (int i = 0; i < s.length(); i++) {
+            cnt += s.charAt(i) - '0';
+        }
+        // 拼接1，注意要留出一个1，所以是cnt -1;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < cnt - 1; i++) {
+            sb.append('1');
+        }
+        // 拼接0
+        for (int i = 0; i < s.length() - cnt; i++) {
+            sb.append('0');
+        }
+        // 再拼接1
+        sb.append('1');
+//        return sb.toString();
+
+
+        // 解法1、数组排列法
+        if (!s.contains("0")) return s;
+        char[] charArray = s.toCharArray();
+        int p = 0;
+        for (int i = 0; i < charArray.length - 1; i++) {
+            if (charArray[i] == '1') {
+                // 保证最后一个1的位置
+                if (charArray[charArray.length - 1] != '1') {
+                    charArray[i] = '0';
+                    charArray[charArray.length - 1] = '1';
+                } else {
+                    if (p == i) {
+                        p++;
+                    } else {
+                        // 移到最前面位置p
+                        charArray[p] = '1';
+                        charArray[i] = '0';
+                        p++;
+                    }
+                }
+            }
+        }
+        StringBuilder sb1 = new StringBuilder();
+        for (char c : charArray) {
+            sb1.append(c);
+        }
+        return sb1.toString();
+    }
 }
 
